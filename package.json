@@ -3,12 +3,25 @@
     "displayName": "Source Engine Support",
     "description": "Adds support for Source Engine file types and other commands",
     "version": "0.0.1",
+    "author": {
+        "name": "Stefan Heinz",
+        "email": "me@stefanheinz.at",
+        "url": "https://www.stefanheinz.at"
+    },
+    "publisher": "stefan-h-at",
+    "license": "SEE LICENSE IN 'LICENSE'",
+    "repository": {
+        "type": "github",
+        "url": "https://github.com/StefanH-AT/Source-Engine-VSCode-Extension"
+    },
+    "categories": [
+        "Programming Languages",
+        "Visualization"
+    ],
+    "keywords": ["source engine","valve","hammer","source sdk"],
     "engines": {
         "vscode": "^1.59.0"
     },
-    "categories": [
-        "Programming Languages"
-    ],
     "main": "./src/main.js",
     "activationEvents": [
         "onLanguage:keyvalue3",
