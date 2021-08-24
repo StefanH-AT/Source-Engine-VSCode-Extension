@@ -1,0 +1,105 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Valve Keyvalue 3",
+	"scopeName": "source.kv",
+	"patterns": [
+		{
+			"include": "#object"
+		}
+	],
+	"repository": {
+		"keyvalue": {
+			"match": "^\\s{0,}(\\w[\\w+:/|.]+|\"\\w[\\w+:/|.\\[\\] ]+\")\\s+([\\w+:/|.$%]+|\"[\\w+:/|.\\[\\]\\{\\}$% ]+\")",
+			"captures": {
+				"1": {
+					"name": "variable.name.keyvalue3"
+				},
+				"2": {
+					"patterns": [
+						{
+							"include": "#number"
+						},
+						{
+							"include": "#boolean"
+						},
+						{
+							"include": "#stringQuoted"
+						},
+						{
+							"include": "#stringUnquoted"
+						}
+					]
+				}
+			}
+		},
+		"object": {
+			"begin": "^\\s{0,}([\\w+:/|.]+|\"[\\w+:/|.]+\")\\s{0,}(\\{)",
+			"beginCaptures": {
+				"1": {
+					"name": "support.class.keyvalue3"
+				},
+				"2": {
+					"name": "storage.type.keyvalue3"
+				}
+			},
+			"end": "\\}(?<!\")$",
+			"endCaptures": {
+				"0": {
+					"name": "storage.type.keyvalue3"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#comment"
+				},
+				{
+					"include": "#object"
+				},
+				{
+					"include": "#keyvalue"
+				}
+			]
+		},
+		"comment": {
+			"name": "comment.line.keyvalue3",
+			"match": "//.*"
+		},
+		"boolean": {
+			"name": "constant.numeric.keyvalue3",
+			"match": "\\b(true|false)\\b"
+		},
+		"number": {
+			"name": "constant.numeric.keyvalue3",
+			"match": "\\b[0-9]+(.[0-9]+)?\\b"
+		},
+		"stringUnquoted": {
+			"name": "string.unquoted.keyvalue3",
+			"match": "(\\w|\\||\\.|\\\\|/)+"
+		},
+		"stringQuoted": {
+			"name": "string.quoted.double.keyvalue3",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [{
+				"include": "#stringArray"
+			}]
+		},
+		"stringArray": {
+			"begin": "(\\[|\\{)",
+			"end": "(\\]|\\})",
+			"captures": {
+				"1": {
+					"name": "storage.type"
+				}
+			},
+			"patterns": [
+				{
+					"include": "#number"
+				},
+				{
+					"include": "#boolean"
+				}
+			]
+		}
+	}
+}

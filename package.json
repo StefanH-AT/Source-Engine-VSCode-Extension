@@ -1,0 +1,165 @@
+{
+    "name": "source-engine-support",
+    "displayName": "Source Engine Support",
+    "description": "Adds support for Source Engine file types and other commands",
+    "version": "0.0.1",
+    "engines": {
+        "vscode": "^1.59.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "main": "./src/main.js",
+    "activationEvents": [
+        "onLanguage:keyvalue3",
+        "onLanguage:vmt"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "keyvalue3",
+                "aliases": [
+                    "Valve Keyvalue 3",
+                    "keyvalue3"
+                ],
+                "extensions": [
+                    ".kv",
+                    ".res",
+                    ".txt"
+                ],
+                "filenames": [
+                    "gameinfo.txt"
+                ],
+                "configuration": "./language-configuration.json"
+            },
+            {
+                "id": "vmt",
+                "aliases": [
+                    "Valve Material Type",
+                    "vmt"
+                ],
+                "extensions": [
+                    ".vmt"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "keyvalue3",
+                "scopeName": "source.kv",
+                "path": "./syntaxes/keyvalue3.tmLanguage.json"
+            },
+            {
+                "language": "vmt",
+                "scopeName": "source.kv.vmt",
+                "path": "./syntaxes/vmt.tmLanguage.json"
+            }
+        ],
+        "commands": [],
+        "configuration": {
+            "title": "Source Engine",
+            "properties": {
+                "source-engine.shaderParameters": {
+                    "type": [
+                        "object"
+                    ],
+                    "default": {
+                        "%compileclip": "bool",
+                        "%compiledetail": "bool",
+                        "%compileladder": "bool",
+                        "%compilenodraw": "bool",
+                        "%compilenolight": "bool",
+                        "%compilenonsolid": "bool",
+                        "%compilenpcclip": "bool",
+                        "%compilepassbullets": "bool",
+                        "%compileskip": "bool",
+                        "%compileteam": "bool",
+                        "%compiletrigger": "bool",
+                        "%keywords": "string",
+                        "%notooltexture": "bool",
+                        "%tooltexture": "texture",
+                        "$allowdiffusemodulation": "bool",
+                        "$alpha": "scalar",
+                        "$alphatest": "bool",
+                        "$ambientocclusion": "scalar",
+                        "$basetexture": "texture",
+                        "$blendmodulatetexture": "texture",
+                        "$blendtintbybasealpha": "bool",
+                        "$bumpmap": "texture",
+                        "$bumptransform": "string",
+                        "$burning": "bool",
+                        "$color": "color",
+                        "$color2": "color",
+                        "$decaltexture": "texture",
+                        "$detail": "texture",
+                        "$displacementmap": "texture",
+                        "$distancealpha": "bool",
+                        "$emissiveblendenabled": "bool",
+                        "$emissiveblendtexture": "texture",
+                        "$emissiveblendbasetexture": "texture",
+                        "$emissiveblendflowtexture": "texture",
+                        "$emissiveblendtint": "color",
+                        "$emissiveblendscrollvector": "matrix",
+                        "$envmap": "env_cubemap",
+                        "$envmapcontrast": "scalar",
+                        "$envmapframe": "int",
+                        "$envmapmask": "texture",
+                        "$envmapmaskframe": "int",
+                        "$envmapmaskscale": "float",
+                        "$envmapmasktransform": "string",
+                        "$envmapsaturation": "scalar",
+                        "$envmaptint": "color",
+                        "$halflambert": "bool",
+                        "$ignorez": "bool",
+                        "$lightwarptexture": "texture",
+                        "$masks1": "texture",
+                        "$masks2": "texture",
+                        "$maxfogdensityscalar": "scalar",
+                        "$model": "bool",
+                        "$layertint1": "color",
+                        "$layertint2": "color",
+                        "$nocull": "bool",
+                        "$nodecal": "bool",
+                        "$nofog": "bool",
+                        "$normalmap": "texture",
+                        "$notint": "bool",
+                        "$phong": "bool",
+                        "$phongexponent": "float",
+                        "$phongexponenttexture": "texture",
+                        "$phongboost": "float",
+                        "$phongfresnelranges": "matrix",
+                        "$forcephong": "bool",
+                        "$invertphongmask": "bool",
+                        "$phongdisablehalflambert": "bool",
+                        "$phongwarptexture": "texture",
+                        "$phongtint": "color",
+                        "$phongalbedoboost": "float",
+                        "$phongmaskcontrastbrightness": "matrix",
+                        "$phongmaskcontrastbrightness2": "matrix",
+                        "$phongamount": "colora",
+                        "$phongamount2": "colora",
+                        "$phongbasetint": "float",
+                        "$phongbasetint2": "float",
+                        "$pointsamplemagfilter": "bool",
+                        "$reflectivity": "color",
+                        "$rimlight": "bool",
+                        "$rimlightexponent": "int",
+                        "$rimlightboost": "int",
+                        "$rimlightmask": "bool",
+                        "$fresnelrangestexture": "texture",
+                        "$metalness": "float",
+                        "$seamless_scale": "float",
+                        "$ssbump": "bool",
+                        "$surfaceprop": "string",
+                        "$tintmasktexture": "texture",
+                        "$translucent": "bool",
+                        "$treeSway": "int",
+                        "$writez": "int"
+                    },
+                    "description": "All shader parameters used in completition."
+                }
+            }
+        }
+    }
+}

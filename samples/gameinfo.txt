@@ -1,0 +1,28 @@
+"GameInfo" {
+	
+	// Comment
+
+	"game"        							"Mod Name"
+	"title"       							"Mod title"
+	"gamedata"								"mod.fgd"
+
+	icon							"resource/icon"
+	gamelogo   			 			1
+	SupportsDX8    					0
+	SupportsXbox360 				0
+
+	"FileSystem" {
+
+		"SteamAppId" 					620
+		"ToolsAppId" 					211
+
+		"SearchPaths" {
+			"game+mod+default_write_path"			|gameinfo_path|.
+			"game"									|gameinfo_path|pak01_dir.vpk
+			"gamebin"								|gameinfo_path|bin
+			"game"									portal2/pak01_dir.vpk
+			"game"									portal2
+			"platform"								platform
+		}
+	}
+}

@@ -1,0 +1,64 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Valve Material Type",
+	"scopeName": "source.kv.vmt",
+    "patterns": [
+        {
+            "include": "#material"
+        }
+	],
+    "repository": {
+        "material": {
+            "begin": "\"?(?i)(LightmappedGeneric|LightmappedReflective|LightmappedTwoTexture|Lightmapped_4WayBlend|Multiblend|WorldTwoTextureBlend|WorldVertexTransition|WindowImposter|Water|UnlitGeneric|UnlitTwoTexture|WorldGGX|ParallaxTest|Sky|Core|SpriteCard|Cable|SplineRope|UnlitGeneric|Refract|MonitorScreen|Modulate|WindowImposter|VertexLitGeneric|Eyes|EyeRefract|VortWarp|Aftershock|Teeth|SurfaceGGX|Character|SolidEnergy|VolumeCloud|Screenspace_general|Pyro_vision|DepthOfField|Engine_Post|LensFX|Suppression|MotionBlur|RGBFilmGrain|DecalModulate|Shadow|Subrect)(?-i)\"?\\s{0,}(\\{)",
+            "beginCaptures": {
+                "1": {
+					"name": "support.class.keyvalue3"
+				},
+				"2": {
+					"name": "storage.type.keyvalue3"
+				}
+            },
+            "end": "\\}(?<!\")$",
+            "endCaptures": {
+                "0": {
+					"name": "storage.type.keyvalue3"
+				}
+            },
+            "patterns": [
+                {
+                    "include": "#shaderParam"
+                },
+                {
+                    "include": "source.kv#comment"
+                },
+                {
+                    "include": "source.kv#object"
+                }
+            ]
+        },
+        "shaderParam": {
+            "match": "^\\s{0,}([$%][\\w+:/|.\\[\\]]+|\"[$%][\\w+:/|.\\[\\]]+\")\\s+([\\w+:/|.\\[\\]]+|\"[\\w+:/|.\\[\\]\\{\\} ]+\")",
+                "captures": {
+                    "1": {
+                        "name": "keyword.control.keyvalue3"
+                    },
+                    "2": {
+                        "patterns": [
+                            {
+                                "include": "source.kv#number"
+                            },
+                            {
+                                "include": "source.kv#boolean"
+                            },
+                            {
+                                "include": "source.kv#stringQuoted"
+                            },
+                            {
+                                "include": "source.kv#stringUnquoted"
+                            }
+                        ]
+                    }
+                }
+        }
+    }
+}
