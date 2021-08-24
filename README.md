@@ -2,6 +2,8 @@
 
 This extension adds intelligent support for Source Engine file types.
 
+![VMT Highlighting](samples/vmt-highlighting.jpg)
+
 ## Features
 Checklist for features that are planned or already implemented.
 ### General
