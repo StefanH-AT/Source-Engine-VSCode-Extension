@@ -11,24 +11,31 @@ Checklist for features that are planned or already implemented.
 ### General
 - [x] Keyvalue highlighting
 - [x] Auto-detect common file names like gameinfo.txt
+
+### VMT
+- [x] VMT highlighting
+- [x] Parameter name completion
+- [x] Config for parameters
+
+### FGD
+- [x] .fgd highlighting
+- [x] UnifyFGD support (Hammer Addons)
+
+
+## Planned
+This is what is planned for this extension. In case you wish to contribute, this is a good place to start.
+
+### General
 - [ ] Conditionals
 - [ ] Schema implementation
   - Schema for gameinfo 
   - Schema for soundscripts
   - Schema for soundscapes
-
 ### VMT
-- [x] VMT highlighting
-- [x] Parameter name completion
 - [ ] Parameter value completion
 - [ ] Parameter value validation dependent on parameter name
-- [x] Config for parameters
 - [ ] Texture path completion
 - [ ] Color value preview
-
-### FGD
-- [x] .fgd highlighting
-- [x] UnifyFGD support (Hammer Addons)
 
 ### QC
 - [ ] QC highlighting
