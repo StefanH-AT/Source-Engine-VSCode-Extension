@@ -4,6 +4,15 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## [Unreleased]
+## [0.0.1]
 
-- Initial release
+- Add keyvalue file support
+  - Auto detect gameinfo.txt
+- Add VMT file support
+  - Shader parameter suggestion
+  - List of parameters can be configured
+
+## [0.0.2]
+
+- Add FGD support
+  - Includes srctools preprocessor support

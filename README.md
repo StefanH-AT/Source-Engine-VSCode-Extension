@@ -27,8 +27,8 @@ Checklist for features that are planned or already implemented.
 - [ ] Color value preview
 
 ### FGD
-- [ ] .fgd highlighting
-- [ ] UnifyFGD support (Hammer Addons)
+- [x] .fgd highlighting
+- [x] UnifyFGD support (Hammer Addons)
 
 ### QC
 - [ ] QC highlighting
