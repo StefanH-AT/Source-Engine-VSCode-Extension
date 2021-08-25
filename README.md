@@ -31,6 +31,7 @@ This is what is planned for this extension. In case you wish to contribute, this
 
 ### General
 - [ ] Conditionals
+- [ ] Tree view
 - [ ] Schema implementation
   - Schema for gameinfo 
   - Schema for soundscripts
