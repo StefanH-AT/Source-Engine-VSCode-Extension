@@ -1,0 +1,8 @@
+LightmappedGeneric {
+    $basetexture "dev/test_wall_01"
+    $detail "detail/detail_noise_01"
+
+    %noportal 1
+
+    // Try auto completion here!
+}
