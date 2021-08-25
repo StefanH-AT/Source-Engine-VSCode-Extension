@@ -1,0 +1,142 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Valve Keyvalue Captions",
+	"scopeName": "source.captions",
+	"patterns": [
+		{
+			"include": "#langName"
+		},
+        {
+            "include": "#langBody"
+        },
+        {
+            "include": "source.kv#comment"
+        }
+	],
+	"repository": {
+        "langName": {
+            "match": "^\"?(?i)lang(?-i)\"?",
+            "name": "entity.name.class.fgd"
+        },
+        "langBody": {
+            "begin": "{",
+            "end": "}",
+            "patterns": [
+                {
+                    "include": "source.kv#keyvalue"
+                },
+                {
+                    "match": "\"?(?i)tokens(?-i)\"?",
+                    "name": "variable.name.keyvalue3"
+                },
+                {
+                    "include": "#data"
+                },
+                {
+                    "include": "source.kv#comment"
+                }
+            ]
+        },
+        "data": {
+            "begin": "{",
+            "end": "}",
+            "contentName": "meta.captions.body.fgd",
+            "patterns": [
+                {
+                    "include": "#captionLine"
+                },
+                {
+                    "include": "source.kv#comment"
+                }
+            ]
+        },
+        "captionLine": {
+            "begin": "(\"?[\\w.+#\\\\/-]+\"?)",
+            "beginCaptures": {
+                "1": {
+                    "name": "variable.name.fgd"
+                }
+            },
+            "end": "\n",
+            "patterns": [
+                {
+                    "begin": "\"",
+                    "end": "\"",
+                    "captures": {
+                        "0": {
+                            "name": "string.quoted.double"
+                        }
+                    },
+                    "contentName": "string.caption.fgd",
+                    "patterns": [
+                        {
+                            "include": "#tagItalic"
+                        },
+                        {
+                            "include": "#tagBold"
+                        },
+                        {
+                            "include": "#tagDelayLenNorepeat"
+                        },
+                        {
+                            "include": "#tagClr"
+                        },
+                        {
+                            "include": "#tagSfx"
+                        }
+                    ]
+                }
+            ]
+        },
+        "tagItalic": {
+            "begin": "\\<(?i)i(?-i)\\>",
+            "end": "\\<(?i)i(?-i)\\>",
+            "captures": {
+                "0": { "name": "storage.modifier.fgd" }
+            },
+            "contentName": "markup.italic.fgd"
+        },
+        "tagBold": {
+            "begin": "\\<(?i)b(?-i)\\>",
+            "end": "\\<(?i)b(?-i)\\>",
+            "captures": {
+                "0": { "name": "storage.modifier.fgd" }
+            },
+            "contentName": "markup.bold.fgd"
+        },
+        "tagSfx": {
+            "match": "\\<(?i)sfx(?-i)\\>",
+            "captures": {
+                "0": { "name": "storage.modifier.fgd" }
+            }
+        },
+        "tagDelayLenNorepeat": {
+            "match": "\\<((?i)(delay|norepeat|len)(?-i))(:)(\\d+(\\.\\d+)?)\\>",
+            "captures": {
+                "0": {
+                    "name": "storage.modifier.fgd"
+                },
+                "3": {
+                    "name": "constant.numeric.fgd"
+                }
+            }
+        },
+        "tagClr": {
+            "match": "\\<((?i)clr(?-i))(:)(\\d{1,3})\\s*(,)(\\d{1,3})\\s*(,)(\\d{1,3})\\>",
+            "captures": {
+                "0": {
+                    "name": "storage.modifier.fgd"
+                },
+                "3": {
+                    "name": "constant.numeric.fgd"
+                },
+                "5": {
+                    "name": "constant.numeric.fgd"
+                },
+                "7": {
+                    "name": "constant.numeric.fgd"
+                }
+            }
+        }
+    }
+}

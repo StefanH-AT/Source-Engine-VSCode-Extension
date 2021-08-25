@@ -16,3 +16,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 - Add FGD support
   - Includes srctools preprocessor support
+
+## [0.0.3]
+
+- Add captions support
+  - Auto-detect if a .txt file is a captions file
+  - Add highlighting for formatting
+  - Add color preview for clr tag

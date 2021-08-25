@@ -21,6 +21,10 @@ Checklist for features that are planned or already implemented.
 - [x] .fgd highlighting
 - [x] UnifyFGD support (Hammer Addons)
 
+### Captions
+- [x] Captions highlighting
+- [x] Captions markup highlighting
+- [x] Captions color preview
 
 ## Planned
 This is what is planned for this extension. In case you wish to contribute, this is a good place to start.
@@ -31,6 +35,7 @@ This is what is planned for this extension. In case you wish to contribute, this
   - Schema for gameinfo 
   - Schema for soundscripts
   - Schema for soundscapes
+
 ### VMT
 - [ ] Parameter value completion
 - [ ] Parameter value validation dependent on parameter name
@@ -49,10 +54,9 @@ This is what is planned for this extension. In case you wish to contribute, this
 - [ ] $File path completion
 
 ### Captions
-- [ ] Captions highlighting
-- [ ] Captions markup highlighting
-- [ ] Captions color preview
 - [ ] Captions preview render
+- [ ] Implement color preview for playerclr
+- [ ] Ability to modify color in gui
 
 ## License
 This project is licensed under the GNU Public License version 3: [License](LICENSE)

@@ -2,7 +2,7 @@
     "name": "source-engine-support",
     "displayName": "Source Engine Support",
     "description": "Adds support for Source Engine file types and other commands",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "author": {
         "name": "Stefan Heinz",
         "email": "me@stefanheinz.at",
@@ -25,7 +25,8 @@
     "main": "./src/main.js",
     "activationEvents": [
         "onLanguage:keyvalue3",
-        "onLanguage:vmt"
+        "onLanguage:vmt",
+        "onLanguage:captions"
     ],
     "contributes": {
         "languages": [
@@ -43,6 +44,7 @@
                 "filenames": [
                     "gameinfo.txt"
                 ],
+                "firstLine": "^\"?(?i)\\w(?-i)\"?",
                 "configuration": "./language-configuration.json"
             },
             {
@@ -67,6 +69,18 @@
                     ".fgd"
                 ],
                 "configuration": "./language-configuration.json"
+            },
+            {
+                "id": "captions",
+                "aliases": [
+                    "Source Engine Captions",
+                    "Source Engine Subtitles"
+                ],
+                "extensions": [
+                    ".txt"
+                ],
+                "firstLine": "^\"?(?i)lang(?-i)\"?",
+                "configuration": "./language-configuration.json"
             }
         ],
         "grammars": [
@@ -84,6 +98,11 @@
                 "language": "fgd",
                 "scopeName": "source.fgd",
                 "path": "./syntaxes/fgd.tmLanguage.json"
+            },
+            {
+                "language": "captions",
+                "scopeName": "source.captions",
+                "path": "./syntaxes/captions.tmLanguage.json"
             }
         ],
         "commands": [],
