@@ -1,4 +1,43 @@
-import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList } from 'vscode'
+import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages } from 'vscode'
+import { KvTokensProviderBase } from './keyvalue-parser/kv-token-provider-base';
+
+export const legend = new SemanticTokensLegend([
+    'struct',
+    'comment',
+    'variable',
+    'string',
+    'number',
+    'operator',
+    'keyword'
+], [
+    'declaration',
+    'readonly'
+]);
+
+export class VmtSemanticTokenProvider extends KvTokensProviderBase {
+
+    protected keyProcessors: { processor: Function; regex: RegExp; }[] = [
+        { regex: /\$\w+/, processor: this.processKeyShader },
+        { regex: /\%\w+/, processor: this.processKeyCompile }
+    ];
+
+    protected valueProcessors: { processor: Function; regex: RegExp; }[] = [
+        
+    ];
+
+    constructor() {
+        super(legend, languages.createDiagnosticCollection('vmt'));
+    }
+
+    processKeyShader(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray) {
+        tokensBuilder.push(range, 'keyword');
+    }
+
+    processKeyCompile(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray) {
+        tokensBuilder.push(range, 'keyword', ['readonly']);
+    }
+
+}
 
 export class ShaderParamCompletionItemProvider implements CompletionItemProvider {
     shaderParams: string[];

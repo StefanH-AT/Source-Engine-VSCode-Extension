@@ -10,6 +10,16 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
     diagnostics: Diagnostic[] = [];
     bracketStack: number = 0;
 
+    protected abstract valueProcessors: {
+        processor: Function,
+        regex: RegExp
+    }[];
+
+    protected abstract keyProcessors: {
+        processor: Function,
+        regex: RegExp
+    }[];
+
     constructor(legend: SemanticTokensLegend, diagnosticCollection: DiagnosticCollection) {
         this.tokenizer = new Tokenizer();
         this.legend = legend;
@@ -90,13 +100,55 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         let nextToken = tokens[i + n];
         while(nextToken.type === TokenType.Comment) {
             nextToken = tokens[i + n++];
-            if(nextToken == null) break; // TODO: Do some analysis here. This seems very illegal
+            if(nextToken == null) break;
         }
 
         return { token: nextToken, offset: n };
     }
 
-    protected abstract processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): void;
-    protected abstract processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): void;
+    protected processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): void {
+        const processed = this.processString(token, range, tokensBuilder, this.keyProcessors);
+        if(!processed) tokensBuilder.push(range, 'variable', ['declaration']);
+    }
+    protected processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): void {
+        const processed = this.processString(token, range, tokensBuilder, this.valueProcessors);
+        if(!processed) tokensBuilder.push(range, 'string', []);
+    }
+
+    processString(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, processors: { processor: Function, regex: RegExp }[]): boolean {
+        const unquoted = this.unquoteToken(token, range, tokensBuilder);
+        const content = unquoted.content;
+        const contentRange = unquoted.range;
+        
+        const processed = processors.some(processor => {
+            const matches = content.match(processor.regex);
+            if(matches) {
+                processor.processor.call(this, content, contentRange, tokensBuilder, matches);
+                return true;
+            }
+            return false;
+        });
+        return processed;
+    }
+
+    unquoteToken(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): { content: string, range: Range } {
+        // Quote tokens
+        if( (token.value.startsWith('"') && token.value.startsWith('"')) || 
+            (token.value.startsWith("'") && token.value.startsWith("'"))) {
+
+            tokensBuilder.push(new Range(range.start, range.start.translate(0, 1)), 'string', []);
+            tokensBuilder.push(new Range(range.end.translate(0, -1), range.end), 'string', []);
+            
+            return {
+                content: token.value.substring(1, token.value.length - 1),
+                range: new Range(range.start.translate(0, 1), range.end.translate(0, -1))
+            }
+        } else {
+            return {
+                content: token.value,
+                range: range
+            }
+        }
+    }
 
 }

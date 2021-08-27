@@ -17,13 +17,17 @@ export function activate(context: vscode.ExtensionContext) {
     const loadConfigEvent = vscode.workspace.onDidChangeConfiguration(loadConfig)
     context.subscriptions.push(loadConfigEvent);
 
-    const selector = { language: 'keyvalue3', scheme: 'file' };
-    const keyvalueTokenProvider = new keyvalue.KeyvalueSemanticTokensProvider();
-    const keyvaluesSemantics = vscode.languages.registerDocumentSemanticTokensProvider(selector, keyvalueTokenProvider, keyvalueTokenProvider.legend);
-    context.subscriptions.push(keyvaluesSemantics);
-    context.subscriptions.push(keyvalueTokenProvider.diagnosticCollection);
+    const kvSelector = { language: 'keyvalue3', scheme: 'file' };
+    const kvTokenProvider = new keyvalue.KeyvalueSemanticTokensProvider();
+    const kvSemantics = vscode.languages.registerDocumentSemanticTokensProvider(kvSelector, kvTokenProvider, kvTokenProvider.legend);
+    context.subscriptions.push(kvSemantics);
+    context.subscriptions.push(kvTokenProvider.diagnosticCollection);
 
+    const vmtSelector = { language: 'vmt', schema: 'file' };
+    const vmtTokenProvider = new vmt.VmtSemanticTokenProvider();
+    const vmtSemantics = vscode.languages.registerDocumentSemanticTokensProvider(vmtSelector, vmtTokenProvider, vmtTokenProvider.legend);
     const vmtCompletion = vscode.languages.registerCompletionItemProvider("vmt", new vmt.ShaderParamCompletionItemProvider(shaderParams), "$", "%");
+    context.subscriptions.push(vmtSemantics);
     context.subscriptions.push(vmtCompletion);
 
     const captionsColors = vscode.languages.registerColorProvider("captions", new captions.CaptionColorsProvider())
