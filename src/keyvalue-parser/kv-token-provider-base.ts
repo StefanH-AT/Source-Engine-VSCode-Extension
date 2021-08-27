@@ -107,7 +107,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
     }
 
     protected processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): void {
-        const processed = this.processString(token, range, tokensBuilder, this.keyProcessors);
+        const processed = this.processString(token, range.with(range.start, range.end.translate(0, 1)), tokensBuilder, this.keyProcessors);
         if(!processed) tokensBuilder.push(range, 'variable', ['declaration']);
     }
     protected processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): void {

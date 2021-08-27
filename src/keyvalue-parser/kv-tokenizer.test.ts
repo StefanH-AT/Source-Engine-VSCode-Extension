@@ -9,19 +9,19 @@ test("Tokenize File", () => {
 
                 // A comment
             
-                "Quoted Strings"         "a a"  // Comment after the line
+    \t\t"Quoted Strings"         "a a"  // Comment after the line
                 unquoted_strings        b       // Unquoted strings cannot have spaces
             
                 integers                130     // 130
                 floats                  5.03    // 
                 in_brackets             500.3
             
-                "booleans"                "true"    //
+                "booleans"     \t"true"    //
                 booleans                "false"   //
             
-                array                   "[1.0 0.5 0.0]"     //gf
+                array        \t     "[1.0 0.5 0.0]"     //gf
                 
-                matrix                  "{255 128 0}"       // {}
+    \tmatrix                  "{255 128 0}"       // {}
             
             
                 "Subobject" { // yes {}]]}}}}

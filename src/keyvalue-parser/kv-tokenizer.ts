@@ -45,7 +45,7 @@ export class Tokenizer {
             const c = text[i];
 
             // Skip forward to the next interesting token
-            if(c === " " || c === "\r" || c === "\n") continue;
+            if(c === " " || c === "\r" || c === "\n" || c === "\t") continue;
 
             // Is it a comment?
             if(c === "/" && text[i + 1] === "/") {
