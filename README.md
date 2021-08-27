@@ -11,6 +11,8 @@ Checklist for features that are planned or already implemented.
 ### General
 - [x] Keyvalue highlighting
 - [x] Auto-detect common file names like gameinfo.txt
+- [x] Semantic Tokenizer
+- [x] Error detection
 
 ### VMT
 - [x] VMT highlighting
@@ -33,9 +35,9 @@ This is what is planned for this extension. In case you wish to contribute, this
 - [ ] Conditionals
 - [ ] Tree view
 - [ ] Schema implementation
-  - Schema for gameinfo 
-  - Schema for soundscripts
-  - Schema for soundscapes
+  - [ ] Schema for gameinfo 
+  - [ ] Schema for soundscripts
+  - [ ] Schema for soundscapes
 
 ### VMT
 - [ ] Parameter value completion
@@ -47,8 +49,8 @@ This is what is planned for this extension. In case you wish to contribute, this
 - [ ] QC highlighting
 - [ ] QC smd/dmx path completion
 - [ ] Compile model button
-  - Configuration for mdlcompile.exe
-  - Configuration for game root path
+  - [ ] Configuration for mdlcompile.exe
+  - [ ] Configuration for game root path
 
 ### VPC
 - [ ] VPC highlighting
@@ -58,6 +60,7 @@ This is what is planned for this extension. In case you wish to contribute, this
 - [ ] Captions preview render
 - [ ] Implement color preview for playerclr
 - [ ] Ability to modify color in gui
+- [ ] Compile captions button
 
 ## License
 This project is licensed under the GNU Public License version 3: [License](LICENSE)

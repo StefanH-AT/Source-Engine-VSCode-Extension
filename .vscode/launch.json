@@ -6,6 +6,19 @@
 	"version": "0.2.0",
     "configurations": [
         {
+            "name": "Test",
+            "request": "launch",
+            "runtimeArgs": [
+                "run-script",
+                "test"
+            ],
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "name": "Extension",
             "type": "extensionHost",
             "request": "launch",

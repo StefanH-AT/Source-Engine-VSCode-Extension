@@ -4,62 +4,28 @@
 	"scopeName": "source.kv",
 	"patterns": [
 		{
+			"include": "#keyvalue"
+		},
+		{
 			"include": "#object"
+		},
+		{
+			"include": "#comment"
+		},
+		{
+			"include": "#number"
+		},
+		{
+			"include": "#boolean"
+		},
+		{
+			"include": "#stringQuoted"
+		},
+		{
+			"include": "#stringUnquoted"
 		}
 	],
 	"repository": {
-		"keyvalue": {
-			"match": "^\\s{0,}(\\w[\\w+:/|.]+|\"\\w[\\w+:/|.\\[\\] ]+\")\\s+([\\w+:/|.$%]+|\"[\\w+:/|.\\[\\]\\{\\}$% ]+\")",
-			"captures": {
-				"1": {
-					"name": "variable.name.keyvalue3"
-				},
-				"2": {
-					"patterns": [
-						{
-							"include": "#number"
-						},
-						{
-							"include": "#boolean"
-						},
-						{
-							"include": "#stringQuoted"
-						},
-						{
-							"include": "#stringUnquoted"
-						}
-					]
-				}
-			}
-		},
-		"object": {
-			"begin": "^\\s{0,}([\\w+:/|.]+|\"[\\w+:/|.]+\")\\s{0,}(\\{)",
-			"beginCaptures": {
-				"1": {
-					"name": "support.class.keyvalue3"
-				},
-				"2": {
-					"name": "storage.type.keyvalue3"
-				}
-			},
-			"end": "\\}(?<!\")$",
-			"endCaptures": {
-				"0": {
-					"name": "storage.type.keyvalue3"
-				}
-			},
-			"patterns": [
-				{
-					"include": "#comment"
-				},
-				{
-					"include": "#object"
-				},
-				{
-					"include": "#keyvalue"
-				}
-			]
-		},
 		"comment": {
 			"name": "comment.line.keyvalue3",
 			"match": "//.*"
@@ -74,7 +40,7 @@
 		},
 		"stringUnquoted": {
 			"name": "string.unquoted.keyvalue3",
-			"match": "(\\w|\\||\\.|\\\\|/)+"
+			"match": "[\\w|\\*\\.\\\\/$%#-\\[\\]]+"
 		},
 		"stringQuoted": {
 			"name": "string.quoted.double.keyvalue3",

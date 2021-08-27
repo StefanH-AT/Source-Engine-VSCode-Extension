@@ -23,3 +23,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
   - Auto-detect if a .txt file is a captions file
   - Add highlighting for formatting
   - Add color preview for clr tag
+
+## [0.0.4]
+
+- Ported everything to typescript
+- Simplified kv3 tmlanguage implementation
+- Implemented semantic kv3 token provider
+  - Fixed [#1](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/issues/1)
+  - Implemented error handling for missing keys and bracket imbalance
+  - Parse and highlight number values in quotes

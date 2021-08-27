@@ -1,15 +1,17 @@
-"Keyvalues" {
+"Keyvalues"
+{
 
     // A comment
 
-    "Quoted Strings"         "a a"  // Comment after the line
+    "Quoted Strings"        "a a"  // Comment after the line
     unquoted_strings        b       // Unquoted strings cannot have spaces
 
     integers                130     // 130
-    floats                  5.03    // 
+    floats                  5.03
+    in_brackets             "500.5"
 
-    booleans                true    //
-    booleans                false   //
+    "booleans"              "true"    //
+    booleans                "false"   //
 
     array                   "[1.0 0.5 0.0]"     //gf
     
@@ -18,10 +20,12 @@
 
     "Subobject" { // yes {}]]}}}}
         "key"               "value"
+        "valueless key"
     }
 
-    Unquoted {
-
+    Unquoted
+    {
+        key val
     }
 
 }

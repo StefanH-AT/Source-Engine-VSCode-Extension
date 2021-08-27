@@ -1,4 +1,3 @@
-
 import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList } from 'vscode'
 
 export class ShaderParamCompletionItemProvider implements CompletionItemProvider {
