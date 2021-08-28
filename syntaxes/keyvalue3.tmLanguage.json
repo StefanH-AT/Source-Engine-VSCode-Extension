@@ -4,12 +4,6 @@
 	"scopeName": "source.kv",
 	"patterns": [
 		{
-			"include": "#keyvalue"
-		},
-		{
-			"include": "#object"
-		},
-		{
 			"include": "#comment"
 		},
 		{

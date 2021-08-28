@@ -23,7 +23,10 @@
             "end": "}",
             "patterns": [
                 {
-                    "include": "source.kv#keyvalue"
+                    "include": "source.kv#stringQuoted"
+                },
+                {
+                    "include": "source.kv#stringUnquoted"
                 },
                 {
                     "match": "\"?(?i)tokens(?-i)\"?",
