@@ -32,3 +32,10 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
   - Fixed [#1](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/issues/1)
   - Implemented error handling for missing keys and bracket imbalance
   - Parse and highlight number values in quotes
+
+## [0.0.5]
+
+- Added marketplace icon
+- Fixed quote matching
+- Fixed captions file type getting selected for all .txt files
+- Fixed some captions tmLanguage bugs
