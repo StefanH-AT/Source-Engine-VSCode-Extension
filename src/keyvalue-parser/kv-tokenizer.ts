@@ -98,7 +98,7 @@ export class Tokenizer {
                 this.text[i + 2] === '"') {
                     return this.consumeStringMultiline(i + 3);
                 } else {
-                    return this.consumeStringQuoted(i + 1);
+                    return this.consumeStringQuoted(i + 1, c);
                 }
         } else {
             return this.consumeStringUnquoted(i + 1);
@@ -107,7 +107,7 @@ export class Tokenizer {
 
     }
 
-    consumeStringQuoted(i: number) : number {
+    consumeStringQuoted(i: number, startingQuote: string) : number {
         let n = 0;
         let escaped = false;
         while(true) {
@@ -118,7 +118,7 @@ export class Tokenizer {
                 continue;
             }
 
-            if(c === '"' || c === "'") {
+            if(c === startingQuote) {
                 if(escaped) continue;
                 else break;
             }

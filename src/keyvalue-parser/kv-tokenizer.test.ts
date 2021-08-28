@@ -26,6 +26,8 @@ test("Tokenize File", () => {
             
                 "Subobject" { // yes {}]]}}}}
                     "key"               "value"
+
+                    "single quote"      "'"
             
                     "multiline string"   """this
 string is multi-line
@@ -44,7 +46,7 @@ and spans many lines"""
 
     const tokens = tkn.tokens;
     expect(tokens).toBeDefined;
-    expect(tokens.length).toBe(46);
+    expect(tokens.length).toBe(48);
 
     expect(tokens[0].value).toBe('"File"');
     expect(tokens[1].value).toBe('{');
