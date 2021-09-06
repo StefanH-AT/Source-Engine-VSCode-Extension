@@ -32,8 +32,7 @@
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./",
         "watch": "tsc -watch -p ./",
-        "pretest": "npm run compile && npm run lint",
-        "lint": "eslint src --ext ts",
+        "pretest": "npm run compile",
         "test": "jest"
     },
     "main": "./out/main.js",
