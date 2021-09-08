@@ -5,4 +5,5 @@ LightmappedGeneric {
     %noportal 1
 
     // Try auto completion here!
+    $envmap env_cubemap
 }

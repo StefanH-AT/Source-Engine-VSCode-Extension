@@ -4,7 +4,7 @@ This extension adds intelligent support for Source Engine file types.
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=stefan-h-at.source-engine-support)
 
-![VMT Highlighting](samples/vmt-highlighting.jpg)
+![VMT Highlighting](vmt-highlighting.jpg)
 
 ## Features
 Checklist for features that are planned or already implemented.
