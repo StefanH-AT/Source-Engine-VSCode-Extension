@@ -2,7 +2,7 @@
     "name": "source-engine-support",
     "displayName": "Source Engine Support",
     "description": "Adds support for Source Engine file types and other commands",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "icon": "extension-icon-256.png",
     "author": {
         "name": "Stefan Heinz",
@@ -123,100 +123,412 @@
                     "type": [
                         "object"
                     ],
-                    "default": {
-                        "%compileclip": "bool",
-                        "%compiledetail": "bool",
-                        "%compileladder": "bool",
-                        "%compilenodraw": "bool",
-                        "%compilenolight": "bool",
-                        "%compilenonsolid": "bool",
-                        "%compilenpcclip": "bool",
-                        "%compilepassbullets": "bool",
-                        "%compileskip": "bool",
-                        "%compileteam": "bool",
-                        "%compiletrigger": "bool",
-                        "%keywords": "string",
-                        "%notooltexture": "bool",
-                        "%noportal": "bool",
-                        "%tooltexture": "texture",
-                        "$allowdiffusemodulation": "bool",
-                        "$alpha": "scalar",
-                        "$alphatest": "bool",
-                        "$ambientocclusion": "scalar",
-                        "$basetexture": "texture",
-                        "$blendmodulatetexture": "texture",
-                        "$blendtintbybasealpha": "bool",
-                        "$bumpmap": "texture",
-                        "$bumptransform": "string",
-                        "$burning": "bool",
-                        "$color": "color",
-                        "$color2": "color",
-                        "$decaltexture": "texture",
-                        "$detail": "texture",
-                        "$displacementmap": "texture",
-                        "$distancealpha": "bool",
-                        "$emissiveblendenabled": "bool",
-                        "$emissiveblendtexture": "texture",
-                        "$emissiveblendbasetexture": "texture",
-                        "$emissiveblendflowtexture": "texture",
-                        "$emissiveblendtint": "color",
-                        "$emissiveblendscrollvector": "matrix",
-                        "$envmap": "env_cubemap",
-                        "$envmapcontrast": "scalar",
-                        "$envmapframe": "int",
-                        "$envmapmask": "texture",
-                        "$envmapmaskframe": "int",
-                        "$envmapmaskscale": "float",
-                        "$envmapmasktransform": "string",
-                        "$envmapsaturation": "scalar",
-                        "$envmaptint": "color",
-                        "$halflambert": "bool",
-                        "$ignorez": "bool",
-                        "$lightwarptexture": "texture",
-                        "$masks1": "texture",
-                        "$masks2": "texture",
-                        "$maxfogdensityscalar": "scalar",
-                        "$model": "bool",
-                        "$layertint1": "color",
-                        "$layertint2": "color",
-                        "$nocull": "bool",
-                        "$nodecal": "bool",
-                        "$nofog": "bool",
-                        "$normalmap": "texture",
-                        "$notint": "bool",
-                        "$phong": "bool",
-                        "$phongexponent": "float",
-                        "$phongexponenttexture": "texture",
-                        "$phongboost": "float",
-                        "$phongfresnelranges": "matrix",
-                        "$forcephong": "bool",
-                        "$invertphongmask": "bool",
-                        "$phongdisablehalflambert": "bool",
-                        "$phongwarptexture": "texture",
-                        "$phongtint": "color",
-                        "$phongalbedoboost": "float",
-                        "$phongmaskcontrastbrightness": "matrix",
-                        "$phongmaskcontrastbrightness2": "matrix",
-                        "$phongamount": "colora",
-                        "$phongamount2": "colora",
-                        "$phongbasetint": "float",
-                        "$phongbasetint2": "float",
-                        "$pointsamplemagfilter": "bool",
-                        "$reflectivity": "color",
-                        "$rimlight": "bool",
-                        "$rimlightexponent": "int",
-                        "$rimlightboost": "int",
-                        "$rimlightmask": "bool",
-                        "$fresnelrangestexture": "texture",
-                        "$metalness": "float",
-                        "$seamless_scale": "float",
-                        "$ssbump": "bool",
-                        "$surfaceprop": "string",
-                        "$tintmasktexture": "texture",
-                        "$translucent": "bool",
-                        "$treeSway": "int",
-                        "$writez": "int"
-                    },
+                    "default": [
+                        {
+                            "name": "%compileclip",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compiledetail",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compileladder",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compilenodraw",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compilenolight",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compilenonsolid",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compilenpcclip",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compilepassbullets",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compileskip",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compileteam",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%compiletrigger",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%keywords",
+                            "type": "string"
+                        },
+                        {
+                            "name": "%notooltexture",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "%noportal",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Compile time parameter to mark this surface as non-portalable. Unnecessary on models.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Controlling_portals"
+                        },
+                        {
+                            "name": "%tooltexture",
+                            "type": "texture",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$allowdiffusemodulation",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$alpha",
+                            "type": "scalar"
+                        },
+                        {
+                            "name": "$alphatest",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$ambientocclusion",
+                            "type": "scalar"
+                        },
+                        {
+                            "name": "$basetexture",
+                            "type": "texture",
+                            "description": "The base color texture to use. Also called albedo/diffuse map",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$basetexture"
+                        },
+                        {
+                            "name": "$blendmodulatetexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$blendtintbybasealpha",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$bumpmap",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$bumptransform",
+                            "type": "string"
+                        },
+                        {
+                            "name": "$burning",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$color",
+                            "type": "color"
+                        },
+                        {
+                            "name": "$color2",
+                            "type": "color"
+                        },
+                        {
+                            "name": "$decaltexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$detail",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$displacementmap",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$distancealpha",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$emissiveblendenabled",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$emissiveblendtexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$emissiveblendbasetexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$emissiveblendflowtexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$emissiveblendtint",
+                            "type": "color"
+                        },
+                        {
+                            "name": "$emissiveblendscrollvector",
+                            "type": "matrix"
+                        },
+                        {
+                            "name": "$envmap",
+                            "type": "env_cubemap",
+                            "defaultCompletion": "env_cubemap"
+                        },
+                        {
+                            "name": "$envmapcontrast",
+                            "type": "scalar"
+                        },
+                        {
+                            "name": "$envmapframe",
+                            "type": "int"
+                        },
+                        {
+                            "name": "$envmapmask",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$envmapmaskframe",
+                            "type": "int"
+                        },
+                        {
+                            "name": "$envmapmaskscale",
+                            "type": "float"
+                        },
+                        {
+                            "name": "$envmapmasktransform",
+                            "type": "string"
+                        },
+                        {
+                            "name": "$envmapsaturation",
+                            "type": "scalar"
+                        },
+                        {
+                            "name": "$envmaptint",
+                            "type": "color"
+                        },
+                        {
+                            "name": "$halflambert",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$ignorez",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$lightwarptexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$masks1",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$masks2",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$maxfogdensityscalar",
+                            "type": "scalar"
+                        },
+                        {
+                            "name": "$model",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$layertint1",
+                            "type": "color"
+                        },
+                        {
+                            "name": "$layertint2",
+                            "type": "color"
+                        },
+                        {
+                            "name": "$nocull",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$nodecal",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$nofog",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$normalmap",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$notint",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$phong",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$phongexponent",
+                            "type": "float"
+                        },
+                        {
+                            "name": "$phongexponenttexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$phongboost",
+                            "type": "float"
+                        },
+                        {
+                            "name": "$phongfresnelranges",
+                            "type": "matrix"
+                        },
+                        {
+                            "name": "$forcephong",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$invertphongmask",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$phongdisablehalflambert",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$phongwarptexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$phongtint",
+                            "type": "color"
+                        },
+                        {
+                            "name": "$phongalbedoboost",
+                            "type": "float"
+                        },
+                        {
+                            "name": "$phongmaskcontrastbrightness",
+                            "type": "matrix"
+                        },
+                        {
+                            "name": "$phongmaskcontrastbrightness2",
+                            "type": "matrix"
+                        },
+                        {
+                            "name": "$phongamount",
+                            "type": "colora"
+                        },
+                        {
+                            "name": "$phongamount2",
+                            "type": "colora"
+                        },
+                        {
+                            "name": "$phongbasetint",
+                            "type": "float"
+                        },
+                        {
+                            "name": "$phongbasetint2",
+                            "type": "float"
+                        },
+                        {
+                            "name": "$pointsamplemagfilter",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$reflectivity",
+                            "type": "color"
+                        },
+                        {
+                            "name": "$rimlight",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$rimlightexponent",
+                            "type": "int"
+                        },
+                        {
+                            "name": "$rimlightboost",
+                            "type": "int"
+                        },
+                        {
+                            "name": "$rimlightmask",
+                            "type": "bool"
+                        },
+                        {
+                            "name": "$fresnelrangestexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$metalness",
+                            "type": "float"
+                        },
+                        {
+                            "name": "$seamless_scale",
+                            "type": "float"
+                        },
+                        {
+                            "name": "$ssbump",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$surfaceprop",
+                            "type": "string"
+                        },
+                        {
+                            "name": "$tintmasktexture",
+                            "type": "texture"
+                        },
+                        {
+                            "name": "$translucent",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$treeSway",
+                            "type": "int",
+                            "defaultCompletion": 1
+                        },
+                        {
+                            "name": "$writez",
+                            "type": "int"
+                        },
+                        {
+                            "name": "$mraotexture",
+                            "type": "texture"
+                        }
+                    ],
                     "description": "All shader parameters used in completition."
                 }
             }
@@ -229,7 +541,7 @@
     },
     "jest": {
         "transform": {
-            ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+            ".(ts|tsx)": "ts-jest"
         },
         "testRegex": "(/tests?/.*|\\.(test|spec))\\.(ts|tsx|js)$",
         "moduleFileExtensions": [
@@ -254,5 +566,8 @@
         "ts-jest": "^27.0.5",
         "typescript": "^4.3.2",
         "vscode-test": "^1.5.2"
+    },
+    "dependencies": {
+        "list-files-in-dir": "^0.1.5"
     }
 }

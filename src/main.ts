@@ -2,11 +2,14 @@ import * as vscode from 'vscode'
 import * as vmt from './vmt'
 import * as captions from './captions'
 import * as keyvalue from './keyvalue'
+import { ShaderParam } from './shader-param'
+
+
 const packageJson = require('../package.json');
 
-let output: vscode.OutputChannel;
+export let output: vscode.OutputChannel;
 let config: vscode.WorkspaceConfiguration;
-let shaderParams: string[] | undefined;
+let shaderParams: ShaderParam[] | undefined;
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -23,10 +26,12 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(kvSemantics);
     context.subscriptions.push(kvTokenProvider.diagnosticCollection);
 
+    vmt.initShaderParams(shaderParams == null ? [] : shaderParams);
     const vmtSelector = { language: 'vmt', schema: 'file' };
     const vmtTokenProvider = new vmt.VmtSemanticTokenProvider();
     const vmtSemantics = vscode.languages.registerDocumentSemanticTokensProvider(vmtSelector, vmtTokenProvider, vmtTokenProvider.legend);
-    const vmtCompletion = vscode.languages.registerCompletionItemProvider("vmt", new vmt.ShaderParamCompletionItemProvider(shaderParams), "$", "%");
+    const vmtCompletion = vscode.languages.registerCompletionItemProvider("vmt", new vmt.ShaderParamCompletionItemProvider(), "$", "%");
+    const vmtHover = vscode.languages.registerHoverProvider("vmt", new vmt.ShaderParamHoverProvider());
     context.subscriptions.push(vmtSemantics);
     context.subscriptions.push(vmtCompletion);
 
