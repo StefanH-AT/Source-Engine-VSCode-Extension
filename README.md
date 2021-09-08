@@ -62,8 +62,27 @@ This is what is planned for this extension. In case you wish to contribute, this
 - [ ] Ability to modify color in gui
 - [ ] Compile captions button
 
-## License
-This project is licensed under the GNU Public License version 3: [License](LICENSE)
-
 ## Contribution
 Contributions are welcome. Create a pull request!
+
+## Compiling and testing locally
+Users can just install this extension on the VSCode Marketplace, but developers might want to run the development build of the extension.
+
+### Prerequisites
+1) Install NPM and NodeJS (>v12)
+2) Install Visual Studio Code (Duh)
+3) Clone the repository
+4) Run `npm install` in the repository's folder, to install the dependencies
+
+### Testing
+To start the unit tests, run `npm run test`. The project will automatically be compiled.
+
+### Running the extension
+1) To start the extension, first compile the project `npm run compile` (Or `npm run watch` to auto-compile on every file change)
+2) Open the repository in VSCode
+3) Open the 'Run and Debug' tab
+4) Select the 'Extension' run configuration on the dropdown on the top
+5) Run by pressing F5
+
+## License
+This project is licensed under the GNU Public License version 3: [License](LICENSE)
