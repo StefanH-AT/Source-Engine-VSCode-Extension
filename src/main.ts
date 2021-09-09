@@ -1,7 +1,7 @@
 import * as vscode from 'vscode'
-import * as vmt from './vmt'
-import * as captions from './captions'
-import * as keyvalue from './keyvalue'
+import * as vmt from './lang-vmt'
+import * as captions from './lang-captions'
+import * as keyvalue from './lang-keyvalue'
 import { ShaderParam } from './shader-param'
 
 
@@ -34,6 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
     const vmtHover = vscode.languages.registerHoverProvider("vmt", new vmt.ShaderParamHoverProvider());
     context.subscriptions.push(vmtSemantics);
     context.subscriptions.push(vmtCompletion);
+    context.subscriptions.push(vmtHover);
 
     const captionsColors = vscode.languages.registerColorProvider("captions", new captions.CaptionColorsProvider())
     context.subscriptions.push(captionsColors);

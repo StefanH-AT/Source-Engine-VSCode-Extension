@@ -1,66 +1,31 @@
-import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument } from 'vscode';
-import { KvTokensProviderBase } from './keyvalue-parser/kv-token-provider-base';
-import { Token, TokenType } from './keyvalue-parser/kv-tokenizer';
+import { Range, TextDocument } from "vscode";
+import { Token, TokenType } from "./keyvalue-parser/kv-tokenizer";
 
-export const legend = new SemanticTokensLegend([
-    'struct',
-    'comment',
-    'variable',
-    'string',
-    'number',
-    'operator'
-], [
-    'declaration'
-]);
+const keyvalueDocuments: { file: string, document: KeyvalueDocument }[] = [];
 
-export class KeyvalueSemanticTokensProvider extends KvTokensProviderBase {
-
-    protected keyProcessors: { processor: Function; regex: RegExp; }[] = [];
-    protected valueProcessors: { processor: Function; regex: RegExp; }[] =
-    [
-        { regex: /^\d+(\.\d+)?$/, processor: this.processValueNumber },
-        { regex: /^(\{|\[)((\d+(\.\d+)? ?)+)(\}|\])$/, processor: this.processValueArray }
-    ];
-
-    constructor() {
-        super(legend, languages.createDiagnosticCollection('keyvalue3'));
-    }
-    
-    processValueNumber(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray) {
-        tokensBuilder.push(range, 'number', []);
-    }
-
-    processValueArray(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray) {
-        // [] {}
-        tokensBuilder.push(new Range(range.start, range.start.translate(0, 1)), 'operator', []);
-        tokensBuilder.push(new Range(range.end.translate(0, -1), range.end), 'operator', []);
-
-        tokensBuilder.push(new Range(range.start.translate(0, 1), range.end.translate(0, -1)), 'number', [])
-    }
-
+export function getDocument(document: TextDocument): KeyvalueDocument | undefined {
+    return keyvalueDocuments.find(d => d.file === document.uri.path)?.document;
 }
 
-export class KeyValue {
+export function hasDocument(document: TextDocument): boolean {
+    return keyvalueDocuments.some(d => d.file === document.uri.path);
+}
 
-    public key: string;
-    public keyRange: Range;
-    public value: string;
-    public valueRange: Range;
-
-    constructor(key: string, value: string, keyRange: Range, valueRange: Range) {
-        this.key = key;
-        this.value = value;
-        this.keyRange = keyRange;
-        this.valueRange = valueRange;
+export function addDocument(document: TextDocument, tokens: Token[]): void {
+    const kvDoc = new KeyvalueDocument(document, tokens);
+    if(hasDocument(document)) {
+        const kvd = keyvalueDocuments.find(kd => kd.file);
+        if(kvd == null) return;
+        kvd.document = kvDoc;
+    } else {
+        keyvalueDocuments.push({ file: document.uri.path, document: kvDoc });
     }
-
 }
 
 export class KeyvalueDocument {
 
     protected _document: TextDocument;
     protected _tokens: Token[];
-
     
     public get document() : TextDocument {
         return this._document;
@@ -105,6 +70,22 @@ export class KeyvalueDocument {
             return startPos.isAfterOrEqual(range.start) && startPos.isBefore(range.end) && endPos.isAfter(range.start) && endPos.isBeforeOrEqual(range.end);
         });
 
+    }
+
+}
+
+export class KeyValue {
+
+    public key: string;
+    public keyRange: Range;
+    public value: string;
+    public valueRange: Range;
+
+    constructor(key: string, value: string, keyRange: Range, valueRange: Range) {
+        this.key = key;
+        this.value = value;
+        this.keyRange = keyRange;
+        this.valueRange = valueRange;
     }
 
 }

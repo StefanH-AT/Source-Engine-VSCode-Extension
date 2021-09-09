@@ -1,10 +1,8 @@
 import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult } from 'vscode'
-import { KeyvalueDocument } from './keyvalue';
+import { KeyvalueDocument, getDocument } from './keyvalue-document';
 import { KvTokensProviderBase } from './keyvalue-parser/kv-token-provider-base';
 import { Tokenizer } from './keyvalue-parser/kv-tokenizer';
 import { ShaderParam } from './shader-param';
-import { output } from './main'
-import * as fs from 'fs'
 import { listFilesSync } from 'list-files-in-dir'
 
 export const legend = new SemanticTokensLegend([
@@ -55,10 +53,8 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
 
     public provideCompletionItems(document: TextDocument, position: Position, cancellationToken: CancellationToken): CompletionList {
         
-        // TODO: Optimize this. Shouldn't create a new KeyvalueDocument and tokenize the whole thing every time we want completion. Very dirty
-        const tokenizer = new Tokenizer();
-        tokenizer.tokenizeFile(document.getText());
-        const kvDoc = new KeyvalueDocument(document, tokenizer.tokens);
+        const kvDoc = getDocument(document);
+        if(kvDoc == null) return new CompletionList();
         const kv = kvDoc.getKeyValueAt(position.line);
 
         if(kv == null) return new CompletionList();
@@ -116,10 +112,8 @@ export class ShaderParamHoverProvider implements HoverProvider {
 
     provideHover(document: TextDocument, position: Position, token: CancellationToken): Hover | null {
 
-        // TODO: Optimize this. Shouldn't create a new KeyvalueDocument and tokenize the whole thing every time we want completion. Very dirty
-        const tokenizer = new Tokenizer();
-        tokenizer.tokenizeFile(document.getText());
-        const kvDoc = new KeyvalueDocument(document, tokenizer.tokens);
+        const kvDoc = getDocument(document);
+        if(kvDoc == null) return null;
         const kv = kvDoc.getKeyValueAt(position.line);
 
         if(kv?.keyRange.contains(position) && kv.key !== "") {
