@@ -46,6 +46,9 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
 
     buildTokens(tokens: Token[], tokensBuilder: SemanticTokensBuilder, document: TextDocument) : SemanticTokens {
         
+        const keys: string[] = [];
+        let currentScope: string = "";
+
         for(let i = 0; i < tokens.length; i++) {
             const token = tokens[i];
             const tokenRange = new Range(document.positionAt(token.start), document.positionAt(token.end));
@@ -65,6 +68,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 if(nextToken.type === TokenType.ObjectStart) {
                     tokensBuilder.push(tokenRange, 'struct', []);
                     this.bracketStack++;
+                    currentScope += `.${token.value}`;
                     continue;
                 }
                 
@@ -76,15 +80,26 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                     const nextTokenRange = new Range(document.positionAt(nextToken.start), document.positionAt(nextToken.end));
                     this.processKvValue(nextToken, nextTokenRange, tokensBuilder);
                     i += interestingToken.offset;
+                    
+                    // Check for duplicates
+                    const scopedKey = `${currentScope}#${token.value}`;
+                    
+                    if(keys.includes(scopedKey)) {
+                        this.diagnostics.push(new Diagnostic(tokenRange, `Duplicate key '${token.value}'`, DiagnosticSeverity.Warning));
+                    } else {
+                        keys.push(scopedKey);
+                    }
+
                     continue;
                 }
 
                 // error 
-                this.diagnostics.push(new Diagnostic(tokenRange, "Key without valve. Please add a value.", DiagnosticSeverity.Error))
+                this.diagnostics.push(new Diagnostic(tokenRange, "Key without valve. Please add a value.", DiagnosticSeverity.Error));
             }
 
             if(token.type === TokenType.ObjectEnd) {
                 this.bracketStack--;
+                currentScope = currentScope.substring(0, currentScope.lastIndexOf("."));
             }
         }
         
