@@ -75,10 +75,10 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 // We're a keyvalue's key. Process the value too and skip forward
                 if(nextToken.type === TokenType.Value) {
                     
-                    this.processKvKey(token, tokenRange, tokensBuilder);
+                    this.processKvKey(token, tokenRange, tokensBuilder, document);
                     
                     const nextTokenRange = new Range(document.positionAt(nextToken.start), document.positionAt(nextToken.end));
-                    this.processKvValue(nextToken, nextTokenRange, tokensBuilder);
+                    this.processKvValue(nextToken, nextTokenRange, tokensBuilder, document);
                     i += interestingToken.offset;
                     
                     // Check for duplicates
@@ -124,16 +124,16 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         return { token: nextToken, offset: n };
     }
 
-    protected processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): void {
-        const processed = this.processString(token, range.with(range.start, range.end.translate(0, 1)), tokensBuilder, this.keyProcessors);
+    protected processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument): void {
+        const processed = this.processString(token, range.with(range.start, range.end.translate(0, 1)), tokensBuilder, this.keyProcessors, document);
         if(!processed) tokensBuilder.push(range, 'variable', ['declaration']);
     }
-    protected processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): void {
-        const processed = this.processString(token, range, tokensBuilder, this.valueProcessors);
+    protected processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument): void {
+        const processed = this.processString(token, range, tokensBuilder, this.valueProcessors, document);
         if(!processed) tokensBuilder.push(range, 'string', []);
     }
 
-    processString(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, processors: { processor: Function, regex: RegExp }[]): boolean {
+    processString(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, processors: { processor: Function, regex: RegExp }[], document: TextDocument): boolean {
         const unquoted = this.unquoteToken(token, range, tokensBuilder);
         const content = unquoted.content;
         const contentRange = unquoted.range;
@@ -141,7 +141,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         const processed = processors.some(processor => {
             const matches = content.match(processor.regex);
             if(matches) {
-                processor.processor.call(this, content, contentRange, tokensBuilder, matches);
+                processor.processor.call(this, content, contentRange, tokensBuilder, matches, document);
                 return true;
             }
             return false;
