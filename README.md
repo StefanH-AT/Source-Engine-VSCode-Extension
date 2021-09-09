@@ -40,9 +40,9 @@ This is what is planned for this extension. In case you wish to contribute, this
   - [ ] Schema for soundscapes
 
 ### VMT
-- [ ] Parameter value completion
-- [ ] Parameter value validation dependent on parameter name
-- [ ] Texture path completion
+- [x] Parameter value completion
+- [x] Parameter value validation dependent on parameter name
+- [x] Texture path completion
 - [ ] Color value preview
 
 ### QC
