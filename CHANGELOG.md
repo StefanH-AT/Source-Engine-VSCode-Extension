@@ -39,3 +39,15 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Fixed quote matching
 - Fixed captions file type getting selected for all .txt files
 - Fixed some captions tmLanguage bugs
+
+## [0.0.6]
+
+**General**
+- Added duplicate key detection
+
+**VMT**
+- Added parameter name completion
+- Added texture name completion (Looks through your filesystem to find .vtf files)
+- Added default parameter value completion
+- Added parameter value type checking
+- Updated shader parameter configuration scheme

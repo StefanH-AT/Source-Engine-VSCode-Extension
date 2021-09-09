@@ -82,8 +82,11 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
             case "float": this.processValueFloat(kv, range, tokensBuilder, kvDoc); break;
             case "scalar": this.processValueScalar(kv, range, tokensBuilder, kvDoc); break;
             case "texture": this.processValueTexture(kv, range, tokensBuilder, kvDoc); break;
-            case "string": this.processValueString(kv, range, tokensBuilder, kvDoc); break;
             case "color": this.processValueColor(kv, range, tokensBuilder, kvDoc); break;
+            case "env_cubemap": this.processValueCubemap(kv, range, tokensBuilder, kvDoc); break;
+            
+            case "string": 
+            default: this.processValueString(kv, range, tokensBuilder, kvDoc); break;
         }
         
     }
@@ -92,7 +95,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         if(kv.value.match(/[01]/g)) {
             tokensBuilder.push(range, "boolean");
         } else {
-            this.diagnostics.push(new Diagnostic(range, "Illegal shader parameter value type. Expecting a boolean (0 or 1).", DiagnosticSeverity.Warning));
+            this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting a boolean (0 or 1).", DiagnosticSeverity.Warning));
         }
     }
 
@@ -100,7 +103,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         if(kv.value.match(/\d+/g)) {
             tokensBuilder.push(range, "number");
         } else {
-            this.diagnostics.push(new Diagnostic(range, "Illegal shader parameter value type. Expecting an integer.", DiagnosticSeverity.Warning));
+            this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting an integer.", DiagnosticSeverity.Warning));
         }
     }
 
@@ -108,7 +111,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         if(kv.value.match(/(\d+)(\.\d+)?/g)) {
             tokensBuilder.push(range, "number");
         } else {
-            this.diagnostics.push(new Diagnostic(range, "Illegal shader parameter value type. Expecting a float.", DiagnosticSeverity.Warning));
+            this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting a float.", DiagnosticSeverity.Warning));
         }
     }
 
@@ -116,7 +119,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         if(kv.value.match(/0?\.\d+/g)) {
             tokensBuilder.push(range, "number");
         } else {
-            this.diagnostics.push(new Diagnostic(range, "Illegal shader parameter value type. Expecting a scalar. (0-1)", DiagnosticSeverity.Warning));
+            this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting a scalar. (0-1)", DiagnosticSeverity.Warning));
         }
     }
 
@@ -130,6 +133,16 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
 
     processValueColor(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
         tokensBuilder.push(range, "string"); // TODO: Interpret colors
+    }
+
+    processValueCubemap(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+        
+        if(kv.value === "env_cubemap") {
+            tokensBuilder.push(range, "keyword");
+        } else {
+            tokensBuilder.push(range, "string");
+        }
+        
     }
 }
 
@@ -221,7 +234,7 @@ export class ShaderParamHoverProvider implements HoverProvider {
             const description = param.description;
             const uri = param.wikiUri;
 
-            let hoverText = `(Shader Parameter) **${name}** ${defaultCompletion != null ? ("- Default: " + defaultCompletion) : ""}`
+            let hoverText = `(Shader Parameter) **${name}** [${param.type}] ${defaultCompletion != null ? ("- Default: " + defaultCompletion) : ""}`
             if(description != null) hoverText += `\n\n${description}`;
             if(uri != null) hoverText += `\n\n[Wiki](${uri})`;
 
