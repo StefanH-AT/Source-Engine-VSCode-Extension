@@ -124,7 +124,8 @@
                         "array"
                     ],
                     "default": [
-                        "_rt_WaterReflection"
+                        "_rt_WaterReflection",
+                        "_rt_WaterRefraction"
                     ]
                 },
                 "source-engine.shaderParameters": {
@@ -132,6 +133,11 @@
                         "array"
                     ],
                     "default": [
+                        {
+                            "name": "%compilewater",
+                            "type": "bool",
+                            "defaultCompletion": 1
+                        },
                         {
                             "name": "%compileclip",
                             "type": "bool",
@@ -229,7 +235,7 @@
                         {
                             "name": "$basetexture",
                             "type": "texture",
-                            "description": "The base color texture to use. Also called albedo/diffuse map",
+                            "description": "The base color texture to use. Also called albedo/diffuse map. On water, this is used as a 'sludge layer'.",
                             "wikiUri": "https://developer.valvesoftware.com/wiki/$basetexture"
                         },
                         {
@@ -535,6 +541,302 @@
                         {
                             "name": "$mraotexture",
                             "type": "texture"
+                        },
+                        {
+                            "name": "$abovewater",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Whether this material is used for above or below the water’s surface.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$bottommaterial",
+                            "type": "material",
+                            "description": "**Required parameter.** This is the material (not texture) to use when underneath the water’s surface. The bottom material must have $reflecttexture, `$abovewater` and `$envmap` disabled, but can otherwise do whatever it wants.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$underwateroverlay",
+                            "type": "material",
+                            "description": "Applies a refracting screen overlay when the camera is underwater. Generally used with `effects/water_warp01`. Requires `$abovewater` to be 0.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$waterdepth",
+                            "type": "float",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$water_feather",
+                            "type": "int",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$fogenable",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Enables volumetric fog for the water.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$fogcolor",
+                            "type": "color",
+                            "defaultCompletion": "[255 255 255]",
+                            "description": "Color of the water's volumetric fog. Should match the color used in the `$bottommaterial`",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$fogstart",
+                            "type": "float",
+                            "defaultCompletion": 0,
+                            "description": "Amount of units from the camera that the fog starts. **Warning: Must be 0 for edge fading to work properly.**",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$fogend",
+                            "type": "float",
+                            "description": "Amount of units from the camera that the fog ends.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$lightmapwaterfog",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Allows the fog to receive lightmaps, so that static objects can cast shadows onto the water. This must be enabled when the map is compiled.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
+                        },
+                        {
+                            "name": "$reflecttexture",
+                            "type": "texture",
+                            "defaultCompletion": "_rt_WaterReflection",
+                            "description": "Texture to use for reflection. For real-time reflections, use _rt_WaterReflection.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$reflectamount",
+                            "type": "float",
+                            "description": "Amount of warp for the reflection. Higher values produce more visible reflections.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$reflecttint",
+                            "type": "color",
+                            "description": "Color tint for both expensive and cheap reflections.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$forceenvmap",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Forces the water to use `$envmap` for reflections.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$forcecheap",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Force the water to render itself as cheap, regardless of the map's `water_lod_control` entity settings or the user's settings. This will disable real-time reflection and instead use `$envmap`. Refraction is assumed to be opaquely the water fog color.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$forceexpensive",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Force the water to render itself as expensive, regardless of the map's `water_lod_control` entity settings or the user's settings.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$cheapwaterstartdistance",
+                            "type": "float",
+                            "description": "Distance from the eye in inches that the shader should start transitioning to a cheaper water shader.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$cheapwaterenddistance",
+                            "type": "float",
+                            "description": "Distance from the eye in inches that the shader should finish transitioning to a cheaper water shader.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$reflectentities",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Make the water reflect entities. By default, no entities are ever reflected.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$reflectonlymarkedentities",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Make the water reflect only entities and static props with `Render in Fast Reflections` enabled.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$reflectskyboxonly",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Make the water reflect only the skybox.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$reflect2dskybox",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Make the water reflect the skybox material in addition to other reflections.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$reflect3dskybox",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Make the water reflect the 3D skybox in addition to other reflections. **Requires a `sky_camera` in the map.**",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$reflectblendfactor",
+                            "type": "float",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$nofresnel",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Disable the fresnel on the water's reflection.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$forcefresnel",
+                            "type": "float",
+                            "description": "Force this amount of fresnel on the water. Higher values usually cause the water to appear brighter. ",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$basereflectance",
+                            "type": "float",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$maxreflectance",
+                            "type": "float",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Reflection"
+                        },
+                        {
+                            "name": "$refract",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Whether the water material should refract.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Refraction"
+                        },
+                        {
+                            "name": "$refracttexture",
+                            "type": "texture",
+                            "defaultCompletion": "_rt_WaterRefraction",
+                            "description": "Texture to use for refraction. For real-time refractions, use `_rt_WaterRefraction`.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Refraction"
+                        },
+                        {
+                            "name": "$refractamount",
+                            "type": "float",
+                            "description": "Amount of warp for the refraction. Higher values produce more warping.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Refraction"
+                        },
+                        {
+                            "name": "$refracttint",
+                            "type": "color",
+                            "description": "Color of the refraction.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Refraction"
+                        },
+                        {
+                            "name": "$blurrefract",
+                            "type": "bool",
+                            "description": "Blurs the refraction when underwater. **Only use on materials with `$abovewater 1`",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Refraction"
+                        },
+                        {
+                            "name": "$pseudotranslucent",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Make the water translucent. This is a cheap substitute for refractive water; do not use this when refraction is enabled.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Refraction"
+                        },
+                        {
+                            "name": "$waterblendfactor",
+                            "type": "scalar",
+                            "description": "How translucent the water should be when $pseudotranslucent is enabled. At 0, the water is completely transparent, while at 1 the water is completely opaque.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Refraction"
+                        },
+                        {
+                            "name": "$scroll1",
+                            "type": "string",
+                            "description": "Used for flowing water that don't use a flowmap. Refer to the wiki.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$scroll2",
+                            "type": "string",
+                            "description": "Used for flowing water that don't use a flowmap. Refer to the wiki.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flowmap",
+                            "type": "texture",
+                            "description": "Texture that defines flow velocity by skewing and scrolling the `$normalmap`",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flow_normaluvscale",
+                            "type": "float",
+                            "description": "The number of world units covered by the normal map before it repeats. Typically in the 100s.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flow_worlduvscale",
+                            "type": "float",
+                            "description": "The number of times the flow map fits into the material. Face texture scale affects this.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flow_uvscrolldistance",
+                            "type": "float",
+                            "description": "How far along the flow map the normal map should be distorted. Higher values lead to more distortion.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flow_timeintervalinseconds",
+                            "type": "float",
+                            "description": "Time needed for the normal map to cross the `$flow_uvscrolldistance`.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flow_timescale",
+                            "type": "float",
+                            "description": "Modifies flow speed without affecting the amount of distortion.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flow_bumpstrength",
+                            "type": "scalar",
+                            "description": "How rough the surface of the water is.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flow_noise_texture",
+                            "type": "texture",
+                            "description": "A treatment texture used to break up repetition of the normal map.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flow_noise_scale",
+                            "type": "float",
+                            "description": "How many times to fit the noise texture into the normal map. Typically around 0.01.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
+                        },
+                        {
+                            "name": "$flow_debug",
+                            "type": "bool",
+                            "defaultCompletion": 0,
+                            "description": "Replaces the water surface with a literal rendering of the flow map. Don't rely on Hammer's view for alignment.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Flowing_water"
                         }
                     ],
                     "description": "All shader parameters used in completition."
