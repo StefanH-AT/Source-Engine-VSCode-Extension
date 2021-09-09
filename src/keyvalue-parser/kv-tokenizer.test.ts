@@ -49,10 +49,16 @@ and spans many lines"""
     expect(tokens.length).toBe(48);
 
     expect(tokens[0].value).toBe('"File"');
+    expect(tokens[0].type).toBe(tokenizer.TokenType.Key);
     expect(tokens[1].value).toBe('{');
     expect(tokens[2].value).toBe('"Keyvalues"');
     expect(tokens[3].value).toBe('{');
     expect(tokens[4].value).toBe('// A comment');
+    expect(tokens[5].value).toBe('"Quoted Strings"');
+    expect(tokens[5].type).toBe(tokenizer.TokenType.Key);
+    expect(tokens[6].value).toBe('"a a"');
+    expect(tokens[6].type).toBe(tokenizer.TokenType.Value);
+    expect(tokens[7].value).toBe('// Comment after the line');
 
 });
 

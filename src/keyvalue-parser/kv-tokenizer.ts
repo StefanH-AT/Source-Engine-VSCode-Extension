@@ -1,6 +1,7 @@
 export enum TokenType {
     Comment,
-    String, // All strings receive this token. The semantic token provider should implement analysis on these
+    Key,
+    Value,
     ObjectStart,
     ObjectEnd
 }
@@ -41,11 +42,17 @@ export class Tokenizer {
         const textSize = text.length;
         this.text = text;
         this._tokens = [];
+
+        let expectingKey = true;
         for(let i = 0; i < textSize; i++) {
             const c = text[i];
 
             // Skip forward to the next interesting token
-            if(c === " " || c === "\r" || c === "\n" || c === "\t") continue;
+            if(c === " " || c === "\t") continue;
+            if(c === "\r" || c === "\n") {
+                expectingKey = true;
+                continue;
+            }
 
             // Is it a comment?
             if(c === "/" && text[i + 1] === "/") {
@@ -67,7 +74,8 @@ export class Tokenizer {
 
             // No, it's a string!
             const stringLength = this.consumeString(i);
-            this.addToken(TokenType.String, i, i + stringLength, text.substring(i, i + stringLength));
+            this.addToken(expectingKey ? TokenType.Key : TokenType.Value, i, i + stringLength, text.substring(i, i + stringLength));
+            expectingKey = !expectingKey;
             i += stringLength;
         }
     }

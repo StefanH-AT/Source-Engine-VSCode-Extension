@@ -45,7 +45,7 @@ export class KeyvalueDocument {
         const tokens = this.findTokensInRange(range);
 
         // FIXME: Very repetetive code
-        if(tokens.length == 2 && tokens[0].type === TokenType.String && tokens[1].type === TokenType.String) {
+        if(tokens.length == 2 && tokens[0].type === TokenType.Key && tokens[1].type === TokenType.Value) {
             const key = tokens[0].value;
             const value = tokens[1].value;
             const keyRange = new Range(this.document.positionAt(tokens[0].start), this.document.positionAt(tokens[0].end));
@@ -53,7 +53,7 @@ export class KeyvalueDocument {
             return new KeyValue(key, value, keyRange, valueRange);
         }
 
-        if(tokens.length == 1 && tokens[0].type === TokenType.String) {
+        if(tokens.length == 1 && tokens[0].type === TokenType.Key) {
             const keyRange = new Range(this.document.positionAt(tokens[0].start), this.document.positionAt(tokens[0].end));
             return new KeyValue(tokens[0].value, "", keyRange, keyRange.with(keyRange.end, keyRange.end.translate(1)));
         }

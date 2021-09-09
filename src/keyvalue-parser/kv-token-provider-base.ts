@@ -55,7 +55,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 tokensBuilder.push(tokenRange, 'comment', []);
             }
 
-            if(token.type === TokenType.String) {
+            if(token.type === TokenType.Key) {
                 
                 // Get next token that isn't a comment 
                 const interestingToken = this.getNextInterestingToken(tokens, i);
@@ -69,7 +69,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 }
                 
                 // We're a keyvalue's key. Process the value too and skip forward
-                if(nextToken.type === TokenType.String) {
+                if(nextToken.type === TokenType.Value) {
                     
                     this.processKvKey(token, tokenRange, tokensBuilder);
                     

@@ -6,4 +6,5 @@ LightmappedGeneric {
 
     // Try auto completion here!
     $envmap env_cubemap
+    $basetexture examples/example_texture
 }
