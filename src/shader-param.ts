@@ -2,9 +2,9 @@ export class ShaderParam {
 
     public name: string;
     public type: string;
-    public defaultCompletion: string | null;
-    public description: string | null;
-    public wikiUri: string | null;
+    public defaultCompletion: string | null | undefined;
+    public description: string | null | undefined;
+    public wikiUri: string | null | undefined;
 
     constructor(name: string, type: string, defaultCompletion: string | null, description: string, wikiUri: string | null) {
         this.name = name;

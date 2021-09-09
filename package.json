@@ -850,6 +850,9 @@
         }
     },
     "jest": {
+        "setupFilesAfterEnv": [
+            "jest-expect-message"
+        ],
         "transform": {
             ".(ts|tsx)": "ts-jest"
         },
@@ -878,6 +881,8 @@
         "vscode-test": "^1.5.2"
     },
     "dependencies": {
+        "@types/jest-expect-message": "^1.0.3",
+        "jest-expect-message": "^1.0.2",
         "list-files-in-dir": "^0.1.5"
     }
 }
