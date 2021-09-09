@@ -51,3 +51,4 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 - Added default parameter value completion
 - Added parameter value type checking
 - Updated shader parameter configuration scheme
+- Added more shader parameters to the default config
