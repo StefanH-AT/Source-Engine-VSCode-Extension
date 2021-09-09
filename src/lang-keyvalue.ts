@@ -26,11 +26,11 @@ export class KeyvalueSemanticTokensProvider extends KvTokensProviderBase {
         super(legend, languages.createDiagnosticCollection('keyvalue3'));
     }
     
-    processValueNumber(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray) {
+    processValueNumber(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
         tokensBuilder.push(range, 'number', []);
     }
 
-    processValueArray(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray) {
+    processValueArray(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
         // [] {}
         tokensBuilder.push(new Range(range.start, range.start.translate(0, 1)), 'operator', []);
         tokensBuilder.push(new Range(range.end.translate(0, -1), range.end), 'operator', []);
