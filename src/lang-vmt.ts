@@ -13,7 +13,8 @@ export const legend = new SemanticTokensLegend([
     'number',
     'boolean',
     'operator',
-    'keyword'
+    'keyword',
+    'parameter'
 ], [
     'declaration',
     'readonly'
@@ -25,18 +26,6 @@ export let internalTextures: string[];
 export function initShaderParams(params: ShaderParam[], intTextures: string[]) {
     shaderParams = params;
     internalTextures = intTextures;
-}
-
-export class ParameterHint {
-
-    public param: string;
-    public valueRegex: RegExp;
-
-    constructor(param: string, valueRegex: RegExp) {
-        this.param = param;
-        this.valueRegex = valueRegex;
-    }
-
 }
 
 export class VmtSemanticTokenProvider extends KvTokensProviderBase {
@@ -55,11 +44,11 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     }
 
     processKeyShader(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
-        tokensBuilder.push(range, 'keyword');
+        tokensBuilder.push(range, 'parameter');
     }
 
     processKeyCompile(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
-        tokensBuilder.push(range, 'keyword', ['readonly']);
+        tokensBuilder.push(range, 'parameter', ['readonly']);
     }
 
     processValue(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
@@ -72,11 +61,15 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         // Get the key value type at that line
         const kv = kvDoc.getKeyValueAt(range.start.line);
         if(kv == null) return;
-        const type = shaderParams.find(p => kv.key)?.type;
-        if(type == null || type == "") return;
+        const param = shaderParams.find(p => p.name === kv.key);
+        if(param == null) {
+            this.processValueString(kv, range, tokensBuilder, kvDoc);
+            return;
+        }
+        if(param.type == null || param.type == "") return;
 
         // Bit copy paste?
-        switch(type) {
+        switch(param.type) {
             case "bool": this.processValueBool(kv, range, tokensBuilder, kvDoc); break;
             case "int": this.processValueInt(kv, range, tokensBuilder, kvDoc); break;
             case "float": this.processValueFloat(kv, range, tokensBuilder, kvDoc); break;
@@ -128,6 +121,12 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     }
 
     processValueTexture(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+
+        if(internalTextures.includes(kv.value)) {
+            tokensBuilder.push(range, "keyword");
+            return;
+        }
+
         tokensBuilder.push(range, "string");
     }
 
@@ -185,6 +184,7 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
                 completions.items.push( completion );
             }
 
+            // TODO: Make this texture path code more reusable
             if(param.type === "texture" && document.uri.scheme === "file") {
                 const path = document.uri.path;
                 const materialPathIndex = path.indexOf("materials") + "materials".length;
@@ -224,23 +224,29 @@ export class ShaderParamHoverProvider implements HoverProvider {
         if(kvDoc == null) return null;
         const kv = kvDoc.getKeyValueAt(position.line);
 
-        if(kv?.keyRange.contains(position) && kv.key !== "") {
-            const param = shaderParams.find(p => p.name == kv.key);
+        if(kv == null) return null;
+        
+        const param = shaderParams.find(p => p.name == kv.key);
+        if(param == null) return null;
+        const name = param.name;
+        const defaultCompletion = param.defaultCompletion;
+        const description = param.description;
+        const uri = param.wikiUri;
 
-            if(param == null) return null;
-
-            const name = param.name;
-            const defaultCompletion = param.defaultCompletion;
-            const description = param.description;
-            const uri = param.wikiUri;
-
+        if(kv.keyRange.contains(position) && kv.key !== "") {
             let hoverText = `(Shader Parameter) **${name}** [${param.type}] ${defaultCompletion != null ? ("- Default: " + defaultCompletion) : ""}`
             if(description != null) hoverText += `\n\n${description}`;
             if(uri != null) hoverText += `\n\n[Wiki](${uri})`;
 
             return new Hover(hoverText, kv.keyRange);
-
         }
+
+        if(kv.valueRange.contains(position) && kv.value !== "") {
+            if(param.type === "env_cubemap" && kv.value === "env_cubemap") {
+                return new Hover("Internal Texture, Samples the environment cubemap.");
+            }
+        }
+
 
         return null;
     }

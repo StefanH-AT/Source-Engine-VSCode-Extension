@@ -15,3 +15,15 @@ export class ShaderParam {
     }
 
 }
+
+export class ShaderParamHint {
+
+    public paramName: string;
+    public valueRegex: RegExp;
+
+    constructor(paramName: string, valueRegex: RegExp) {
+        this.paramName = paramName;
+        this.valueRegex = valueRegex;
+    }
+
+}
