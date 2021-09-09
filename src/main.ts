@@ -9,7 +9,10 @@ const packageJson = require('../package.json');
 
 export let output: vscode.OutputChannel;
 let config: vscode.WorkspaceConfiguration;
-let shaderParams: ShaderParam[] | undefined;
+
+// TODO: Refactor the config system and how language systems are initialized
+let shaderParams: ShaderParam[];
+let internalTextures: string[];
 
 export function activate(context: vscode.ExtensionContext) {
 
@@ -26,7 +29,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(kvSemantics);
     context.subscriptions.push(kvTokenProvider.diagnosticCollection);
 
-    vmt.initShaderParams(shaderParams == null ? [] : shaderParams);
+    vmt.initShaderParams(shaderParams, internalTextures);
     const vmtSelector = { language: 'vmt', schema: 'file' };
     const vmtTokenProvider = new vmt.VmtSemanticTokenProvider();
     const vmtSemantics = vscode.languages.registerDocumentSemanticTokensProvider(vmtSelector, vmtTokenProvider, vmtTokenProvider.legend);
@@ -44,7 +47,8 @@ export function activate(context: vscode.ExtensionContext) {
 
 function loadConfig() {
     config = vscode.workspace.getConfiguration("source-engine");
-    shaderParams = config.get("shaderParameters");
+    shaderParams = config.get("shaderParameters") ?? [];
+    internalTextures = config.get("internalTextures") ?? [];
 }
 
 export function deactivate() {}

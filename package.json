@@ -119,9 +119,17 @@
         "configuration": {
             "title": "Source Engine",
             "properties": {
+                "source-engine.internalTextures": {
+                    "type": [
+                        "array"
+                    ],
+                    "default": [
+                        "_rt_WaterReflection"
+                    ]
+                },
                 "source-engine.shaderParameters": {
                     "type": [
-                        "object"
+                        "array"
                     ],
                     "default": [
                         {

@@ -19,9 +19,11 @@ export const legend = new SemanticTokensLegend([
 ]);
 
 export let shaderParams: ShaderParam[];
+export let internalTextures: string[];
 
-export function initShaderParams(params: ShaderParam[]) {
+export function initShaderParams(params: ShaderParam[], intTextures: string[]) {
     shaderParams = params;
+    internalTextures = intTextures;
 }
 
 export class VmtSemanticTokenProvider extends KvTokensProviderBase {
@@ -65,6 +67,7 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
             const completions = suggestions.map(s => {
                 const completion = new CompletionItem(s.name);
                 completion.insertText = s.name.substring(1);
+                completion.documentation = `${s.description}`;
                 if(s.defaultCompletion != null) {
                     completion.insertText += " " + s.defaultCompletion.toString();
                 }
@@ -82,18 +85,28 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
             if(param == null) return new CompletionList();
 
             if(param.defaultCompletion != null) {
-                completions.items.push( new CompletionItem(param.defaultCompletion.toString()) );
+                const completion = new CompletionItem(param.defaultCompletion.toString());
+                completion.detail = "Default Completion";
+                completions.items.push( completion );
             }
 
             if(param.type === "texture" && document.uri.scheme === "file") {
                 const path = document.uri.path;
                 const materialPathIndex = path.indexOf("materials") + "materials".length;
+
+                internalTextures.forEach(rt => {
+                    const completion = new CompletionItem(rt);
+                    completion.detail = "Internal";
+                    completions.items.push(completion);
+                });
+
                 if(materialPathIndex > 0) {
                     const materialRoot = path.substring(0, materialPathIndex);
                     const textureFiles = listFilesSync(materialRoot, "vtf");
                     textureFiles.forEach( t => {
                         const completion = new CompletionItem(t.substring(materialPathIndex + 1));
                         completion.insertText = t.substring(materialPathIndex + 1, t.length - 4);
+                        completion.detail = "Texture Path";
                         completions.items.push(completion);
                     });
                 } 
