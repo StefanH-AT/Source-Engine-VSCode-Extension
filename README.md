@@ -18,6 +18,9 @@ Checklist for features that are planned or already implemented.
 - [x] VMT highlighting
 - [x] Parameter name completion
 - [x] Config for parameters
+- [x] Parameter value completion
+- [x] Parameter value validation dependent on parameter name
+- [x] Texture path completion
 
 ### FGD
 - [x] .fgd highlighting
@@ -40,9 +43,6 @@ This is what is planned for this extension. In case you wish to contribute, this
   - [ ] Schema for soundscapes
 
 ### VMT
-- [x] Parameter value completion
-- [x] Parameter value validation dependent on parameter name
-- [x] Texture path completion
 - [ ] Color value preview
 
 ### QC
