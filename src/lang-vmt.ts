@@ -1,9 +1,10 @@
-import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity } from 'vscode'
+import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation } from 'vscode'
 import { KeyvalueDocument, getDocument, KeyValue } from './keyvalue-document';
 import { KvTokensProviderBase } from './keyvalue-parser/kv-token-provider-base';
 import { Tokenizer } from './keyvalue-parser/kv-tokenizer';
 import { ShaderParam } from './shader-param';
 import { listFilesSync } from 'list-files-in-dir'
+import { assert } from 'console';
 
 export const legend = new SemanticTokensLegend([
     'struct',
@@ -131,7 +132,14 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     }
 
     processValueColor(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
-        tokensBuilder.push(range, "string"); // TODO: Interpret colors
+
+        // Don't put any semantic tokens here. The textmate highlighting is good enough. We only validate the input and provide warning messages
+        const colorMatches = getColorMatches(kv.value);
+        if(!colorMatches.validFormat) {
+            this.diagnostics.push(new Diagnostic(range, "Invalid color value. Format: [0 50 255]", DiagnosticSeverity.Warning));
+        } else if(colorMatches.outOfBounds) {
+            this.diagnostics.push(new Diagnostic(range, "Color values out of bounds. Must be between 0 and 255", DiagnosticSeverity.Warning));
+        }
     }
 
     processValueCubemap(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
@@ -251,4 +259,68 @@ export class ShaderParamHoverProvider implements HoverProvider {
         return null;
     }
 
+}
+
+export class ShaderParamColorsProvider implements DocumentColorProvider {
+
+    provideDocumentColors(document: TextDocument, token: CancellationToken): ColorInformation[] | null {
+        const kvDoc = getDocument(document);
+        if(kvDoc == null) return null;
+
+        const colorInfos: ColorInformation[] = [];
+        
+        // TODO: This seems like it should be reusable.
+        const valueTokens = kvDoc.getAllValueTokens();
+        valueTokens.forEach(t => {
+            const line = document.positionAt(t.start).line;
+            const kv = kvDoc.getKeyValueAt(line);
+            if(kv == null) return;
+            
+            const param = shaderParams.find(p => p.name === kv.key);
+            if(param == null) return;
+
+            if(param.type !== "color") return;
+            
+            const colorMatches = getColorMatches(kv.value);
+            if(!colorMatches.validFormat || colorMatches.outOfBounds || colorMatches.color == null) return;
+
+            const colorInfo = new ColorInformation(kv.valueRange, colorMatches.color);
+            colorInfos.push(colorInfo);
+        });
+
+        return colorInfos;
+    }
+
+    provideColorPresentations(color: Color, context: { document: TextDocument; range: Range; }, token: CancellationToken): ProviderResult<ColorPresentation[]> {
+        throw new Error('Method not implemented.');
+    }
+
+}
+
+function getColorMatches(colorString: string): { validFormat: boolean, outOfBounds: boolean, color: Color | null, matches: RegExpMatchArray | null }  {
+    const matches = colorString.match(/\[(\d{1,3}) (\d{1,3}) (\d{1,3})\]/);
+    if(!matches) return {
+        validFormat: false,
+        outOfBounds: false,
+        color: null,
+        matches: null
+    }
+
+    const r = parseInt(matches[1]);
+    const g = parseInt(matches[2]);
+    const b = parseInt(matches[3]);
+
+    if(r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0) return {
+        validFormat: true,
+        outOfBounds: true,
+        color: null,
+        matches: matches
+    }
+
+    return {
+        validFormat: true,
+        outOfBounds: false,
+        color: new Color(r / 255, g / 255, b / 255, 1),
+        matches: matches
+    };
 }

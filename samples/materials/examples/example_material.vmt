@@ -6,4 +6,16 @@ LightmappedGeneric {
 
     // Try auto completion here!
     $envmap env_cubemap
+
+    $color "[50 20 150]"
+
+    
+
+
+
+
+
+
+
+    $basetexture ""
 }

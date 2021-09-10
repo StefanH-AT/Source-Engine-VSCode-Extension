@@ -62,6 +62,10 @@ export class KeyvalueDocument {
         
     }
 
+    public getAllValueTokens(): Token[] {
+        return this._tokens.filter(t => t.type === TokenType.Value);
+    }
+
     public findTokensInRange(range: Range): Token[] {
         
         return this._tokens.filter(t => {

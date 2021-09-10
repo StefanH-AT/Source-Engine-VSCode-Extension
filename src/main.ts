@@ -35,9 +35,11 @@ export function activate(context: vscode.ExtensionContext) {
     const vmtSemantics = vscode.languages.registerDocumentSemanticTokensProvider(vmtSelector, vmtTokenProvider, vmtTokenProvider.legend);
     const vmtCompletion = vscode.languages.registerCompletionItemProvider("vmt", new vmt.ShaderParamCompletionItemProvider(), "$", "%");
     const vmtHover = vscode.languages.registerHoverProvider("vmt", new vmt.ShaderParamHoverProvider());
+    const vmtColors = vscode.languages.registerColorProvider("vmt", new vmt.ShaderParamColorsProvider());
     context.subscriptions.push(vmtSemantics);
     context.subscriptions.push(vmtCompletion);
     context.subscriptions.push(vmtHover);
+    context.subscriptions.push(vmtColors);
 
     const captionsColors = vscode.languages.registerColorProvider("captions", new captions.CaptionColorsProvider())
     context.subscriptions.push(captionsColors);
