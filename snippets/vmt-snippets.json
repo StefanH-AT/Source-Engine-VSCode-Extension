@@ -1,0 +1,33 @@
+{
+    "Brush Material": {
+        "prefix": "LightmappedGeneric",
+        "body": [
+            "LightmappedGeneric {",
+            "\t\\$basetexture \"$1\"",
+            "\t%noportal ${3:1}",
+            "}"
+        ],
+        "description": "Basic LightmappedGeneric material for brushes"
+    },
+    "Decal/Overlay": {
+        "prefix": "LightmappedGeneric",
+        "body": [
+            "LightmappedGeneric {",
+            "\t\\$basetexture \"$1\"",
+            "\t\\$decal 1",
+            "\t\\$decalscale 0.25",
+            "}"
+        ],
+        "description": "Basic LightmappedGeneric material to use as a world-placed decal"
+    },
+    "Model Material": {
+        "prefix": "VertexlitGeneric",
+        "body": [
+            "VertexlitGeneric {",
+            "\t\\$basetexture \"models/$1\"",
+            "\t\\$model 1",
+            "}"
+        ],
+        "description": "Basic VertexlitGeneric material for water"
+    }
+}

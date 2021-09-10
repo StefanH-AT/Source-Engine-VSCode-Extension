@@ -42,6 +42,12 @@
         "onLanguage:captions"
     ],
     "contributes": {
+        "snippets": [
+            {
+                "language": "vmt",
+                "path": "./snippets/vmt-snippets.json"
+            }
+        ],
         "languages": [
             {
                 "id": "keyvalue3",
