@@ -46,6 +46,10 @@
             {
                 "language": "vmt",
                 "path": "./snippets/vmt-snippets.json"
+            },
+            {
+                "language": "keyvalue3",
+                "path": "./snippets/gameinfo-snippets.json"
             }
         ],
         "languages": [

@@ -1,0 +1,38 @@
+{
+    "Portal 2 Mod": {
+        "prefix": "Gameinfo",
+        "body": [
+            "GameInfo {",
+			"",
+			"\tgame \"$1\"",
+			"\ttitle \"$1\"",
+			"\tgamedata ${2:portal2}.fgd",
+			"\ticon resource/icon",
+			"\tgamelogo 1",
+			"\tSupportsDX8 0",
+			"\tSupportsXbox360 0",
+			"",
+			"\tFilesystem {",
+			"\t\tSteamAppId 620",
+			"\t\tToolsAppId 211",
+			"",
+			"\t\tSearchPaths {",
+			"\t\t\tgame+mod+default_write_path |gameinfo_path|.",
+			"\t\t\tgame |gameinfo_path|pak01_dir.vpk",
+			"\t\t\tgamebin |gameinfo_path|bin",
+			"\t\t\tgame update/pak01_dir.vpk",
+			"\t\t\tgame update",
+			"\t\t\tgame portal2_dlc2/pak01_dir.vpk",
+			"\t\t\tgame portal2_dlc2",
+			"\t\t\tgame portal2_dlc1/pak01_dir.vpk",
+			"\t\t\tgame portal2_dlc1",
+			"\t\t\tgame portal2/pak01_dir.vpk",
+			"\t\t\tgame portal2",
+			"\t\t\tplatform platform",
+			"\t\t}",
+			"\t}",
+			"}"
+        ],
+        "description": "Basic LightmappedGeneric material for brushes"
+    }
+}
