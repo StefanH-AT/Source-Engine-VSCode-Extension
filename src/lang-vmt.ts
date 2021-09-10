@@ -85,7 +85,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     }
 
     processValueBool(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
-        if(kv.value.match(/[01]/g)) {
+        if(kv.value.match(/^[01]$/)) {
             tokensBuilder.push(range, "boolean");
         } else {
             this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting a boolean (0 or 1).", DiagnosticSeverity.Warning));
@@ -93,7 +93,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     }
 
     processValueInt(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
-        if(kv.value.match(/\d+/g)) {
+        if(kv.value.match(/^\d+$/)) {
             tokensBuilder.push(range, "number");
         } else {
             this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting an integer.", DiagnosticSeverity.Warning));
@@ -101,7 +101,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     }
 
     processValueFloat(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
-        if(kv.value.match(/(\d+)(\.\d+)?/g)) {
+        if(kv.value.match(/^(\d+)(\.\d+)?$/)) {
             tokensBuilder.push(range, "number");
         } else {
             this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting a float.", DiagnosticSeverity.Warning));
@@ -109,7 +109,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     }
 
     processValueScalar(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
-        if(kv.value.match(/0?\.\d+/g)) {
+        if(kv.value.match(/^0?\.\d+$/)) {
             tokensBuilder.push(range, "number");
         } else {
             this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting a scalar. (0-1)", DiagnosticSeverity.Warning));

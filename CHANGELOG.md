@@ -4,6 +4,11 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.7]
+
+**VMT**
+- Fixed shader parameter value regex not matching exactly
+
 ## [0.0.6]
 
 **General**
