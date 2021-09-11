@@ -166,7 +166,23 @@
                     ],
                     "default": [
                         "_rt_WaterReflection",
-                        "_rt_WaterRefraction"
+                        "_rt_WaterRefraction",
+                        "_rt_Camera",
+                        "_rt_PowerOfTwoFB",
+                        "_rt_Fullscreen",
+                        "_rt_FullFrameDepth",
+                        "_rt_SmallHDR0",
+                        "_rt_SmallHDR1",
+                        "_rt_SmallFB0",
+                        "_rt_SmallFB1",
+                        "_rt_Shadows",
+                        "_rt_ShadowDummy",
+                        "_rt_Replay_Accum_Sample",
+                        "_rt_Replay_Pong",
+                        "_rt_LayoffResult",
+                        "_rt_ReplayScreenshot",
+                        "_rt_ResolvedFullFrameDepth",
+                        "_rt_Scope"
                     ]
                 },
                 "source-engine.shaderParameters": {
