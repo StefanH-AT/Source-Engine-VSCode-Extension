@@ -1,0 +1,897 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Valve Project Creator",
+	"scopeName": "source.vpc",
+    "patterns": [
+        {
+			"include": "source.kv#keyvalue"
+		},
+		{
+			"include": "source.kv#object"
+		},
+		{
+			"include": "source.kv#comment"
+		},
+		{
+			"include": "source.kv#number"
+		},
+		{
+			"include": "source.kv#boolean"
+		},
+		{
+			"include": "source.kv#stringQuoted"
+		},
+		{
+			"include": "source.kv#stringUnquoted"
+		},
+        {
+            "include": "#keywords"
+        }
+	],
+    "repository": {
+        "keywords": {
+            "patterns": [
+                {
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]ndefine[Aa]ll[Pp]reprocessor[Dd]efinitions"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]isable[Ll]inker[Dd]ead[Cc]ode[Ee]limination"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]ndefine[Pp]reprocessor[Dd]efinitions"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Mm]anifest[Dd]ependencies"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ff]orce[Cc]onformance[Ii]n[Ff]or[Ll]oop[Ss]cope"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]nherited[Pp]roject[Pp]roperty[Ss]heets"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Pp]roject[Dd]ependencies"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Ff]loating[Pp]oint[Ee]xceptions"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg]enerate[Xx][Mm][Ll][Dd]ocumentation[Ff]iles"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]mage[Hh]as[Ss]afe[Ee]xception[Hh]andlers"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Ii]nclude[Dd]irectories"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Ll]ibrary[Dd]irectories"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]ommon[Ll]anguage[Rr]untime[Ss]upport"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]etect64bit[Pp]ortability[Ii]ssues"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Ee]nhanced[Ii]nstruction[Ss]et"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Ff]iber[Ss]afe[Oo]ptimizations"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Dd]ependencies_[Pp]roj"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]reate/[Uu]se[Pp]recompiled[Hh]eader"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]ocument[Ll]ibrary[Dd]ependencies"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg]enerate[Pp]rogram[Dd]atabase[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Ff]unction[Ll]evel[Ll]inking"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]pdate[Ff]ile[Hh]ashes[Ss]earch[Pp]ath"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]se[Ll]ibrary[Dd]ependency[Ii]nputs"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]ependency[Ii]nformation[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]isable[Ll]anguage[Ee]xtensions"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]xtensions[Tt]o[Dd]elete[Oo]n[Cc]lean"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg][Cc][Cc]_[Ee]xtra[Cc]xx[Cc]ompiler[Ff]lags"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]gnore[Aa]ll[Dd]efault[Ll]ibraries"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]gnore[Ss]tandard[Ii]nclude[Pp]ath"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]gnore[Ss]tandard[Ii]nclude[Pp]ath"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]ulti[Pp]rocessor[Cc]ompilation"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]rder[Oo]nly[Ff]ile[Dd]ependencies"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Tt]reat[Ww][Cc][Hh][Aa][Rr]_[Tt][Aa]s[Bb]uilt[Ii]n[Tt]ype"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Tt]urn[Oo]ff[Aa]ssembly[Gg]eneration"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]reate/[Uu]se[Pp][Cc][Hh][Tt]hrough[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]mbed[Mm]anaged[Rr]esource[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Ii]ncremental[Ll]inking"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Ii]ntrinsic[Ff]unctions"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg]enerate[Pp]reprocessed[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ww]hole[Pp]rogram[Oo]ptimization"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ww]hole[Pp]rogram[Oo]ptimization"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Xx][Mm][Ll][Dd]ocumentation[Ff]ile[Nn]ame"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Dd]ocument[Ff]iles"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Mm]anifest[Ff]iles"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]isable[Ss]pecific[Ww]arnings"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Bb]rowse[Ii]nformation"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]gnore[Rr]edundancy[Ww]arning"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]nline[Ff]unction[Ee]xpansion"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ll]ink[Ll]ibrary[Dd]ependencies"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]mit[Dd]efault[Ll]ibrary[Nn]ames"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Pp]reprocessor[Dd]efinitions"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Pp]rogram[Dd]atabase[Ff]ile[Nn]ame"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Rr]esolve#[Uu]sing[Rr]eferences"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]se[Uu][Nn][Ii][Cc][Oo][Dd][Ee][Rr]esponse[Ff]iles"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]se[Uu][Nn][Ii][Cc][Oo][Dd][Ee][Rr]esponse[Ff]iles"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]se[Uu][Nn][Ii][Cc][Oo][Dd][Ee][Rr]esponse[Ff]iles"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]se[Uu][Nn][Ii][Cc][Oo][Dd][Ee][Rr]esponse[Ff]iles"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Dd]ependencies"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]ebug[Ii]nformation[Ff]ormat"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]xpand[Aa]ttributed[Ss]ource"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg][Cc][Cc]_[Ee]xtra[Cc]ompiler[Ff]lags"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]nput[Rr]esource[Mm]anifests"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ll]ink[Tt]ime[Cc]ode[Gg]eneration"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Oo]utput[Ff]iles"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc][Ll][Rr][Uu]nmanaged[Cc]ode[Cc]heck"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Rr]un[Tt]ime[Tt]ype[Ii]nfo"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ff]orce[Ss]ymbol[Rr]eferences"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]gnore[Ss]pecific[Ll]ibrary"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]ntermediate[Dd]irectory"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Pp]recompiled[Hh]eader[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Pp]rofile[Gg]uided[Dd]atabase"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]truct[Mm]ember[Aa]lignment"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]uppress[Ss]tartup[Bb]anner"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]uppress[Ss]tartup[Bb]anner"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]uppress[Ss]tartup[Bb]anner"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Tt]reat[Ww]arnings[Aa]s[Ee]rrors"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]ssembly[Ll]ink[Rr]esource"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Ll]arge[Aa]ddresses"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Mm]inimal[Rr]ebuild"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg][Cc][Cc]_[Ee]xtra[Ll]inker[Ff]lags"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg]enerate[Cc]atalog[Ff]iles"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]anifest[Rr]esource[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]erge[Ii][Dd][Ll][Bb]ase[Ff]ile[Nn]ame"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]odule[Dd]efinition[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]ptimize[Ff]or[Ww]indows98"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Vv]alidate[Ii]ntelli[Ss]ense"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dd[Mm]odule[Tt]o[Aa]ssembly"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Bb]uffer[Ss]ecurity[Cc]heck"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]efault[Cc]har[Uu]nsigned"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Cc]\\+\\+[Ee]xceptions"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Cc][Oo][Mm][Dd][Aa][Tt][Ff]olding"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nable[Ss]tring[Pp]ooling"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]gnore[Ii]mport[Ll]ibrary"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]inimize[Cc][Rr][Tt][Uu]se[Ii]n[Aa][Tt][Ll]"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Rr]egistrar[Ss]cript[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]trip[Pp]rivate[Ss]ymbols"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Bb]asic[Rr]untime[Cc]hecks"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc][Ll][Rr][Tt]hread[Aa]ttribute"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]ebuggable[Aa]ssembly"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ff]loating[Pp]oint[Mm]odel"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]utput[Dd]ocument[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]utput[Mm]anifest[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]wap[Rr]un[Ff]rom[Nn]etwork"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Tt]arget[Mm]achine"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]se[Ff][Aa][Tt]32[Ww]ork[Aa]round"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]dditional[Oo]ptions"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]alling[Cc]onvention"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]omponent[Ff]ile[Nn]ame"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]onfiguration[Tt]ype"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]xcluded[Ff]rom[Bb]uild"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg]enerate[Dd]ebug[Ii]nfo"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]gnore[Ee]mbedded[Ii][Dd][Ll]"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]mit[Ff]rame[Pp]ointers"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Tt]ype[Ll]ib[Rr]esource[Ii][Dd]"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]ssembly[Ii]dentity"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]ommand[Aa]rguments"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ff]avor[Ss]ize[Oo]r[Ss]peed"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ff]ixed[Bb]ase[Aa]ddress"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg]enerate[Mm]anifest"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]erge[Ee]nvironment"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Pp]otential[Oo]utputs"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Rr]eplacements[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Rr]esource[Ff]ile[Nn]ame"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]maller[Tt]ype[Cc]heck"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]tack[Rr]eserve[Ss]ize"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]ymbol[Vv]isibility"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]ymbol[Vv]isibility"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]ystem[Ff]rameworks"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]pdate[Ff]ile[Hh]ashes"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ww]orking[Dd]irectory"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa][Ss][Mm][Ll]ist[Ll]ocation"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]ssembler[Oo]utput"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]elay[Ll]oaded[Dd][Ll][Ll]s"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Hh]eap[Rr]eserve[Ss]ize"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ll]ocal[Ff]rameworks"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]utput[Dd]irectory"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]tack[Cc]ommit[Ss]ize"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]ystem[Ll]ibraries"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Tt]ype[Ll]ibrary[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]llow[Ii]solation"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Bb]uild[Mm]ulti[Aa]rch"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]elay[Ll]oaded[Dd][Ll][Ll]"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]rror[Rr]eporting"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]rror[Rr]eporting"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Gg]ame[Oo]utput[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Hh]eap[Cc]ommit[Ss]ize"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]mp[Ll]ib[Ee]xternal"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]mplib[Ee]xternal"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]bject[Ff]ile[Nn]ame"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]ptimizer[Ll]evel"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Pp]ost[Bb]uild[Ee]vent"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Rr]egister[Oo]utput"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Rr]untime[Ll]ibrary"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Tt]erminal[Ss]erver"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]mbed[Mm]anifest"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ff]orce[Ii]ncludes"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ff]unction[Oo]rder"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]mport[Ll]ibrary"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]acro[Rr]equired"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]erge[Ss]ections"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]pen[Mm][Pp][Ss]upport"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]wap[Rr]un[Ff]rom[Cc][Dd]"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Vv]erbose[Oo]utput"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Bb]uild[Ll]og[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc][Ll][Rr][Ii]mage[Tt]ype"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]haracter[Ss]et"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]ebugger[Tt]ype"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Kk]eep[Cc]omments"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Kk]ey[Cc]ontainer"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm][Ii][Dd][Ll][Cc]ommands"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]anifest[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Nn]o[Ee]ntry[Pp]oint"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]ptimization"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Pp][Oo][Ss][Ii][Xx]_[Rr][Pp]aths"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss][Qq][Ll][Dd]ebugging"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]how[Ii]ncludes"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]how[Pp]rogress"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]how[Pp]rogress"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]se[Ff]ull[Pp]aths"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ww]arning[Ll]evel"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Bb]ase[Aa]ddress"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]ommand[Ll]ine"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]escription"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]ynamic[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]nvironment"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ff]orce#[Uu]sing"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ll]ib[Ee]xternal"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]et[Cc]hecksum"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Tt]ype[Ll]ibrary"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Bb]rowse[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]onditional"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ee]ntry[Pp]oint"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]ap[Ee]xports"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]utput[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Rr]eferences"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]ompile[Aa]s"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]elay[Ss]ign"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]ub[Ss]ystem"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]se[Oo]f[Aa][Tt][Ll]"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Uu]se[Oo]f[Mm][Ff][Cc]"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]ommand"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Cc]ulture"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]nclude"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Kk]ey[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Oo]utputs"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Pp]rofile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Vv]ersion"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Aa]ttach"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Dd]river"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]mp[Ll]ib"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ii]mp[Ll]ib"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Mm]acro"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ff]ile"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ss]ystem[Ii]ncludes"
+				},
+				{
+					"name": "keyword.control.vpc",
+					"match": "\\$[Ll]ib"
+				}
+            ]
+        }
+    }
+}

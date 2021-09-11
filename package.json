@@ -112,6 +112,16 @@
                 "extensions": [
                     ".cfg"
                 ]
+            },
+            {
+                "id": "vpc",
+                "aliases": [
+                    "Valve Project Creator"
+                ],
+                "extensions": [
+                    ".vpc",
+                    ".vgc"
+                ]
             }
         ],
         "grammars": [
@@ -139,6 +149,11 @@
                 "language": "cfg",
                 "scopeName": "source.cfg",
                 "path": "./syntaxes/cfg.tmLanguage.json"
+            },
+            {
+                "language": "vpc",
+                "scopeName": "source.vpc",
+                "path": "./syntaxes/vpc.tmLanguage.json"
             }
         ],
         "commands": [],
