@@ -1,0 +1,58 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Source Engine Config",
+	"scopeName": "source.cfg",
+	"patterns": [
+        {
+            "include": "source.kv#comment"
+        },
+        {
+            "include": "#command"
+        }
+	],
+	"repository": {
+
+		"command": {
+            "begin": "^\\w+",
+            "end": "\n",
+            "beginCaptures": {
+                "0": {
+                    "name": "entity.name.function.cfg"
+                }
+            },
+            "patterns": [
+                {
+                    "include": "#stringQuoted"
+                },
+                {
+                    "include": "#stringUnquoted"
+                },
+                {
+                    "include": "#number"
+                }
+            ]
+        },
+
+        "stringQuoted": {
+            "begin": "\"",
+            "end": "\"",
+            "name": "string.quoted.double.cfg",
+            "patterns": [
+                {
+                    "include": "#number"
+                }
+            ]
+        },
+
+        "stringUnquoted": {
+            "match": "[\\w_+#]+",
+            "name": "string.unquoted.cfg"
+        },
+
+        "number": {
+            "match": "\\b(\\d+)(\\.\\d+)?\\b",
+            "name": "constant.numeric.cfg"
+        }
+        
+	}
+}

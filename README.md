@@ -6,6 +6,8 @@ This extension adds intelligent support for Source Engine file types.
 
 ![VMT Highlighting](vmt-highlighting.jpg)
 
+---
+
 ## Features
 Checklist for features that are planned or already implemented.
 ### General
@@ -33,11 +35,15 @@ Checklist for features that are planned or already implemented.
 - [x] Captions markup highlighting
 - [x] Captions color preview
 
+### CFG
+- [x] .cfg highlighting
+
 ## Planned
 This is what is planned for this extension. In case you wish to contribute, this is a good place to start.
 
 ### General
 - [ ] Conditionals
+- [ ] #include, #base
 - [ ] Tree view
 - [ ] Schema implementation
   - [ ] Schema for gameinfo 
@@ -60,6 +66,8 @@ This is what is planned for this extension. In case you wish to contribute, this
 - [ ] Implement color preview for playerclr
 - [ ] Ability to modify color in gui
 - [ ] Compile captions button
+
+---
 
 ## Roadmap
 ### [0.1.0]
@@ -97,11 +105,16 @@ This is what is planned for this extension. In case you wish to contribute, this
 - Basic QC highlighting (Not semantic)
 - Common QC snippets
 
+**CFG**
+- Basic .cfg highlighting (Not semantic)
+
 ### [0.2.0]
 
 **QC**
 - Semantic QC tokenization (Good luck with that)
 - QC commands autocomplete and snippets
+
+---
 
 ## Contribution
 Contributions are welcome. Create a pull request!

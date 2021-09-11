@@ -2,7 +2,7 @@
     "name": "source-engine-support",
     "displayName": "Source Engine Support",
     "description": "Adds support for Source Engine file types and other commands",
-    "version": "0.0.8",
+    "version": "0.0.9",
     "icon": "extension-icon-256.png",
     "author": {
         "name": "Stefan Heinz",
@@ -61,6 +61,7 @@
                 ],
                 "extensions": [
                     ".kv",
+                    ".vdf",
                     ".res",
                     ".txt"
                 ],
@@ -101,6 +102,16 @@
                 ],
                 "firstLine": "^\"?(?i)lang(?-i)\"?",
                 "configuration": "./language-configuration.json"
+            },
+            {
+                "id": "cfg",
+                "aliases": [
+                    "Source Engine Configuration",
+                    "Source Engine Commands"
+                ],
+                "extensions": [
+                    ".cfg"
+                ]
             }
         ],
         "grammars": [
@@ -123,6 +134,11 @@
                 "language": "captions",
                 "scopeName": "source.captions",
                 "path": "./syntaxes/captions.tmLanguage.json"
+            },
+            {
+                "language": "cfg",
+                "scopeName": "source.cfg",
+                "path": "./syntaxes/cfg.tmLanguage.json"
             }
         ],
         "commands": [],
