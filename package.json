@@ -63,7 +63,10 @@
                     ".kv",
                     ".vdf",
                     ".res",
-                    ".txt"
+                    ".txt",
+                    ".acf",
+                    ".vmf",
+                    ".vmx"
                 ],
                 "filenames": [
                     "gameinfo.txt"
@@ -182,7 +185,9 @@
                         "_rt_LayoffResult",
                         "_rt_ReplayScreenshot",
                         "_rt_ResolvedFullFrameDepth",
-                        "_rt_Scope"
+                        "_rt_Scope",
+                        "_rt_Portal1",
+                        "_rt_Portal2"
                     ]
                 },
                 "source-engine.shaderParameters": {
