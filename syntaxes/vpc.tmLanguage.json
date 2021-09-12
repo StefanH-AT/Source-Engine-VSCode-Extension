@@ -3,12 +3,9 @@
 	"name": "Valve Project Creator",
 	"scopeName": "source.vpc",
     "patterns": [
-        {
-			"include": "source.kv#keyvalue"
-		},
 		{
-			"include": "source.kv#object"
-		},
+            "include": "#keywords"
+        },
 		{
 			"include": "source.kv#comment"
 		},
@@ -19,16 +16,25 @@
 			"include": "source.kv#boolean"
 		},
 		{
-			"include": "source.kv#stringQuoted"
+			"include": "#stringQuoted"
 		},
 		{
-			"include": "source.kv#stringUnquoted"
-		},
-        {
-            "include": "#keywords"
-        }
+			"include": "#stringUnquoted"
+		}
 	],
     "repository": {
+		"stringUnquoted": {
+			"name": "string.unquoted.vpc",
+			"match": "[\\w|\\*\\.\\\\/%#-\\[\\]]+"
+		},
+		"stringQuoted": {
+			"name": "string.quoted.double.vpc",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [{
+				"include": "#keywords"
+			}]
+		},
         "keywords": {
             "patterns": [
                 {
