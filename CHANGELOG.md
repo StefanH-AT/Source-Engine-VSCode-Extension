@@ -4,6 +4,17 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.10]
+
+**General**
+- Added .vmf, .vmx and .acf file extensions to use keyvalue language highlighting
+
+**VMT**
+- Added further rendertarget textures
+
+**VPC**
+- Added first rudimentary support for VPC based on JJL77's implementation
+
 ## [0.0.9]
 
 **General**
