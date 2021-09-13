@@ -1,10 +1,11 @@
-import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation } from 'vscode'
+import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString } from 'vscode'
 import { KeyvalueDocument, getDocument, KeyValue } from './keyvalue-document';
 import { KvTokensProviderBase } from './keyvalue-parser/kv-token-provider-base';
 import { Tokenizer } from './keyvalue-parser/kv-tokenizer';
 import { ShaderParam } from './shader-param';
 import { listFilesSync } from 'list-files-in-dir'
 import { assert } from 'console';
+import { getParentDocumentDirectory } from './source-fs';
 
 export const legend = new SemanticTokensLegend([
     'struct',
@@ -169,15 +170,26 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
             const completions = suggestions.map(s => {
                 const completion = new CompletionItem(s.name);
                 completion.insertText = s.name.substring(1);
-                completion.documentation = `${s.description}`;
+                if(s.description != null) {
+                    completion.documentation = new MarkdownString(s.description);
+                }
+
                 if(s.defaultCompletion != null) {
                     completion.insertText += " " + s.defaultCompletion.toString();
+                } else if(s.type === "string" || s.type === "texture") {
+                    completion.insertText = new SnippetString(completion.insertText + ' "${1}"');
                 }
+
+                if(s.type === "texture") {
+                    completion.command = { command: "editor.action.triggerSuggest", title: "Re-trigger completions" };
+                }
+
                 return completion;
             });
             
             return new CompletionList(completions);
         }
+
 
         if(kv.valueRange.contains(position) && kv.value === "") {
             const param = shaderParams.find(p => p.name == kv.key);
@@ -186,34 +198,11 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
 
             if(param == null) return new CompletionList();
 
-            if(param.defaultCompletion != null) {
-                const completion = new CompletionItem(param.defaultCompletion.toString());
-                completion.detail = "Default Completion";
-                completions.items.push( completion );
-            }
+            // Completion contributors below here
 
-            // TODO: Make this texture path code more reusable
-            if(param.type === "texture" && document.uri.scheme === "file") {
-                const path = document.uri.path;
-                const materialPathIndex = path.indexOf("materials") + "materials".length;
-
-                internalTextures.forEach(rt => {
-                    const completion = new CompletionItem(rt);
-                    completion.detail = "Internal";
-                    completions.items.push(completion);
-                });
-
-                if(materialPathIndex > 0) {
-                    const materialRoot = path.substring(0, materialPathIndex);
-                    const textureFiles = listFilesSync(materialRoot, "vtf");
-                    textureFiles.forEach( t => {
-                        const completion = new CompletionItem(t.substring(materialPathIndex + 1));
-                        completion.insertText = t.substring(materialPathIndex + 1, t.length - 4);
-                        completion.detail = "Texture Path";
-                        completions.items.push(completion);
-                    });
-                } 
-            }
+            this.completeDefault(completions, document, kv, param);
+            this.completeTexturePath(completions, document, kv, param);
+            
 
             return completions;
 
@@ -221,6 +210,41 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
 
         return new CompletionList();
         
+    }
+
+    completeDefault(completions: CompletionList, document: TextDocument, kv: KeyValue, param: ShaderParam): void {
+        if(param.defaultCompletion == null) return;
+        const completion = new CompletionItem(param.defaultCompletion.toString());
+        completion.detail = "Default Completion";
+        completion.kind = CompletionItemKind.Value;
+        completions.items.push( completion );
+    }
+
+    completeTexturePath(completions: CompletionList, document: TextDocument, kv: KeyValue, param: ShaderParam): void {
+        if(param.type !== "texture" && document.uri.scheme !== "file") return;
+
+        internalTextures.forEach(rt => {
+            const completion = new CompletionItem(rt);
+            completion.detail = "Internal engine texture";
+            completions.items.push(completion);
+        });
+
+        const materialRoot = getParentDocumentDirectory(document.uri.path, "material");
+
+        if(materialRoot != null) {
+            
+            const textureFiles = listFilesSync(materialRoot, "vtf");
+            textureFiles.forEach( t => {
+                const filePath = t.substring(materialRoot.length + 1);
+                const filePathWithoutExtension = filePath.substring(0, filePath.length - 4);
+
+                const completion = new CompletionItem(filePath);
+                completion.insertText = filePathWithoutExtension;
+                completion.detail = "Texture Path";
+                completion.kind = CompletionItemKind.File;
+                completions.items.push(completion);
+            });
+        }
     }
 }
 

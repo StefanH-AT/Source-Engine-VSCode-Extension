@@ -1,4 +1,5 @@
 import { Range, TextDocument } from "vscode";
+import { KvTokensProviderBase } from "./keyvalue-parser/kv-token-provider-base";
 import { Token, TokenType } from "./keyvalue-parser/kv-tokenizer";
 
 const keyvalueDocuments: { file: string, document: KeyvalueDocument }[] = [];
@@ -50,12 +51,16 @@ export class KeyvalueDocument {
             const value = tokens[1].value;
             const keyRange = new Range(this.document.positionAt(tokens[0].start), this.document.positionAt(tokens[0].end));
             const valueRange = new Range(this.document.positionAt(tokens[1].start), this.document.positionAt(tokens[1].end));
-            return new KeyValue(key, value, keyRange, valueRange);
+
+            const unquotedKey = KvTokensProviderBase.unquoteToken(tokens[0], keyRange, null);
+            const unquotedValue = KvTokensProviderBase.unquoteToken(tokens[1], valueRange, null);
+            return new KeyValue(unquotedKey.content, unquotedValue.content, unquotedKey.range, unquotedValue.range);
         }
 
         if(tokens.length == 1 && tokens[0].type === TokenType.Key) {
             const keyRange = new Range(this.document.positionAt(tokens[0].start), this.document.positionAt(tokens[0].end));
-            return new KeyValue(tokens[0].value, "", keyRange, keyRange.with(keyRange.end, keyRange.end.translate(1)));
+            const unquoted = KvTokensProviderBase.unquoteToken(tokens[0], keyRange, null);
+            return new KeyValue(unquoted.content, "", unquoted.range, keyRange.with(keyRange.end, keyRange.end.translate(1)));
         }
 
         return null;

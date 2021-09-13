@@ -134,7 +134,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
     }
 
     processString(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, processors: { processor: Function, regex: RegExp }[], document: TextDocument): boolean {
-        const unquoted = this.unquoteToken(token, range, tokensBuilder);
+        const unquoted = KvTokensProviderBase.unquoteToken(token, range, tokensBuilder);
         const content = unquoted.content;
         const contentRange = unquoted.range;
         
@@ -149,13 +149,15 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         return processed;
     }
 
-    unquoteToken(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder): { content: string, range: Range } {
+    public static unquoteToken(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder | null): { content: string, range: Range } {
         // Quote tokens
         if( (token.value.startsWith('"') && token.value.startsWith('"')) || 
             (token.value.startsWith("'") && token.value.startsWith("'"))) {
-
-            tokensBuilder.push(new Range(range.start, range.start.translate(0, 1)), 'string', []);
-            tokensBuilder.push(new Range(range.end.translate(0, -1), range.end), 'string', []);
+            
+            if(tokensBuilder != null) {
+                tokensBuilder.push(new Range(range.start, range.start.translate(0, 1)), 'string', []);
+                tokensBuilder.push(new Range(range.end.translate(0, -1), range.end), 'string', []);
+            }
             
             return {
                 content: token.value.substring(1, token.value.length - 1),
