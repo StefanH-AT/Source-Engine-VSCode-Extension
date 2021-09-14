@@ -1,0 +1,28 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "Valve QC",
+	"scopeName": "source.qc",
+    "patterns": [
+        {
+			"include": "source.kv#comment"
+		},
+        {
+            "include": "#command"
+        },
+        {
+			"include": "source.kv#number"
+		},
+        {
+			"include": "source.kv#stringQuoted"
+		},
+        {
+			"include": "source.kv#stringUnquoted"
+		}
+	],
+    "repository": {
+        "command": {
+            "match": "\\$\\w+",
+            "name": "keyword"
+        }
+    }
+}

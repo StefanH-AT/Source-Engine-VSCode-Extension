@@ -125,6 +125,18 @@
                     ".vpc",
                     ".vgc"
                 ]
+            },
+            {
+                "id": "qc",
+                "aliases": [
+                    "Valve QC",
+                    "Valve MC",
+                    "Quake Command"
+                ],
+                "extensions": [
+                    ".qc",
+                    ".mc"
+                ]
             }
         ],
         "grammars": [
@@ -157,6 +169,11 @@
                 "language": "vpc",
                 "scopeName": "source.vpc",
                 "path": "./syntaxes/vpc.tmLanguage.json"
+            },
+            {
+                "language": "qc",
+                "scopeName": "source.qc",
+                "path": "./syntaxes/qc.tmLanguage.json"
             }
         ],
         "commands": [],

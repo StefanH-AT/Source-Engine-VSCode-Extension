@@ -32,6 +32,9 @@ Checklist for features that are planned or already implemented.
 - [x] .fgd highlighting
 - [x] UnifyFGD support (Hammer Addons)
 
+## QC
+- [x] QC highlighting
+
 ### Captions
 - [x] Captions highlighting
 - [x] Captions markup highlighting
@@ -56,7 +59,6 @@ This is what is planned for this extension. In case you wish to contribute, this
   - [ ] Schema for soundscapes
 
 ### QC
-- [ ] QC highlighting
 - [ ] QC smd/dmx path completion
 - [ ] Compile model button
   - [ ] Configuration for mdlcompile.exe

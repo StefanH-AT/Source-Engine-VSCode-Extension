@@ -9,6 +9,9 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 **General**
 - Added auto indentation and formatting for keyvalue files. Only enabled in .vmt for now
 
+**QC**
+- Added basic QC highlighting
+
 ## [0.0.10]
 
 **General**
