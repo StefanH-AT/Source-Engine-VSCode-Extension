@@ -94,7 +94,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 }
 
                 // error 
-                this.diagnostics.push(new Diagnostic(tokenRange, "Key without valve. Please add a value.", DiagnosticSeverity.Error));
+                this.diagnostics.push(new Diagnostic(tokenRange, "Key without value. Please add a value.", DiagnosticSeverity.Error));
             }
 
             if(token.type === TokenType.ObjectEnd) {
