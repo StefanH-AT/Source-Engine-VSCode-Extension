@@ -1,0 +1,55 @@
+{
+    "Static Prop": {
+        "prefix": "$staticprop",
+        "body": [
+            "\\$staticprop"
+        ],
+        "description": "Compile the model as a static prop"
+    },
+    "Material Source": {
+        "prefix": "$cdmaterials",
+        "body": [
+            "\\$cdmaterials \"${1:/}\""
+        ],
+        "description": "Define a material root"
+    },
+    "Model Name": {
+        "prefix": "$modelname",
+        "body": [
+            "\\$modelname \"$1.mdl\""
+        ],
+        "description": "Path and name of the compiled model"
+    },
+    "Body": {
+        "prefix": "$body",
+        "body": [
+            "\\$body \"${1:body}\" \"${2}.${3|dmx,smd|}"
+        ],
+        "description": "Define the main body mesh"
+    },
+    "Simple Sequence": {
+        "prefix": "$sequence",
+        "body": [
+            "\\$sequence \"${1:idle}\" \"${2}.${3|dmx,smd|}\""
+        ],
+        "description": "Compile the model as a static prop"
+    },
+    "Simple Collision Model": {
+        "prefix": "$collisionmodel",
+        "body": [
+            "\\$collisionmodel \"${1}.${2|dmx,smd|}\""
+        ],
+        "description": "Define a non-moving, single-mesh collision model"
+    },
+    "Concave Collision Model": {
+        "prefix": "$collisionmodel",
+        "body": [
+            "\\$collisionmodel \"${1}.${2|dmx,smd|}\"",
+            "{",
+            "\t\\$mass ${3:100}",
+            "\t\\$concave",
+            "}"
+        ],
+        "description": "Define a non-moving, single-mesh collision model with concave parts"
+    }
+}
