@@ -4,7 +4,7 @@ const packageJson = require('../package.json');
 
 // This is a pretty dirty unit test. It's more of a method to validate the configuration.
 test("Validate shader param config in package.json", () => {
-    const params = packageJson.contributes.configuration.properties["source-engine.shaderParameters"].default;
+    const params = packageJson.contributes.configuration.properties["sourceEngine.shaderParameters"].default;
     
     let i = 0;
     params.forEach((p: any) => {
