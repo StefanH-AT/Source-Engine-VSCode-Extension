@@ -10,12 +10,14 @@ This extension adds intelligent support for Source Engine file types.
 
 ## Features
 Checklist for features that are planned or already implemented.
+
 ### General
 - [x] Keyvalue highlighting
 - [x] Auto-detect common file names like gameinfo.txt
 - [x] Semantic Tokenizer
 - [x] Error detection
 - [x] Duplicate key detection
+- [x] Keyvalue file auto indentation and formatting
 
 ### VMT
 - [x] VMT highlighting

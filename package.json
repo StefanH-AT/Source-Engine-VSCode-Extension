@@ -2,7 +2,7 @@
     "name": "source-engine-support",
     "displayName": "Source Engine Support",
     "description": "Adds support for Source Engine file types and other commands",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "icon": "extension-icon-256.png",
     "author": {
         "name": "Stefan Heinz",
@@ -163,10 +163,13 @@
         "configuration": {
             "title": "Source Engine",
             "properties": {
-                "source-engine.internalTextures": {
-                    "type": [
-                        "array"
-                    ],
+                "sourceEngine.keyvalueBracesOnNewline": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Whether to put { on a newline after the key"
+                },
+                "sourceEngine.internalTextures": {
+                    "type": "array",
                     "default": [
                         "_rt_WaterReflection",
                         "_rt_WaterRefraction",
@@ -188,9 +191,10 @@
                         "_rt_Scope",
                         "_rt_Portal1",
                         "_rt_Portal2"
-                    ]
+                    ],
+                    "description": "List of internal textures. Includes render-targets and solid colors"
                 },
-                "source-engine.shaderParameters": {
+                "sourceEngine.shaderParameters": {
                     "type": [
                         "array"
                     ],

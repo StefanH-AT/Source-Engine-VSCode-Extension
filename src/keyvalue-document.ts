@@ -1,4 +1,4 @@
-import { Range, TextDocument } from "vscode";
+import { CancellationToken, DocumentFormattingEditProvider, FormattingOptions, ProviderResult, Range, TextDocument, TextEdit, workspace } from "vscode";
 import { KvTokensProviderBase } from "./keyvalue-parser/kv-token-provider-base";
 import { Token, TokenType } from "./keyvalue-parser/kv-tokenizer";
 
@@ -71,6 +71,10 @@ export class KeyvalueDocument {
         return this._tokens.filter(t => t.type === TokenType.Value);
     }
 
+    public getAllTokens(): Token[] {
+        return this._tokens;
+    }
+
     public findTokensInRange(range: Range): Token[] {
         
         return this._tokens.filter(t => {
@@ -95,6 +99,63 @@ export class KeyValue {
         this.value = value;
         this.keyRange = keyRange;
         this.valueRange = valueRange;
+    }
+
+}
+
+
+export class KeyvalueDocumentFormatter implements DocumentFormattingEditProvider {
+
+
+
+    protected doPutBracesOnNewline(): boolean {
+        const config = workspace.getConfiguration("sourceEngine");
+        return config.get("keyvalueBracesOnNewline") ?? false;
+    }
+
+    provideDocumentFormattingEdits(document: TextDocument, options: FormattingOptions, token: CancellationToken): TextEdit[] {
+
+        const kvDoc = getDocument(document);
+        if(kvDoc == null) return [];
+
+        const tokens = kvDoc.getAllTokens();
+        
+        let indentation = 0;
+        const edits: TextEdit[] = [];
+
+        for(let i = 0; i < tokens.length; i++) {
+
+            const token = tokens[i];
+                        
+            if(token.type === TokenType.ObjectStart) indentation++;
+            if(token.type === TokenType.ObjectEnd) indentation--;
+
+            const startPos = document.positionAt(token.start);
+            const line = document.lineAt(startPos.line);
+            const lineTokens = kvDoc.findTokensInRange(line.range);
+            
+            for(var tabs = ""; tabs.length < indentation; tabs += "\t") {}
+
+            if(token.type === TokenType.Key || token.type === TokenType.ObjectEnd || token.type === TokenType.Comment) {
+                const edit = new TextEdit(line.range.with(undefined, line.range.start.translate(0, line.firstNonWhitespaceCharacterIndex)), tabs);
+                edits.push(edit);
+            }
+            if(token.type === TokenType.ObjectStart) {
+                const keyToken = tokens[i - 1];
+                if(keyToken == null) continue;
+
+                // Get range between key and { and replace it with what we need
+                let keyBraceRange = new Range(document.positionAt(keyToken.end), document.positionAt(token.start));
+                
+                const edit = new TextEdit(keyBraceRange, this.doPutBracesOnNewline() ? `\n${tabs.substring(1)}` : ' '); // Chop off 1 \t, we're the opening {
+                edits.push(edit);
+                
+            }
+            
+        }
+
+        return edits;
+
     }
 
 }

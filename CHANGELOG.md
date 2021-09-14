@@ -4,6 +4,11 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.11]
+
+**General**
+- Added auto indentation and formatting for keyvalue files. Only enabled in .vmt for now
+
 ## [0.0.10]
 
 **General**

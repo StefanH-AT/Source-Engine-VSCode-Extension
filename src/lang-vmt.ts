@@ -226,6 +226,7 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
         internalTextures.forEach(rt => {
             const completion = new CompletionItem(rt);
             completion.detail = "Internal engine texture";
+            completion.kind = CompletionItemKind.Keyword;
             completions.items.push(completion);
         });
 
@@ -242,6 +243,7 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
                 completion.insertText = filePathWithoutExtension;
                 completion.detail = "Texture Path";
                 completion.kind = CompletionItemKind.File;
+                completion.preselect = true;
                 completions.items.push(completion);
             });
         }

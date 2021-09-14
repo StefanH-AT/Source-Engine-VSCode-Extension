@@ -1,3 +1,8 @@
 LightmappedGeneric {
-    $basetexture "examples/example_texture"
+	$basetexture "examples/example_texture"
+	// comment
+	proxies {
+
+		"gfg" 124
+	}
 }

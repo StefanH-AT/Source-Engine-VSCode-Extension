@@ -3,6 +3,7 @@ import * as vmt from './lang-vmt'
 import * as captions from './lang-captions'
 import * as keyvalue from './lang-keyvalue'
 import { ShaderParam } from './shader-param'
+import { KeyvalueDocumentFormatter } from './keyvalue-document'
 
 
 const packageJson = require('../package.json');
@@ -33,13 +34,12 @@ export function activate(context: vscode.ExtensionContext) {
     const vmtSelector = { language: 'vmt', schema: 'file' };
     const vmtTokenProvider = new vmt.VmtSemanticTokenProvider();
     const vmtSemantics = vscode.languages.registerDocumentSemanticTokensProvider(vmtSelector, vmtTokenProvider, vmtTokenProvider.legend);
-    const vmtCompletion = vscode.languages.registerCompletionItemProvider("vmt", new vmt.ShaderParamCompletionItemProvider(), "$", "%");
+    const vmtCompletion = vscode.languages.registerCompletionItemProvider("vmt", new vmt.ShaderParamCompletionItemProvider(), '$', '%'); // BUG: Trigger characters don't seem to work?
     const vmtHover = vscode.languages.registerHoverProvider("vmt", new vmt.ShaderParamHoverProvider());
     const vmtColors = vscode.languages.registerColorProvider("vmt", new vmt.ShaderParamColorsProvider());
-    context.subscriptions.push(vmtSemantics);
-    context.subscriptions.push(vmtCompletion);
-    context.subscriptions.push(vmtHover);
-    context.subscriptions.push(vmtColors);
+    const vmtFormatter = vscode.languages.registerDocumentFormattingEditProvider("vmt", new KeyvalueDocumentFormatter());
+    context.subscriptions.push(vmtSemantics, vmtCompletion, vmtHover, vmtColors, vmtFormatter);
+
 
     const captionsColors = vscode.languages.registerColorProvider("captions", new captions.CaptionColorsProvider())
     context.subscriptions.push(captionsColors);
@@ -48,7 +48,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 function loadConfig() {
-    config = vscode.workspace.getConfiguration("source-engine");
+    config = vscode.workspace.getConfiguration("sourceEngine");
     shaderParams = config.get("shaderParameters") ?? [];
     internalTextures = config.get("internalTextures") ?? [];
 }
