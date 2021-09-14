@@ -50,6 +50,10 @@
             {
                 "language": "keyvalue3",
                 "path": "./snippets/gameinfo-snippets.json"
+            },
+            {
+                "language": "qc",
+                "path": "./snippets/qc-snippets.json"
             }
         ],
         "languages": [
@@ -219,52 +223,72 @@
                         {
                             "name": "%compilewater",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* Makes the brush water.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)#Other"
                         },
                         {
                             "name": "%compileclip",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* Makes the brush a clip. Blocks players, and NPCS but **not physics objects**.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compileclip"
                         },
                         {
                             "name": "%compiledetail",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* Any brush using this material will be made func_detail.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compiledetail"
                         },
                         {
                             "name": "%compileladder",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* Makes this brush climbable.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compileladder"
                         },
                         {
                             "name": "%compilenodraw",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* The material will not be drawn.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compilenodraw"
                         },
                         {
                             "name": "%compilenolight",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* Skip compiling lightmaps for this material. Useful for solid black or self-illuminating materials.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compilenolight"
                         },
                         {
                             "name": "%compilenonsolid",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* A brush with this material will not have collision.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compilenonsolid"
                         },
                         {
                             "name": "%compilenpcclip",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* Makes the brush an NPC clip. Only NPCs collide with this brush. (Note that Portal 2 security cameras and turrets are NPCs)",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compilenpcclip"
                         },
                         {
                             "name": "%compilepassbullets",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* Allows guns to shoot straight through the brush. Useful for grates or foliage",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compilepassbullets"
                         },
                         {
                             "name": "%compileskip",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* VBSP will not compile faces using this material. Be careful.",
+                            "wikiUri": ""
                         },
                         {
                             "name": "%compileteam",
