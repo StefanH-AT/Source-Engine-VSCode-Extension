@@ -1,0 +1,29 @@
+{
+    "FGD Entity": {
+        "prefix": "@Class",
+        "body": [
+            "@${1|PointClass,SolidClass,MoveClass,FilterClass,NPCClass,KeyFrameClass|} base(TargetName, Origin)",
+            "= ${3:entity_name} : \"${4:Description}\"",
+            "[",
+            "",
+            "\tspawnflags(flags) =",
+            "\t[",
+            "\t\t1 : \"Flag\" : 0",
+            "\t]",
+            "",
+            "\tKeyvalueExample(string) : \"Keyvalue Display Name\" : \"Default\" : \"Description\"",
+            "",
+            "\tinput InputExample(void) : \"Description\"",
+            "",
+            "\toutput OutputExample(void) : \"Description\"",
+            "]"
+        ],
+        "description": "Template for an FGD entity definition"
+    },
+    "Input": {
+        "prefix": "input",
+        "body": [
+            "input ${1:name}(${2|string,integer,float,boolean,choices,flags,axis,angle,angle_negative_pitch,color255,color1,filterclass,instance_file,instance_param,instance_variable,material,node_dest,node_id,npcclass,origin,particlesystem,pointentityclass,scene,script,scriptlist,sidelist,sound,sprite,decal,studio,target_destination,target_name_or_class,target_source,vecline,vector|}) : \"${3:description}\""
+        ]
+    }
+}

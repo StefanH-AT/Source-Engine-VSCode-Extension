@@ -54,6 +54,10 @@
             {
                 "language": "qc",
                 "path": "./snippets/qc-snippets.json"
+            },
+            {
+                "language": "fgd",
+                "path": "./snippets/fgd-snippets.json"
             }
         ],
         "languages": [
