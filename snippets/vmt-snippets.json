@@ -29,5 +29,17 @@
             "}"
         ],
         "description": "Basic VertexlitGeneric material for water"
+    },
+    "PBR": {
+        "prefix": "PBR",
+        "body": [
+            "PBR {",
+            "\t\\$basetexture \"$1\"",
+            "\t\\$bumpmap \"$2\"",
+            "\t\\$mraotexture \"$3\"",
+            "\t\\$envmap env_cubemap",
+            "}"
+        ],
+        "description": "Basic PBR Material for brushes. Add `$model 1` to use on a model."
     }
 }
