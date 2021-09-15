@@ -292,26 +292,34 @@
                             "type": "bool",
                             "defaultCompletion": 1,
                             "description": "*[Compiled]* VBSP will not compile faces using this material. Be careful.",
-                            "wikiUri": ""
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compileskip"
                         },
                         {
                             "name": "%compileteam",
-                            "type": "bool",
-                            "defaultCompletion": 1
+                            "type": "int",
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* Compilation modifiers only affect a specific team.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compileteam"
                         },
                         {
                             "name": "%compiletrigger",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "*[Compiled]* Allows the material to be used for triggers.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25compiletrigger"
                         },
                         {
                             "name": "%keywords",
-                            "type": "string"
+                            "type": "string",
+                            "description": "Comma separated list used in Hammer's keyword filter.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25keywords"
                         },
                         {
                             "name": "%notooltexture",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Hides the material from Hammer's texture browser",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25notooltexture"
                         },
                         {
                             "name": "%noportal",
@@ -323,7 +331,9 @@
                         {
                             "name": "%tooltexture",
                             "type": "texture",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Defines a texture to use as the thumbnail in Hammer's texture browser",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/%25tooltexture"
                         },
                         {
                             "name": "$allowdiffusemodulation",
@@ -359,7 +369,9 @@
                         },
                         {
                             "name": "$bumpmap",
-                            "type": "texture"
+                            "type": "texture",
+                            "description": "Defines the bump map to use. Despite the name, this actually represents a 3D normal map rather than a 1D height map. \n\nThe [PBR](https://docs.momentum-mod.org/guide/pbr-shader/) shader uses the alpha channel as a height map for parallax occlusion mapping.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Bump_map"
                         },
                         {
                             "name": "$bumptransform",
@@ -421,7 +433,9 @@
                         {
                             "name": "$envmap",
                             "type": "env_cubemap",
-                            "defaultCompletion": "env_cubemap"
+                            "defaultCompletion": "env_cubemap",
+                            "description": "Defines the texture to represent reflections on this material. Use *env_cubemap* to use the nearest cubemap.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$envmap"
                         },
                         {
                             "name": "$envmapcontrast",
@@ -458,12 +472,16 @@
                         {
                             "name": "$halflambert",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Enables half-lambertian lighting, which wraps lighting further around a model.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$halflambert"
                         },
                         {
                             "name": "$ignorez",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Makes the material always appear on top of everything else. Only really used for user-interfaces.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$ignorez"
                         },
                         {
                             "name": "$lightwarptexture",
@@ -484,7 +502,9 @@
                         {
                             "name": "$model",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Marks the material to be used for models rather than brushes. Also hides it from Hammer's texture browser.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$model_(VMT)"
                         },
                         {
                             "name": "$layertint1",
@@ -497,30 +517,42 @@
                         {
                             "name": "$nocull",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Disables culling on this material to show the material on both sides of a face.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$nocull"
                         },
                         {
                             "name": "$nodecal",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Prevents decals like bullet holes to appear on the material.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$nodecal"
                         },
                         {
                             "name": "$nofog",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Stops the material from rendering into fog. Used typically for 2D skyboxes.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$nofog"
                         },
                         {
                             "name": "$normalmap",
-                            "type": "texture"
+                            "type": "texture",
+                            "description": "Defines the normal map to use. Same as `$bumpmap`. \n\nThe [PBR](https://docs.momentum-mod.org/guide/pbr-shader/) shader uses the alpha channel as a height map for parallax occlusion mapping.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Bump_map"
                         },
                         {
                             "name": "$notint",
-                            "type": "bool"
+                            "type": "bool",
+                            "description": "Prevents the material from getting tinted by the prop's `rendercolor` or `$color2`.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$notint"
                         },
                         {
                             "name": "$phong",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Enables Phong shading",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$phong"
                         },
                         {
                             "name": "$phongexponent",
@@ -596,19 +628,29 @@
                         },
                         {
                             "name": "$rimlight",
-                            "type": "bool"
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Enables rim-lighting. Requires `$phong 1`.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$rimlight"
                         },
                         {
                             "name": "$rimlightexponent",
-                            "type": "int"
+                            "type": "int",
+                            "description": "Exponent for phong component of rim lighting. The rim exponent defines the 'tightness' of the highlight. A higher exponent results in a smaller, tighter highlight while a lower exponent results in a broader flatter one.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$rimlight#Additional_parameters"
                         },
                         {
                             "name": "$rimlightboost",
-                            "type": "int"
+                            "type": "int",
+                            "description": "Boost for ambient cube component of rim lighting.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$rimlight#Additional_parameters"
                         },
                         {
-                            "name": "$rimlightmask",
-                            "type": "bool"
+                            "name": "$rimmask",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Uses the alpha channel of the $phongexponenttexture to mask rimlighting.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$rimlight#Additional_parameters"
                         },
                         {
                             "name": "$fresnelrangestexture",
@@ -625,11 +667,15 @@
                         {
                             "name": "$ssbump",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Enables self-shadowing of the bumpmap. \nTip: You can use `height2ssbump.exe` to generate this map.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$ssbump"
                         },
                         {
                             "name": "$surfaceprop",
-                            "type": "string"
+                            "type": "string",
+                            "description": "Sets the physical surface properties to use for this material. This affects sounds and physics like mass and buoyancy.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$surfaceprop"
                         },
                         {
                             "name": "$tintmasktexture",
@@ -638,20 +684,29 @@
                         {
                             "name": "$translucent",
                             "type": "bool",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Makes the texture partially see-through. \nDisables projected texture shadow casting and can cause depth sorting problems.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$translucent"
                         },
                         {
                             "name": "$treeSway",
                             "type": "int",
-                            "defaultCompletion": 1
+                            "defaultCompletion": 1,
+                            "description": "Enables the tree-sway effect, which morphs the material according to the level's env_wind to emulate wind blowing through leaves.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$treeSway"
                         },
                         {
                             "name": "$writez",
-                            "type": "int"
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Used on the `DecalModulate` shader to force the material to write into z-buffer.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$writeZ"
                         },
                         {
                             "name": "$mraotexture",
-                            "type": "texture"
+                            "type": "texture",
+                            "description": "Used in the PBR shader to represent **M**etallic, **R**oughness and **A**mbient **O**cclusion maps. \n\nRed: Metallic \n\nGreen: Roughness \n\nBlue: Ambient Occlusion",
+                            "wikiUri": "https://docs.momentum-mod.org/guide/pbr-shader/#manual-mrao-creation-in-photoshop-channel-packing"
                         },
                         {
                             "name": "$abovewater",
