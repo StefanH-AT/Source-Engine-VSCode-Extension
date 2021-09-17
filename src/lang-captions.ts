@@ -74,9 +74,11 @@ export class CaptionColorsProvider implements DocumentColorProvider {
             if(clrMatches.length == 0) continue;
             clrMatches.forEach(match => {
                 const color = new Color(parseInt(match[1]) / 255, parseInt(match[2]) / 255, parseInt(match[3]) / 255, 1.0);
-                const posStart = kv.value.indexOf(match[0]) + 5;
-                const posEnd = posStart + kv.value.indexOf(">");
-                const range = kv.valueRange.with(kv.valueRange.start.translate(0, posStart), kv.valueRange.start.translate(0, posEnd));
+
+                const wholeString = match[0];
+                const posStart = kv.value.indexOf(wholeString);
+                const posEnd = posStart + wholeString.length;
+                const range = kv.valueRange.with(kv.valueRange.start.translate(0, posStart + 5), kv.valueRange.start.translate(0, posEnd - 1));
                 colorInfos.push(new ColorInformation(range, color));
             });
 
