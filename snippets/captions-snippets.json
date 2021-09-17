@@ -1,0 +1,48 @@
+{
+    "Language File": {
+        "prefix": "Lang",
+        "body": [
+            "lang {",
+            "\tLanguage ${1|english,german,french,italian,spanish,japanese,chinese|}",
+            "\tTokens {",
+            "\t\t\"${2:Sound}\" \"<clr:${3:255},${4:255},${5:255}>$6\"",
+            "}"
+        ],
+        "description": "Create a new language definition file"
+    },
+    "Language Line": {
+        "prefix": "\"",
+        "body": [
+            "\t\t\"${1:Sound}\" \"${2:Line}\""
+        ],
+        "description": "Insert a new line"
+    },
+    "Color Tag": {
+        "prefix": "<clr",
+        "body": [
+            "<clr:${1:255},${2:255},${3:255}>$4"
+        ],
+        "description": "Insert a clr tag"
+    },
+    "Bold Tag": {
+        "prefix": "<b>",
+        "body": [
+            "<b>$1<b>"
+        ],
+        "description": "Insert a bold tag"
+    },
+    "Italic Tag": {
+        "prefix": "<i>",
+        "body": [
+            "<i>$1<i>"
+        ],
+        "description": "Insert an italic tag"
+    },
+    "Delay Tag": {
+        "prefix": "<delay",
+        "body": [
+            "<delay:${1:1}>$2"
+        ],
+        "description": "Insert a delay tag"
+    }
+}

@@ -58,6 +58,10 @@
             {
                 "language": "fgd",
                 "path": "./snippets/fgd-snippets.json"
+            },
+            {
+                "language": "captions",
+                "path": "./snippets/captions-snippets.json"
             }
         ],
         "languages": [
