@@ -4,6 +4,22 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.12]
+
+**General**
+- Big refactor
+- Disabled duplicate key warning by default
+
+**VMT**
+- Enabled duplicate key warning only on shader parameters
+
+**Captions**
+- Added formatting
+- Added tokenization
+- Improved `<clr>` tag colorization
+- Added `<playerclr>` tag colorization
+- Added snippets for tags and to create a new file
+
 ## [0.0.11]
 
 **General**
