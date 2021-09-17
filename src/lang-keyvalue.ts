@@ -1,5 +1,5 @@
-import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument } from 'vscode';
-import { KvTokensProviderBase } from './keyvalue-parser/kv-token-provider-base';
+import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector } from 'vscode';
+import { KvTokensProviderBase, Processor } from './keyvalue-parser/kv-token-provider-base';
 import { Token, TokenType } from './keyvalue-parser/kv-tokenizer';
 
 export const legend = new SemanticTokensLegend([
@@ -13,10 +13,18 @@ export const legend = new SemanticTokensLegend([
     'declaration'
 ]);
 
+export const selector: DocumentSelector = "keyvalue3";
+
+export function init(context: ExtensionContext) {
+    const kvTokenProvider = new KeyvalueSemanticTokensProvider();
+    const kvSemantics = languages.registerDocumentSemanticTokensProvider(selector, kvTokenProvider, kvTokenProvider.legend);
+    context.subscriptions.push(kvSemantics, kvTokenProvider.diagnosticCollection);
+}
+
 export class KeyvalueSemanticTokensProvider extends KvTokensProviderBase {
 
-    protected keyProcessors: { processor: Function; regex: RegExp; }[] = [];
-    protected valueProcessors: { processor: Function; regex: RegExp; }[] =
+    protected keyProcessors: Processor[] = [];
+    protected valueProcessors: Processor[] =
     [
         { regex: /^\d+(\.\d+)?$/, processor: this.processValueNumber },
         { regex: /^(\{|\[)((\d+(\.\d+)? ?)+)(\}|\])$/, processor: this.processValueArray }

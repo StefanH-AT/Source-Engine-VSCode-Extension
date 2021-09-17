@@ -2,6 +2,18 @@ import { CancellationToken, Diagnostic, DiagnosticCollection, DiagnosticSeverity
 import { addDocument } from "../keyvalue-document";
 import { Token, Tokenizer, TokenType } from "./kv-tokenizer";
 
+export type ProcessorFunction = (content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) => void;
+
+export class Processor {
+    public processor: ProcessorFunction = (content, range, tokensBuilder, captures, document, scope) => { };
+    public regex: RegExp = /.+/;
+
+    constructor(processor: ProcessorFunction, regex: RegExp) {
+        this.processor = processor;
+        this.regex = regex;
+    }
+}
+
 export abstract class KvTokensProviderBase implements DocumentSemanticTokensProvider {
     
     public legend: SemanticTokensLegend;
@@ -11,15 +23,9 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
     diagnostics: Diagnostic[] = [];
     bracketStack: number = 0;
 
-    protected abstract valueProcessors: {
-        processor: Function,
-        regex: RegExp
-    }[];
+    protected abstract valueProcessors: Processor[];
 
-    protected abstract keyProcessors: {
-        processor: Function,
-        regex: RegExp
-    }[];
+    protected abstract keyProcessors: Processor[];
 
     constructor(legend: SemanticTokensLegend, diagnosticCollection: DiagnosticCollection) {
         this.tokenizer = new Tokenizer();
@@ -68,17 +74,17 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 if(nextToken.type === TokenType.ObjectStart) {
                     tokensBuilder.push(tokenRange, 'struct', []);
                     this.bracketStack++;
-                    currentScope += `.${token.value}`;
+                    currentScope += `.${KvTokensProviderBase.stripQuotes(token.value.toLowerCase())}`;
                     continue;
                 }
                 
                 // We're a keyvalue's key. Process the value too and skip forward
                 if(nextToken.type === TokenType.Value) {
                     
-                    this.processKvKey(token, tokenRange, tokensBuilder, document);
+                    this.processKvKey(token, tokenRange, tokensBuilder, document, currentScope);
                     
                     const nextTokenRange = new Range(document.positionAt(nextToken.start), document.positionAt(nextToken.end));
-                    this.processKvValue(nextToken, nextTokenRange, tokensBuilder, document);
+                    this.processKvValue(nextToken, nextTokenRange, tokensBuilder, document, currentScope);
                     i += interestingToken.offset;
                     
                     // Check for duplicates
@@ -126,16 +132,16 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         return { token: nextToken, offset: n };
     }
 
-    protected processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument): void {
-        const processed = this.processString(token, range.with(range.start, range.end.translate(0, 1)), tokensBuilder, this.keyProcessors, document);
+    protected processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument, scope: string): void {
+        const processed = this.processString(token, range.with(range.start, range.end.translate(0, 1)), tokensBuilder, this.keyProcessors, document, scope);
         if(!processed) tokensBuilder.push(range, 'variable', ['declaration']);
     }
-    protected processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument): void {
-        const processed = this.processString(token, range, tokensBuilder, this.valueProcessors, document);
+    protected processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument, scope: string): void {
+        const processed = this.processString(token, range, tokensBuilder, this.valueProcessors, document, scope);
         if(!processed) tokensBuilder.push(range, 'string', []);
     }
 
-    processString(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, processors: { processor: Function, regex: RegExp }[], document: TextDocument): boolean {
+    processString(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, processors: Processor[], document: TextDocument, scope: string): boolean {
         const unquoted = KvTokensProviderBase.unquoteToken(token, range, tokensBuilder);
         const content = unquoted.content;
         const contentRange = unquoted.range;
@@ -143,7 +149,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         const processed = processors.some(processor => {
             const matches = content.match(processor.regex);
             if(matches) {
-                processor.processor.call(this, content, contentRange, tokensBuilder, matches, document);
+                processor.processor.call(this, content, contentRange, tokensBuilder, matches, document, scope);
                 return true;
             }
             return false;
@@ -157,8 +163,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
 
     public static unquoteToken(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder | null): { content: string, range: Range } {
         // Quote tokens
-        if( (token.value.startsWith('"') && token.value.startsWith('"')) || 
-            (token.value.startsWith("'") && token.value.startsWith("'"))) {
+        if( this.isQuoted(token.value) ) {
             
             if(tokensBuilder != null) {
                 tokensBuilder.push(new Range(range.start, range.start.translate(0, 1)), 'string', []);
@@ -175,6 +180,17 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 range: range
             }
         }
+    }
+
+    public static isQuoted(text: string): boolean {
+        return (text.startsWith('"') && text.startsWith('"')) || 
+               (text.startsWith("'") && text.startsWith("'"));
+    }
+
+    public static stripQuotes(text: string) {
+        if(this.isQuoted(text)) {
+            return text.substring(1, text.length - 1);
+        } else return text;
     }
 
 }

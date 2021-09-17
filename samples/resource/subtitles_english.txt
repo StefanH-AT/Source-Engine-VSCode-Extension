@@ -9,8 +9,8 @@ lang
         "character.03" "<clr:255,125,240>It's just great, I'm telling you!"
         "character.04" "<clr:255,125,240>It doesn't just color in basic keywords, no it actually formats markup."
         "character.05" "<clr:255,125,240>With this plugin, formatting tags like <B>bold<B> or <I>italic<I> actually receive their styles."
-        "character.06" "<clr:55,250,240>But it doesn't end there. In fact, the color value of the clr tag shows you a preview of what this color looks like!<delay:5.0> Isn't that awesome?"
-        "bomb.big" "<clr:55,250,240><sfx><norepeat:5><i>*Atom Bomb Explosion*<i>"
+        "character.06" "<clr:55,250,240>But it doesn't end there. In fact, the color value of the clr tag shows you a preview of what this color looks like!<delay:5.0> Isn't that <clr:115,225,240>awesome?"
+        "bomb.big" "<clr:55,250,240><sfx><norepeat:5><i>*Atom Bomb Explosion*<i>" 
         
     }
 }

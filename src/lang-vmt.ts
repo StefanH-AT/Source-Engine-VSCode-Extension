@@ -1,11 +1,12 @@
-import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString } from 'vscode'
-import { KeyvalueDocument, getDocument, KeyValue, tokenizeDocument } from './keyvalue-document';
-import { KvTokensProviderBase } from './keyvalue-parser/kv-token-provider-base';
+import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector } from 'vscode'
+import { KeyvalueDocument, getDocument, KeyValue, tokenizeDocument, KeyvalueDocumentFormatter } from './keyvalue-document';
+import { KvTokensProviderBase, Processor } from './keyvalue-parser/kv-token-provider-base';
 import { Token, Tokenizer } from './keyvalue-parser/kv-tokenizer';
 import { ShaderParam } from './shader-param';
 import { listFilesSync } from 'list-files-in-dir'
 import { assert } from 'console';
 import { getParentDocumentDirectory } from './source-fs';
+import { config } from './main';
 
 export const legend = new SemanticTokensLegend([
     'struct',
@@ -22,22 +23,31 @@ export const legend = new SemanticTokensLegend([
     'readonly'
 ]);
 
+export const selector: DocumentSelector = "vmt";
+
 export let shaderParams: ShaderParam[];
 export let internalTextures: string[];
 
-export function initShaderParams(params: ShaderParam[], intTextures: string[]) {
-    shaderParams = params;
-    internalTextures = intTextures;
+export function init(context: ExtensionContext) {
+    shaderParams = config.get("shaderParameters") ?? [];
+    internalTextures = config.get("internalTextures") ?? [];
+
+    const vmtSemantics = languages.registerDocumentSemanticTokensProvider(selector, new VmtSemanticTokenProvider(), legend);
+    const vmtCompletion = languages.registerCompletionItemProvider(selector, new ShaderParamCompletionItemProvider(), '$', '%'); // BUG: Trigger characters don't seem to work?
+    const vmtHover = languages.registerHoverProvider(selector, new ShaderParamHoverProvider());
+    const vmtColors = languages.registerColorProvider(selector, new ShaderParamColorsProvider());
+    const vmtFormatter = languages.registerDocumentFormattingEditProvider(selector, new KeyvalueDocumentFormatter());
+    context.subscriptions.push(vmtSemantics, vmtCompletion, vmtHover, vmtColors, vmtFormatter);
 }
 
 export class VmtSemanticTokenProvider extends KvTokensProviderBase {
 
-    protected keyProcessors: { processor: Function; regex: RegExp; }[] = [
+    protected keyProcessors: Processor[] = [
         { regex: /\$\w+/, processor: this.processKeyShader },
         { regex: /\%\w+/, processor: this.processKeyCompile }
     ];
 
-    protected valueProcessors: { processor: Function; regex: RegExp; }[] = [
+    protected valueProcessors: Processor[] = [
         { regex: /.*/, processor: this.processValue }
     ];
 

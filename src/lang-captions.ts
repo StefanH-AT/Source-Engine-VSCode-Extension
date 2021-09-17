@@ -1,50 +1,85 @@
 
-import { TextDocument, CancellationToken, DocumentColorProvider, Color, ColorPresentation, Range, ColorInformation } from "vscode";
+import { TextDocument, CancellationToken, DocumentColorProvider, Color, ColorPresentation, Range, ColorInformation, languages, SemanticTokensLegend, SemanticTokensBuilder, ExtensionContext, DocumentSelector } from "vscode";
+import { getDocument } from "./keyvalue-document";
+import { KvTokensProviderBase, Processor } from "./keyvalue-parser/kv-token-provider-base";
+
+export const legend = new SemanticTokensLegend([
+    'struct',
+    'comment',
+    'variable',
+    'string',
+    'number',
+    'boolean',
+    'operator',
+    'keyword',
+    'parameter'
+], [
+    'declaration',
+    'readonly'
+]);
+
+export const selector: DocumentSelector = "captions";
+
+export function init(context: ExtensionContext) {
+    const captionsColors = languages.registerColorProvider(selector, new CaptionColorsProvider());
+    const captionsTokenProvider = languages.registerDocumentSemanticTokensProvider(selector, new CaptionsSemanticTokenProvider(), legend);
+    context.subscriptions.push(captionsColors);
+}
+
+export class CaptionsSemanticTokenProvider extends KvTokensProviderBase {
+
+    protected keyProcessors: Processor[] = [
+        { regex: /.*/, processor: this.processKey }
+    ];
+    protected valueProcessors: Processor[] = [
+        { regex: /.*/, processor: this.processValue }
+    ];
+
+    constructor() {
+        super(legend, languages.createDiagnosticCollection('captions'));
+    }
+
+    processKey(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) {
+        tokensBuilder.push(range, "parameter");
+    }
+
+    processValue(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) {
+        
+        if(scope === ".lang.tokens") {
+            return; // Don't add a semantic token to  lang values and let tmLanguage handle it.
+        }
+        tokensBuilder.push(range, "string");
+    }
+
+}
 
 export class CaptionColorsProvider implements DocumentColorProvider {
-    head = "<clr:";
-    tail = ">";
+    
     provideDocumentColors(document: TextDocument, cancellationToken: CancellationToken) : ColorInformation[] {
         const lines = document.lineCount;
 
-        const colorInfos = [];
+        const kvDoc = getDocument(document);
+        if(kvDoc == null) return [];
+
+        const colorInfos: ColorInformation[] = [];
         // TODO: Implement <playerclr>
         for(let i = 0; i < lines; i++) {
             if(cancellationToken.isCancellationRequested) break;
             
             // Get a line that isn't empty
-            const line = document.lineAt(i);
-            if(line.isEmptyOrWhitespace) continue;
-            const lineText = line.text;
+            const kv = kvDoc.getKeyValueAt(i);
+            if(kv == null) continue;
 
-            // Check if it start with the color tag
-            const beginIndex = lineText.indexOf(this.head);
-            if(beginIndex === -1) continue;
-            
-            // Check if it ends with the color tag
-            const rest = lineText.slice(beginIndex);
-            const endIndex = rest.indexOf(this.tail);
-            if(endIndex === -1) continue;
+            const clrMatches = [...kv.value.matchAll(/<clr:(\d{1,3}),(\d{1,3}),(\d{1,3})>/g)];
+            if(clrMatches.length == 0) continue;
+            clrMatches.forEach(match => {
+                const color = new Color(parseInt(match[1]) / 255, parseInt(match[2]) / 255, parseInt(match[3]) / 255, 1.0);
+                const posStart = kv.value.indexOf(match[0]) + 5;
+                const posEnd = posStart + kv.value.indexOf(">");
+                const range = kv.valueRange.with(kv.valueRange.start.translate(0, posStart), kv.valueRange.start.translate(0, posEnd));
+                colorInfos.push(new ColorInformation(range, color));
+            });
 
-            // Extract the values of the color tag
-            const colorString = rest.substring(this.head.length, endIndex);
-            const rgbString = colorString.split(",");
-            if(rgbString.length != 3) continue;
-            
-            // Validate array
-            const rgb = rgbString.map(item => parseInt(item));
-            if(rgb.some(num => num < 0 || num > 255)) continue;
-
-            // Get the position and color information
-            const posStart = beginIndex + this.head.length;
-            const posEnd = endIndex + beginIndex;
-            //output.appendLine(`${posStart}-${posEnd} => '${lineText.substring(posStart, posEnd)}'`);
-
-            // We got a color!
-            const color = new Color(rgb[0] / 255, rgb[1] / 255, rgb[2] / 255, 1.0);
-            const range = new Range(i, posStart, i, posEnd);
-            const colorInfo = new ColorInformation(range, color);
-            colorInfos.push(colorInfo);
         }
 
         return colorInfos;
