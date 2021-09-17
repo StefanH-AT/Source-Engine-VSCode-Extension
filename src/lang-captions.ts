@@ -1,6 +1,6 @@
 
 import { TextDocument, CancellationToken, DocumentColorProvider, Color, ColorPresentation, Range, ColorInformation, languages, SemanticTokensLegend, SemanticTokensBuilder, ExtensionContext, DocumentSelector } from "vscode";
-import { getDocument } from "./keyvalue-document";
+import { getDocument, KeyvalueDocumentFormatter } from "./keyvalue-document";
 import { KvTokensProviderBase, Processor } from "./keyvalue-parser/kv-token-provider-base";
 
 export const legend = new SemanticTokensLegend([
@@ -23,7 +23,8 @@ export const selector: DocumentSelector = "captions";
 export function init(context: ExtensionContext) {
     const captionsColors = languages.registerColorProvider(selector, new CaptionColorsProvider());
     const captionsTokenProvider = languages.registerDocumentSemanticTokensProvider(selector, new CaptionsSemanticTokenProvider(), legend);
-    context.subscriptions.push(captionsColors);
+    const captionsFormatter = languages.registerDocumentFormattingEditProvider(selector, new KeyvalueDocumentFormatter());
+    context.subscriptions.push(captionsColors, captionsTokenProvider, captionsFormatter);
 }
 
 export class CaptionsSemanticTokenProvider extends KvTokensProviderBase {
@@ -87,7 +88,6 @@ export class CaptionColorsProvider implements DocumentColorProvider {
 
                 const wholeString = match[0];
                 const posStart = kv.value.indexOf(wholeString);
-                const posEnd = posStart + wholeString.length;
 
                 const start1 = kv.value.indexOf(":") + 1;
                 const end1 = kv.value.lastIndexOf(":") + 1;
