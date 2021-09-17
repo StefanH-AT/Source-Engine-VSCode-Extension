@@ -62,7 +62,6 @@ export class CaptionColorsProvider implements DocumentColorProvider {
         if(kvDoc == null) return [];
 
         const colorInfos: ColorInformation[] = [];
-        // TODO: Implement <playerclr>
         for(let i = 0; i < lines; i++) {
             if(cancellationToken.isCancellationRequested) break;
             
@@ -71,7 +70,6 @@ export class CaptionColorsProvider implements DocumentColorProvider {
             if(kv == null) continue;
 
             const clrMatches = [...kv.value.matchAll(/<clr:(\d{1,3}),(\d{1,3}),(\d{1,3})>/g)];
-            if(clrMatches.length == 0) continue;
             clrMatches.forEach(match => {
                 const color = new Color(parseInt(match[1]) / 255, parseInt(match[2]) / 255, parseInt(match[3]) / 255, 1.0);
 
@@ -80,6 +78,24 @@ export class CaptionColorsProvider implements DocumentColorProvider {
                 const posEnd = posStart + wholeString.length;
                 const range = kv.valueRange.with(kv.valueRange.start.translate(0, posStart + 5), kv.valueRange.start.translate(0, posEnd - 1));
                 colorInfos.push(new ColorInformation(range, color));
+            });
+
+            const playerclrMatches = [...kv.value.matchAll(/<playerclr:(\d{1,3}),(\d{1,3}),(\d{1,3}):(\d{1,3}),(\d{1,3}),(\d{1,3})>/g)];
+            playerclrMatches.forEach(match => {
+                const color1 = new Color(parseInt(match[1]) / 255, parseInt(match[2]) / 255, parseInt(match[3]) / 255, 1.0);
+                const color2 = new Color(parseInt(match[4]) / 255, parseInt(match[5]) / 255, parseInt(match[6]) / 255, 1.0);
+
+                const wholeString = match[0];
+                const posStart = kv.value.indexOf(wholeString);
+                const posEnd = posStart + wholeString.length;
+
+                const start1 = kv.value.indexOf(":") + 1;
+                const end1 = kv.value.lastIndexOf(":") + 1;
+                const end2 = kv.value.lastIndexOf(">");
+
+                const range1 = kv.valueRange.with(kv.valueRange.start.translate(0, start1), kv.valueRange.start.translate(0, end1));
+                const range2 = kv.valueRange.with(kv.valueRange.start.translate(0, end1), kv.valueRange.start.translate(0, end2));
+                colorInfos.push(new ColorInformation(range1, color1), new ColorInformation(range2, color2));
             });
 
         }

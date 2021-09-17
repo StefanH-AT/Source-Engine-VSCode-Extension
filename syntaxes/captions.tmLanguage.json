@@ -85,6 +85,9 @@
                             "include": "#tagClr"
                         },
                         {
+                            "include": "#tagPlayerClr"
+                        },
+                        {
                             "include": "#tagSfx"
                         }
                     ]
@@ -137,6 +140,32 @@
                     "name": "constant.numeric.fgd"
                 },
                 "7": {
+                    "name": "constant.numeric.fgd"
+                }
+            }
+        },
+        "tagPlayerClr": {
+            "match": "\\<((?i)playerclr(?-i))(:)(\\d{1,3})\\s*(,)(\\d{1,3})\\s*(,)(\\d{1,3})(:)(\\d{1,3})\\s*(,)(\\d{1,3})\\s*(,)(\\d{1,3})\\>",
+            "captures": {
+                "0": {
+                    "name": "storage.modifier.fgd"
+                },
+                "3": {
+                    "name": "constant.numeric.fgd"
+                },
+                "5": {
+                    "name": "constant.numeric.fgd"
+                },
+                "7": {
+                    "name": "constant.numeric.fgd"
+                },
+                "9": {
+                    "name": "constant.numeric.fgd"
+                },
+                "11": {
+                    "name": "constant.numeric.fgd"
+                },
+                "13": {
                     "name": "constant.numeric.fgd"
                 }
             }
