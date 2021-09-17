@@ -85,7 +85,9 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                     const scopedKey = `${currentScope}#${token.value}`;
                     
                     if(keys.includes(scopedKey)) {
-                        this.diagnostics.push(new Diagnostic(tokenRange, `Duplicate key '${token.value}'`, DiagnosticSeverity.Warning));
+                        if(this.disallowDuplicate(scopedKey, this.bracketStack, token)) {
+                            this.diagnostics.push(new Diagnostic(tokenRange, `Duplicate key '${token.value}'`, DiagnosticSeverity.Warning));
+                        }
                     } else {
                         keys.push(scopedKey);
                     }
@@ -147,6 +149,10 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
             return false;
         });
         return processed;
+    }
+
+    protected disallowDuplicate(scopedKey: string, depth: number, token: Token): boolean {
+        return false; // Duplicate keys are allowed by default.
     }
 
     public static unquoteToken(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder | null): { content: string, range: Range } {

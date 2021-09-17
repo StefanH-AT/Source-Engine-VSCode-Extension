@@ -1,4 +1,4 @@
-import { CancellationToken, DocumentFormattingEditProvider, FormattingOptions, ProviderResult, Range, TextDocument, TextEdit, workspace } from "vscode";
+import { CancellationToken, commands, DocumentFormattingEditProvider, FormattingOptions, OnTypeFormattingEditProvider, Position, ProviderResult, Range, TextDocument, TextEdit, workspace } from "vscode";
 import { KvTokensProviderBase } from "./keyvalue-parser/kv-token-provider-base";
 import { Token, TokenType } from "./keyvalue-parser/kv-tokenizer";
 
@@ -21,6 +21,10 @@ export function addDocument(document: TextDocument, tokens: Token[]): void {
     } else {
         keyvalueDocuments.push({ file: document.uri.path, document: kvDoc });
     }
+}
+
+export function tokenizeDocument(document: TextDocument): Thenable<unknown> {
+    return commands.executeCommand("vscode.provideDocumentSemanticTokens", document.uri);
 }
 
 export class KeyvalueDocument {

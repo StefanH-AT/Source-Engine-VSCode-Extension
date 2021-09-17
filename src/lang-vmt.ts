@@ -1,7 +1,7 @@
 import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString } from 'vscode'
-import { KeyvalueDocument, getDocument, KeyValue } from './keyvalue-document';
+import { KeyvalueDocument, getDocument, KeyValue, tokenizeDocument } from './keyvalue-document';
 import { KvTokensProviderBase } from './keyvalue-parser/kv-token-provider-base';
-import { Tokenizer } from './keyvalue-parser/kv-tokenizer';
+import { Token, Tokenizer } from './keyvalue-parser/kv-tokenizer';
 import { ShaderParam } from './shader-param';
 import { listFilesSync } from 'list-files-in-dir'
 import { assert } from 'console';
@@ -151,6 +151,10 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
             tokensBuilder.push(range, "string");
         }
         
+    }
+
+    protected override disallowDuplicate(scopedKey: string, depth: number, token: Token): boolean {
+        return depth === 1; // Disallow duplicates on shader parameters
     }
 }
 
