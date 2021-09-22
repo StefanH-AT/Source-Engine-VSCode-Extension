@@ -44,5 +44,12 @@
             "<delay:${1:1}>$2"
         ],
         "description": "Insert a delay tag"
+    },
+    "Len Tag": {
+        "prefix": "<len",
+        "body": [
+            "<len:${1:1}>$2"
+        ],
+        "description": "Insert a len tag"
     }
 }
