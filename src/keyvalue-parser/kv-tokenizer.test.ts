@@ -1,3 +1,12 @@
+// ==========================================================================
+// Purpose:
+// Tests for keyvalue file tokenizer
+// 
+// Author: Stefan Heinz
+//
+// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
+// ==========================================================================
+
 import * as tokenizer from './kv-tokenizer'
 
 test("Tokenize File", () => {
@@ -29,9 +38,7 @@ test("Tokenize File", () => {
 
                     "single quote"      "'"
             
-                    "multiline string"   """this
-string is multi-line
-and spans many lines"""
+                    " string"   "fsdf"
                 }
             
                 Unquoted
@@ -40,13 +47,19 @@ and spans many lines"""
                 }
             
             }
+
+            more                  {
+
+                hello "\\"world\\""
+
+            }
         }
     `);
     expect(tkn).toBeDefined;
 
     const tokens = tkn.tokens;
     expect(tokens).toBeDefined;
-    expect(tokens.length).toBe(48);
+    expect(tokens.length).toBe(53);
 
     expect(tokens[0].value).toBe('"File"');
     expect(tokens[0].type).toBe(tokenizer.TokenType.Key);
@@ -60,6 +73,9 @@ and spans many lines"""
     expect(tokens[6].type).toBe(tokenizer.TokenType.Value);
     expect(tokens[7].value).toBe('// Comment after the line');
 
+    expect(tokens[50].type).toBe(tokenizer.TokenType.Value);
+    expect(tokens[50].value).toBe('"\\"world\\""')
+
 });
 
 test("Consume Unquoted string", () => {
@@ -69,4 +85,5 @@ test("Consume Unquoted string", () => {
     tkn.text = "key value";
     expect(tkn.consumeStringUnquoted(0)).toBe(4);
     expect(tkn.consumeStringUnquoted(4)).toBe(6);
-})
+});
+

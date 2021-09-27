@@ -1,3 +1,5 @@
+import { isWhitespace } from "./kv-string-util";
+
 export enum TokenType {
     Comment,
     Key,
@@ -127,8 +129,12 @@ export class Tokenizer {
             }
 
             if(c === startingQuote) {
-                if(escaped) continue;
-                else break;
+                if(escaped) {
+                    escaped = false;
+                    continue;
+                } else {
+                    break;
+                }
             }
         }
 
@@ -164,11 +170,9 @@ export class Tokenizer {
     }
 
     consumeStringUnquoted(i: number) : number {
-        for(var n = 0; i + n < this.text.length && !this.isWhitespace(this.text[i + n]); n++) { }
+        for(var n = 0; i + n < this.text.length && !isWhitespace(this.text[i + n]); n++) { }
         return n + 1;
     }
 
-    isWhitespace(char: string) {
-        return char === " " || char === "\t" || char === "\n" || char === "\r";
-    }
+    
 }

@@ -1020,9 +1020,6 @@
         }
     },
     "jest": {
-        "setupFilesAfterEnv": [
-            "jest-expect-message"
-        ],
         "transform": {
             ".(ts|tsx)": "ts-jest"
         },
