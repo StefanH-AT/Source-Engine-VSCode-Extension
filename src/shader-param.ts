@@ -1,3 +1,12 @@
+// ==========================================================================
+// Purpose:
+// Object model for shader parameter information that is used to give hints, inspections and error detection for the vmt language.
+// 
+// Author: Stefan Heinz
+//
+// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
+// ==========================================================================
+
 export class ShaderParam {
 
     public name: string;

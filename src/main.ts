@@ -1,3 +1,12 @@
+// ==========================================================================
+// Purpose:
+// Entry point to the extension. Keep code here to a minimum.
+// 
+// Author: Stefan Heinz
+//
+// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
+// ==========================================================================
+
 import * as vscode from 'vscode'
 import * as vmt from './lang-vmt'
 import * as captions from './lang-captions'

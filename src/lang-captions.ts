@@ -1,3 +1,11 @@
+// ==========================================================================
+// Purpose:
+// Implementations of language utility providers for the captions language.
+// 
+// Author: Stefan Heinz
+//
+// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
+// ==========================================================================
 
 import { TextDocument, CancellationToken, DocumentColorProvider, Color, ColorPresentation, Range, ColorInformation, languages, SemanticTokensLegend, SemanticTokensBuilder, ExtensionContext, DocumentSelector } from "vscode";
 import { getDocument, KeyvalueDocumentFormatter } from "./keyvalue-document";

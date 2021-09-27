@@ -1,3 +1,14 @@
+// ==========================================================================
+// Purpose:
+// Implementations of language utility providers for the keyvalues language.
+//
+// This is NOT a base for other formats!
+// 
+// Author: Stefan Heinz
+//
+// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
+// ==========================================================================
+
 import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector } from 'vscode';
 import { KvTokensProviderBase, Processor } from './keyvalue-parser/kv-token-provider-base';
 import { Token, TokenType } from './keyvalue-parser/kv-tokenizer';
