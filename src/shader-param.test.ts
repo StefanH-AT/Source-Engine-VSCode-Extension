@@ -8,8 +8,8 @@ test("Validate shader param config in package.json", () => {
     
     let i = 0;
     params.forEach((p: any) => {
-        expect(p.name, `Element ${i} does not have a name`).toBeDefined();
-        expect(p.type, `Element ${i} does not have a type`).toBeDefined();
+        expect(p.name).toBeDefined();
+        expect(p.type).toBeDefined();
         i++;
     });
 

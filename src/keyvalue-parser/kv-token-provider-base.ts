@@ -1,5 +1,16 @@
+// ==========================================================================
+// Purpose:
+// Abstract base class for keyvalue token providers.
+// Tokenizes the file and does analysis on it. The inheriting class can define processors to further process keys/values and to set the semantic tokens.
+// 
+// Author: Stefan Heinz
+//
+// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
+// ==========================================================================
+
 import { CancellationToken, commands, Diagnostic, DiagnosticCollection, DiagnosticSeverity, DocumentSemanticTokensProvider, Event, ProviderResult, Range, SemanticTokens, SemanticTokensBuilder, SemanticTokensLegend, TextDocument } from "vscode";
 import { addDocument } from "../keyvalue-document";
+import { isQuoted, stripQuotes } from "./kv-string-util";
 import { Token, Tokenizer, TokenType } from "./kv-tokenizer";
 
 export type ProcessorFunction = (content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) => void;
@@ -76,7 +87,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 if(nextToken.type === TokenType.ObjectStart) {
                     tokensBuilder.push(tokenRange, 'struct', []);
                     this.bracketStack++;
-                    currentScope += `.${KvTokensProviderBase.stripQuotes(token.value.toLowerCase())}`;
+                    currentScope += `.${stripQuotes(token.value.toLowerCase())}`;
                     continue;
                 }
                 
@@ -165,7 +176,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
 
     public static unquoteToken(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder | null): { content: string, range: Range } {
         // Quote tokens
-        if( this.isQuoted(token.value) ) {
+        if( isQuoted(token.value) ) {
             
             if(tokensBuilder != null) {
                 tokensBuilder.push(new Range(range.start, range.start.translate(0, 1)), 'string', []);
@@ -182,17 +193,6 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 range: range
             }
         }
-    }
-
-    public static isQuoted(text: string): boolean {
-        return (text.startsWith('"') && text.startsWith('"')) || 
-               (text.startsWith("'") && text.startsWith("'"));
-    }
-
-    public static stripQuotes(text: string) {
-        if(this.isQuoted(text)) {
-            return text.substring(1, text.length - 1);
-        } else return text;
     }
 
 }
