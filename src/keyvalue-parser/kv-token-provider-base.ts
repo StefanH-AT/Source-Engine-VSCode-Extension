@@ -59,7 +59,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
 
         for(let i = 0; i < tokens.length; i++) {
             const token = tokens[i];
-            const tokenRange = new Range(document.positionAt(token.start), document.positionAt(token.end));
+            const tokenRange = new Range(document.positionAt(token.start - 1), document.positionAt(token.end));
 
             // No further processing on comments
             if(token.type === TokenType.Comment) {
