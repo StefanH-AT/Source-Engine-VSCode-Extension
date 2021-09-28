@@ -1,4 +1,4 @@
-import { commands, ExtensionContext, OutputChannel, TextEditor, window, workspace } from "vscode";
+import { commands, ExtensionContext, OutputChannel, ProgressLocation, TextEditor, window, workspace } from "vscode";
 import { config } from "./main";
 import * as fs from 'fs';
 import { isWhitespace } from "./keyvalue-parser/kv-string-util";
@@ -9,12 +9,15 @@ let ccChannel: OutputChannel;
 export function init(context: ExtensionContext) {
     const ccCommand = commands.registerTextEditorCommand("captions.compile", compileCaptions);
     context.subscriptions.push(ccCommand);
-    ccChannel = window.createOutputChannel("Captions Compiler");
 }
 
 function compileCaptions(editor: TextEditor) {
 
-    const ccExePath = config.get<string>("sourceEngine.captionCompilePath");
+    if(ccChannel == null) {
+        ccChannel = window.createOutputChannel("Captions Compiler");
+    }
+
+    const ccExePath = config.get<string>("");
     const ccFilePath = editor.document.uri.path;
 
     if( ccExePath == null || isWhitespace(ccExePath) ) {
@@ -48,5 +51,18 @@ function compileCaptions(editor: TextEditor) {
         } else {
             ccChannel.appendLine("Compilation failed with error code " + exitCode);
         }
+    });
+
+    window.withProgress({
+        location: ProgressLocation.Notification,
+        title: "Compiling caption",
+        cancellable: true
+    }, (progress, token) => {
+
+        const promise = new Promise<void>(resolve => {
+            // Put loading bar code here. I'm coding this on linux and captioncompile is a windows program :(
+        });
+
+        return promise;
     });
 }
