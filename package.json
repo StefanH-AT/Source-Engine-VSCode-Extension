@@ -116,7 +116,11 @@
                     "Source Engine Subtitles"
                 ],
                 "firstLine": "^\"?(?i)lang(?-i)\"?",
-                "configuration": "./language-configuration.json"
+                "configuration": "./language-configuration.json",
+                "filenamePatterns": [
+                    "subtitles_*.txt",
+                    "captions_*.txt"
+                ]
             },
             {
                 "id": "cfg",
