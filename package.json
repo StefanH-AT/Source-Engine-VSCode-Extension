@@ -193,10 +193,40 @@
                 "path": "./syntaxes/qc.tmLanguage.json"
             }
         ],
-        "commands": [],
+        "commands": [
+            {
+                "command": "captions.compile",
+                "title": "Compile captions file",
+                "shortTitle": "Compile Captions",
+                "category": "Captions",
+                "icon": {
+                    "light": "./icons/start-light.svg",
+                    "dark": "./icons/start-dark.svg"
+                }
+            }
+        ],
+        "menus": {
+            "editor/title": [
+                {
+                    "when": "editorLangId == captions",
+                    "command": "captions.compile",
+                    "group": "navigation"
+                }
+            ]
+        },
         "configuration": {
             "title": "Source Engine",
             "properties": {
+                "sourceEngine.captionCompilePath": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Portal 2\\bin\\captioncompile.exe",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Half Life 2\\bin\\captioncompile.exe",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Counter Strike Global Offensive\\bin\\captioncompile.exe"
+                    ],
+                    "description": "Path to captioncompile.exe for in-editor captions compiling."
+                },
                 "sourceEngine.keyvalueBracesOnNewline": {
                     "type": "boolean",
                     "default": true,

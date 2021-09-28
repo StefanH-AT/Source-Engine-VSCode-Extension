@@ -7,10 +7,12 @@
 // https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
-import * as vscode from "vscode";
-import * as vmt from "./lang-vmt";
-import * as captions from "./lang-captions";
-import * as keyvalue from "./lang-keyvalue";
+
+import * as vscode from 'vscode'
+import * as vmt from './lang-vmt'
+import * as captions from './lang-captions'
+import * as keyvalue from './lang-keyvalue'
+import * as captionsCompile from './captions-compile'
 
 
 import * as packageJson from "../package.json";
@@ -27,6 +29,7 @@ export function activate(context: vscode.ExtensionContext): void {
     keyvalue.init(context);
     vmt.init(context);
     captions.init(context);
+    captionsCompile.init(context);
 
     output.appendLine(`Started Source Engine Support v${packageJson.version}`);
 }
