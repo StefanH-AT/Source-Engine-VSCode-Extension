@@ -217,7 +217,7 @@
         "configuration": {
             "title": "Source Engine",
             "properties": {
-                "sourceEngine.captionCompilePath": {
+                "sourceEngine.captionCompile.executablePath": {
                     "type": "string",
                     "default": "",
                     "examples": [
@@ -226,6 +226,11 @@
                         "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Counter Strike Global Offensive\\bin\\captioncompile.exe"
                     ],
                     "description": "Path to captioncompile.exe for in-editor captions compiling."
+                },
+                "sourceEngine.captionCompile.openOutputWindow": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Re-open the output window on every compile."
                 },
                 "sourceEngine.keyvalueBracesOnNewline": {
                     "type": "boolean",
