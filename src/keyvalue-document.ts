@@ -145,38 +145,41 @@ export class KeyvalueDocumentFormatter implements DocumentFormattingEditProvider
         const tokens = kvDoc.getAllTokens();
         
         let indentation = 0;
-        const edits: TextEdit[] = [];
+
+        const startPos = document.positionAt(0);
+        
+        // We just delete and reconstruct the entire file. Much easier.
+        const edits: TextEdit[] = [ 
+            new TextEdit( new Range(startPos, document.positionAt(document.getText().length)), "" )
+        ];
+
+        let text = "";
 
         for(let i = 0; i < tokens.length; i++) {
-
             const token = tokens[i];
-                        
-            if(token.type === TokenType.ObjectStart) indentation++;
-            if(token.type === TokenType.ObjectEnd) indentation--;
 
-            const startPos = document.positionAt(token.start);
-            const line = document.lineAt(startPos.line);
-            const lineTokens = kvDoc.findTokensInRange(line.range);
-            
-            for(var tabs = ""; tabs.length < indentation; tabs += "\t") {}
+            // var is used intentionally here. Javascript is great!
+            for(var indent = ""; indent.length < indentation; indent += "\t");
 
-            if(token.type === TokenType.Key || token.type === TokenType.ObjectEnd || token.type === TokenType.Comment) {
-                const edit = new TextEdit(line.range.with(undefined, line.range.start.translate(0, line.firstNonWhitespaceCharacterIndex)), tabs);
-                edits.push(edit);
-            }
             if(token.type === TokenType.ObjectStart) {
-                const keyToken = tokens[i - 1];
-                if(keyToken == null) continue;
-
-                // Get range between key and { and replace it with what we need
-                let keyBraceRange = new Range(document.positionAt(keyToken.end), document.positionAt(token.start));
-                
-                const edit = new TextEdit(keyBraceRange, this.doPutBracesOnNewline() ? `\n${tabs.substring(1)}` : ' '); // Chop off 1 \t, we're the opening {
-                edits.push(edit);
-                
+                indentation++;
+                const prefix = (this.doPutBracesOnNewline() ? (text.charAt(text.length - 1) === "\n" ? "" : "\n") : " "); // :)
+                text += prefix + indent + "{\n";
+            } else if(token.type === TokenType.ObjectEnd) {
+                indentation--;
+                text += indent.substring(1) + "}\n";
+            } else if(token.type === TokenType.Key) {
+                text += indent + token.value;
+            } else if(token.type === TokenType.Value) {
+                text += " " + token.value + "\n";
+            } else if(token.type === TokenType.Comment) {
+                const val = token.value;
+                text += indent + "// " + val.substring(2).trimStart() + "\n";
             }
-            
+
         }
+
+        edits.push(new TextEdit(new Range(startPos, startPos), text));
 
         return edits;
 
