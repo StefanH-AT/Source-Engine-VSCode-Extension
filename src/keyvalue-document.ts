@@ -153,6 +153,8 @@ export class KeyvalueDocumentFormatter implements DocumentFormattingEditProvider
             new TextEdit( new Range(startPos, document.positionAt(document.getText().length)), "" )
         ];
 
+        const bracketOnNewline = this.doPutBracesOnNewline();
+
         let text = "";
 
         for(let i = 0; i < tokens.length; i++) {
@@ -163,8 +165,16 @@ export class KeyvalueDocumentFormatter implements DocumentFormattingEditProvider
 
             if(token.type === TokenType.ObjectStart) {
                 indentation++;
-                const prefix = (this.doPutBracesOnNewline() ? (text.charAt(text.length - 1) === "\n" ? "" : "\n") : " "); // :)
-                text += prefix + indent + "{\n";
+                const lastChar = text.charAt(text.length - 1);
+                if(lastChar === "\n") {
+                    text += indent + "{\n";
+                    continue;
+                }
+                if(bracketOnNewline) {
+                    text += "\n" + indent + "{\n";
+                } else {
+                    text += " {\n";
+                }
             } else if(token.type === TokenType.ObjectEnd) {
                 indentation--;
                 text += indent.substring(1) + "}\n";
