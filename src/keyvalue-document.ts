@@ -11,11 +11,15 @@
 
 import { CancellationToken, commands, DocumentFormattingEditProvider, FormattingOptions, OnTypeFormattingEditProvider, Position, ProviderResult, Range, TextDocument, TextEdit, workspace } from "vscode";
 import { KvTokensProviderBase } from "./keyvalue-parser/kv-token-provider-base";
-import { Token, TokenType } from "./keyvalue-parser/kv-tokenizer";
+import { Token, Tokenizer, TokenType } from "./keyvalue-parser/kv-tokenizer";
 
 const keyvalueDocuments: { file: string, document: KeyvalueDocument }[] = [];
+const tokenizer = new Tokenizer();
 
 export function getDocument(document: TextDocument): KeyvalueDocument | undefined {
+    if(!hasDocument(document)) {
+        tokenizeDocument(document);
+    }
     return keyvalueDocuments.find(d => d.file === document.uri.path)?.document;
 }
 
@@ -34,8 +38,13 @@ export function addDocument(document: TextDocument, tokens: Token[]): void {
     }
 }
 
-export function tokenizeDocument(document: TextDocument): Thenable<unknown> {
-    return commands.executeCommand("vscode.provideDocumentSemanticTokens", document.uri);
+export function tokenizeDocument(document: TextDocument): Token[] {
+    const text = document.getText();
+    tokenizer.tokenizeFile(text);
+    const tokens = tokenizer.tokens;
+
+    addDocument(document, tokens);
+    return tokens;
 }
 
 export class KeyvalueDocument {

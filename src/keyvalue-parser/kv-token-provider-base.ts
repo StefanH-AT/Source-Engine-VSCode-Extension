@@ -9,7 +9,7 @@
 // ==========================================================================
 
 import { CancellationToken, commands, Diagnostic, DiagnosticCollection, DiagnosticSeverity, DocumentSemanticTokensProvider, Event, ProviderResult, Range, SemanticTokens, SemanticTokensBuilder, SemanticTokensLegend, TextDocument } from "vscode";
-import { addDocument } from "../keyvalue-document";
+import { addDocument, tokenizeDocument } from "../keyvalue-document";
 import { isQuoted, stripQuotes } from "./kv-string-util";
 import { Token, Tokenizer, TokenType } from "./kv-tokenizer";
 
@@ -50,17 +50,9 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         this.diagnostics = [];
         this.bracketStack = 0;
 
-        const text = document.getText();
-        this.tokenizer.tokenizeFile(text);
-        const tokens = this.tokenizer.tokens;
-
-        addDocument(document, tokens);
-
         const tokensBuilder = new SemanticTokensBuilder(this.legend);
 
-        commands.executeCommand("vscode.executeDocumentColorProvider");
-
-        return this.buildTokens(tokens, tokensBuilder, document);
+        return this.buildTokens(tokenizeDocument(document), tokensBuilder, document);
     }
 
     buildTokens(tokens: Token[], tokensBuilder: SemanticTokensBuilder, document: TextDocument) : SemanticTokens {
