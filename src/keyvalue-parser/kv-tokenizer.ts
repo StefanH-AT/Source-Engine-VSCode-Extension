@@ -67,6 +67,7 @@ export class Tokenizer {
             // Is it an object?
             if(c === "{") {
                 this.addToken(TokenType.ObjectStart, i, i, text[i]);
+                expectingKey = true;
                 continue;
             }
             if(c === "}") {
@@ -124,7 +125,7 @@ export class Tokenizer {
             const c = this.text[i + n++];
             if(c == null) break;
             if(c === '\\') {
-                escaped = true;
+                escaped = !escaped;
                 continue;
             }
 
@@ -135,6 +136,8 @@ export class Tokenizer {
                 } else {
                     break;
                 }
+            } else {
+                if(escaped) escaped = false;
             }
         }
 

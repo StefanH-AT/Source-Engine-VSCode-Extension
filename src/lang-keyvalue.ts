@@ -10,6 +10,7 @@
 // ==========================================================================
 
 import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector } from 'vscode';
+import { KeyvalueDocumentFormatter } from './keyvalue-document';
 import { KvTokensProviderBase, Processor } from './keyvalue-parser/kv-token-provider-base';
 import { Token, TokenType } from './keyvalue-parser/kv-tokenizer';
 
@@ -29,7 +30,8 @@ export const selector: DocumentSelector = "keyvalue3";
 export function init(context: ExtensionContext) {
     const kvTokenProvider = new KeyvalueSemanticTokensProvider();
     const kvSemantics = languages.registerDocumentSemanticTokensProvider(selector, kvTokenProvider, kvTokenProvider.legend);
-    context.subscriptions.push(kvSemantics, kvTokenProvider.diagnosticCollection);
+    const kvFormatter = languages.registerDocumentFormattingEditProvider(selector, new KeyvalueDocumentFormatter());
+    context.subscriptions.push(kvSemantics, kvTokenProvider.diagnosticCollection, kvFormatter);
 }
 
 export class KeyvalueSemanticTokensProvider extends KvTokensProviderBase {
