@@ -11,7 +11,7 @@ import { CompletionItemProvider, TextDocument, Position, CancellationToken, Comp
 import { KeyvalueDocument, getDocument, KeyValue, tokenizeDocument, KeyvalueDocumentFormatter } from './keyvalue-document';
 import { KvTokensProviderBase, Processor } from './kv-core/kv-token-provider-base';
 import { Token, Tokenizer } from './kv-core/kv-tokenizer';
-import { ShaderParam } from './shader-param';
+import { ShaderParam } from './kv-core/shader-param';
 import { listFilesSync } from 'list-files-in-dir'
 import { getParentDocumentDirectory } from './source-fs';
 import { config } from './main';
