@@ -4,7 +4,15 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.14]
+
+**General**
+- Fixed and improved tokenizer
+- Fixed keyvalue docs not being tokenized sometimes
+- Keyvalue file formatting rewrite
+
 ## [0.0.13]
+
 **General**
 - Lots of bug fixes
 - More snippets
