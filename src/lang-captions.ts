@@ -9,8 +9,8 @@
 
 import { TextDocument, CancellationToken, DocumentColorProvider, Color, ColorPresentation, Range, ColorInformation, languages, SemanticTokensLegend, SemanticTokensBuilder, ExtensionContext, DocumentSelector } from "vscode";
 import { getDocument, KeyvalueDocumentFormatter } from "./keyvalue-document";
-import { populateColorTagMatches } from "./keyvalue-parser/kv-caption-tag-matches";
-import { KvTokensProviderBase, Processor } from "./keyvalue-parser/kv-token-provider-base";
+import { populateColorTagMatches } from "./kv-core/kv-caption-tag-matches";
+import { KvTokensProviderBase, Processor } from "./kv-core/kv-token-provider-base";
 
 export const legend = new SemanticTokensLegend([
     'struct',
