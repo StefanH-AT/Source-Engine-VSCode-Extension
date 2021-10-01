@@ -7,7 +7,6 @@
 // https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
-import { ShaderParam } from './shader-param'
 const packageJson = require('../package.json');
 
 // This is a pretty dirty unit test. It's more of a method to validate the configuration.
