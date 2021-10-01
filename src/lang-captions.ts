@@ -94,8 +94,6 @@ export class CaptionColorsProvider implements DocumentColorProvider {
                 const color1 = new Color(parseInt(match[1]) / 255, parseInt(match[2]) / 255, parseInt(match[3]) / 255, 1.0);
                 const color2 = new Color(parseInt(match[4]) / 255, parseInt(match[5]) / 255, parseInt(match[6]) / 255, 1.0);
 
-                const wholeString = match[0];
-
                 const start1 = kv.value.indexOf(":") + 1;
                 const end1 = kv.value.lastIndexOf(":");
                 const end2 = kv.value.lastIndexOf(match[6]) + match[6].length; // Javascript, why don't you just allow me to get the index of the match?
