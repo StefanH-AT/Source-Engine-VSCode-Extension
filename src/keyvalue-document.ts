@@ -160,13 +160,11 @@ export class KeyvalueDocumentFormatter implements DocumentFormattingEditProvider
         for(let i = 0; i < tokens.length; i++) {
             const token = tokens[i];
 
-            // var is used intentionally here. Javascript is great!
-            for(var indent = ""; indent.length < indentation; indent += "\t");
+            const indent = "\t".repeat(indentation);
 
             if(token.type === TokenType.ObjectStart) {
                 indentation++;
-                const lastChar = text.charAt(text.length - 1);
-                if(lastChar === "\n") {
+                if(text.endsWith("\n")) {
                     text += indent + "{\n";
                     continue;
                 }
