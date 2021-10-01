@@ -11,8 +11,8 @@
 
 import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector } from 'vscode';
 import { KeyvalueDocumentFormatter } from './keyvalue-document';
-import { KvTokensProviderBase, Processor } from './keyvalue-parser/kv-token-provider-base';
-import { Token, TokenType } from './keyvalue-parser/kv-tokenizer';
+import { KvTokensProviderBase, Processor } from './kv-core/kv-token-provider-base';
+import { Token, TokenType } from './kv-core/kv-tokenizer';
 
 export const legend = new SemanticTokensLegend([
     'struct',

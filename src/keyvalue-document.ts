@@ -10,9 +10,9 @@
 // ==========================================================================
 
 import { CancellationToken, commands, DocumentFormattingEditProvider, FormattingOptions, OnTypeFormattingEditProvider, Position, ProviderResult, Range, TextDocument, TextEdit, workspace } from "vscode";
-import { formatTokens } from "./keyvalue-parser/kv-formatter";
-import { KvTokensProviderBase } from "./keyvalue-parser/kv-token-provider-base";
-import { Token, Tokenizer, TokenType } from "./keyvalue-parser/kv-tokenizer";
+import { formatTokens } from "./kv-core/kv-formatter";
+import { KvTokensProviderBase } from "./kv-core/kv-token-provider-base";
+import { Token, Tokenizer, TokenType } from "./kv-core/kv-tokenizer";
 
 const keyvalueDocuments: { file: string, document: KeyvalueDocument }[] = [];
 const tokenizer = new Tokenizer();

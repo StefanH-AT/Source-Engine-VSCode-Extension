@@ -9,8 +9,8 @@
 
 import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector } from 'vscode'
 import { KeyvalueDocument, getDocument, KeyValue, tokenizeDocument, KeyvalueDocumentFormatter } from './keyvalue-document';
-import { KvTokensProviderBase, Processor } from './keyvalue-parser/kv-token-provider-base';
-import { Token, Tokenizer } from './keyvalue-parser/kv-tokenizer';
+import { KvTokensProviderBase, Processor } from './kv-core/kv-token-provider-base';
+import { Token, Tokenizer } from './kv-core/kv-tokenizer';
 import { ShaderParam } from './shader-param';
 import { listFilesSync } from 'list-files-in-dir'
 import { getParentDocumentDirectory } from './source-fs';
