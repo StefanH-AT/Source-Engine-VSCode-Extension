@@ -6,6 +6,8 @@ This extension adds intelligent support for Source Engine file types.
 
 ![VMT Highlighting](vmt-highlighting.jpg)
 
+![Keyvalue file formatting](formatting.gif)
+
 ---
 
 ## Features
