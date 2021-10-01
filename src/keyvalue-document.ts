@@ -10,6 +10,7 @@
 // ==========================================================================
 
 import { CancellationToken, commands, DocumentFormattingEditProvider, FormattingOptions, OnTypeFormattingEditProvider, Position, ProviderResult, Range, TextDocument, TextEdit, workspace } from "vscode";
+import { formatTokens } from "./keyvalue-parser/kv-formatter";
 import { KvTokensProviderBase } from "./keyvalue-parser/kv-token-provider-base";
 import { Token, Tokenizer, TokenType } from "./keyvalue-parser/kv-tokenizer";
 
@@ -143,51 +144,14 @@ export class KeyvalueDocumentFormatter implements DocumentFormattingEditProvider
         if(kvDoc == null) return [];
 
         const tokens = kvDoc.getAllTokens();
-        
-        let indentation = 0;
-
         const startPos = document.positionAt(0);
         
         // We just delete and reconstruct the entire file. Much easier.
         const edits: TextEdit[] = [ 
             new TextEdit( new Range(startPos, document.positionAt(document.getText().length)), "" )
-        ];
+        ];     
 
-        const bracketOnNewline = this.doPutBracesOnNewline();
-
-        let text = "";
-
-        for(let i = 0; i < tokens.length; i++) {
-            const token = tokens[i];
-
-            const indent = "\t".repeat(indentation);
-
-            if(token.type === TokenType.ObjectStart) {
-                indentation++;
-                if(text.endsWith("\n")) {
-                    text += indent + "{\n";
-                    continue;
-                }
-                if(bracketOnNewline) {
-                    text += "\n" + indent + "{\n";
-                } else {
-                    text += " {\n";
-                }
-            } else if(token.type === TokenType.ObjectEnd) {
-                indentation--;
-                text += indent.substring(1) + "}\n";
-            } else if(token.type === TokenType.Key) {
-                text += indent + token.value;
-            } else if(token.type === TokenType.Value) {
-                text += " " + token.value + "\n";
-            } else if(token.type === TokenType.Comment) {
-                const val = token.value;
-                text += indent + "// " + val.substring(2).trimStart() + "\n";
-            }
-
-        }
-
-        edits.push(new TextEdit(new Range(startPos, startPos), text));
+        edits.push(new TextEdit(new Range(startPos, startPos), formatTokens(tokens, this.doPutBracesOnNewline())));
 
         return edits;
 
