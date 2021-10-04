@@ -4,6 +4,15 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.15]
+
+**General**
+- Semantic token improvements
+- Other small bug fixes
+
+**Captions**
+- Added a button to compile a captions file. (Must configure captioncompiler.exe path)
+
 ## [0.0.14]
 
 **General**

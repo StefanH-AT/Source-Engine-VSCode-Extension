@@ -41,7 +41,7 @@ Checklist for features that are planned or already implemented.
 - [x] Captions highlighting
 - [x] Captions markup highlighting
 - [x] Captions color preview
-- [x] Implement color preview for playerclr
+- [x] Compile captions button
 
 ### CFG
 - [x] .cfg highlighting
@@ -73,7 +73,6 @@ This is what is planned for this extension. In case you wish to contribute, this
 ### Captions
 - [ ] Captions preview render
 - [ ] Ability to modify color in gui
-- [ ] Compile captions button
 
 ---
 
