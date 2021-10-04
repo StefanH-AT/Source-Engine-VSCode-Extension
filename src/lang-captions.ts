@@ -8,9 +8,8 @@
 // ==========================================================================
 
 import { TextDocument, CancellationToken, DocumentColorProvider, Color, ColorPresentation, Range, ColorInformation, languages, SemanticTokensLegend, SemanticTokensBuilder, ExtensionContext, DocumentSelector } from "vscode";
-import { getDocument, KeyvalueDocumentFormatter } from "./keyvalue-document";
+import { getDocument, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor } from "./keyvalue-document";
 import { populateColorTagMatches } from "./kv-core/kv-caption-tag-matches";
-import { KvTokensProviderBase, Processor } from "./kv-core/kv-token-provider-base";
 
 export const legend = new SemanticTokensLegend([
     'struct',
@@ -49,16 +48,16 @@ export class CaptionsSemanticTokenProvider extends KvTokensProviderBase {
         super(legend, languages.createDiagnosticCollection('captions'));
     }
 
-    processKey(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) {
-        tokensBuilder.push(range, "parameter");
+    processKey(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) {
+        tokensBuilder.push(wholeRange, "parameter");
     }
 
-    processValue(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) {
+    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) {
         
         if(scope === ".lang.tokens") {
             return; // Don't add a semantic token to  lang values and let tmLanguage handle it.
         }
-        tokensBuilder.push(range, "string");
+        tokensBuilder.push(wholeRange, "string");
     }
 
 }
