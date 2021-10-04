@@ -1,12 +1,12 @@
 import { commands, ExtensionContext, FileType, OutputChannel, ProgressLocation, TextEditor, Uri, window, workspace } from "vscode";
 import { config } from "./main";
-import * as fs from 'fs';
-import { isWhitespace } from "./keyvalue-parser/kv-string-util";
-import { exec, execFile, spawn } from "child_process";
+import * as fs from "fs";
+import { isWhitespace } from "./kv-core/kv-string-util";
+import { execFile } from "child_process";
 
 let ccChannel: OutputChannel;
 
-export function init(context: ExtensionContext) {
+export function init(context: ExtensionContext): void {
     const ccCommand = commands.registerTextEditorCommand("captions.compile", compileCaptions);
     context.subscriptions.push(ccCommand);
 }
@@ -65,14 +65,14 @@ async function compileCaptions(editor: TextEditor) {
 
         token.onCancellationRequested(e => {
             ccProcess.kill();
-            ccChannel.appendLine("Cancelled compilation process")
+            ccChannel.appendLine("Cancelled compilation process");
         });
 
         progress.report({ message: "Compiling", increment: 0});
         
         const promise = new Promise<void>(resolve => {
 
-            ccProcess.on('exit', (exitCode: Number) => {
+            ccProcess.on("exit", (exitCode: number) => {
                 if(exitCode === 0) {
                     ccChannel.appendLine("Completed successfully!");
                 } else {
