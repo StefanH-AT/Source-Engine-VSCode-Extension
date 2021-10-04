@@ -12,5 +12,5 @@ export function getParentDocumentDirectory(path: string, directoryName: string):
     const materialPathIndex = path.indexOf("materials") + "materials".length;
     if(materialPathIndex < 0) return null;
 
-    return path.substring(0, materialPathIndex);;
+    return path.substring(0, materialPathIndex);
 }

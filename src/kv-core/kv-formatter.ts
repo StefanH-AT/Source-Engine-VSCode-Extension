@@ -28,7 +28,7 @@ export function formatTokens(tokens: Token[], bracketOnNewline: boolean): string
         } else if(token.type === TokenType.Value) {
             text += " " + token.value + "\n";
         } else if(token.type === TokenType.Comment) {
-            const comment = token.value.substring(2).trimStart()
+            const comment = token.value.substring(2).trimStart();
             const putIndent = text.endsWith("\n") || (text.length === 0);
             text += (putIndent ? indent : " ") + "// " + comment + "\n";
         }

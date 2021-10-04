@@ -13,20 +13,20 @@ test("Is Quoted", () => {
     expect(isQuoted("")).toBeFalsy();
     expect(isQuoted("hi")).toBeFalsy();
     expect(isQuoted("'hi'")).toBeTruthy();
-    expect(isQuoted('"hi"')).toBeTruthy();
+    expect(isQuoted("\"hi\"")).toBeTruthy();
 
     expect(isQuoted("'hi\"")).toBeFalsy();
 
     expect(isQuoted("'hi")).toBeFalsy();
-})
+});
 
 test("Strip Quotes", () => {
     expect(stripQuotes("")).toBe("");
     expect(stripQuotes("'")).toBe("'");
     expect(stripQuotes("''")).toBe("");
     expect(stripQuotes("hi")).toBe("hi");
-    expect(stripQuotes('"hi"')).toBe("hi");
-    expect(stripQuotes('"hi')).toBe('"hi');
+    expect(stripQuotes("\"hi\"")).toBe("hi");
+    expect(stripQuotes("\"hi")).toBe("\"hi");
 });
 
 test("IsWhitespace", () => {

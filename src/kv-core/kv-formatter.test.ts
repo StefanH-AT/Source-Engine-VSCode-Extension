@@ -9,7 +9,7 @@ test("Formatting Pentest 1, Bracket on Newline", () => {
 
     const formattedStringNotNewline = formatTokens(tokens, false);
     expect(formattedStringNotNewline).toBe(
-`// """"" should be ignored
+        `// """"" should be ignored
 "Root1" {
 \t"Key" "Value"
 \t"Extra" "Spaces"

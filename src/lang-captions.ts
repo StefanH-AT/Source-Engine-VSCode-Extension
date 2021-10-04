@@ -12,23 +12,23 @@ import { getDocument, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor
 import { populateColorTagMatches } from "./kv-core/kv-caption-tag-matches";
 
 export const legend = new SemanticTokensLegend([
-    'struct',
-    'comment',
-    'variable',
-    'string',
-    'number',
-    'boolean',
-    'operator',
-    'keyword',
-    'parameter'
+    "struct",
+    "comment",
+    "variable",
+    "string",
+    "number",
+    "boolean",
+    "operator",
+    "keyword",
+    "parameter"
 ], [
-    'declaration',
-    'readonly'
+    "declaration",
+    "readonly"
 ]);
 
 export const selector: DocumentSelector = "captions";
 
-export function init(context: ExtensionContext) {
+export function init(context: ExtensionContext): void {
     const captionsColors = languages.registerColorProvider(selector, new CaptionColorsProvider());
     const captionsTokenProvider = languages.registerDocumentSemanticTokensProvider(selector, new CaptionsSemanticTokenProvider(), legend);
     const captionsFormatter = languages.registerDocumentFormattingEditProvider(selector, new KeyvalueDocumentFormatter());
@@ -45,14 +45,14 @@ export class CaptionsSemanticTokenProvider extends KvTokensProviderBase {
     ];
 
     constructor() {
-        super(legend, languages.createDiagnosticCollection('captions'));
+        super(legend, languages.createDiagnosticCollection("captions"));
     }
 
-    processKey(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) {
+    processKey(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string): void {
         tokensBuilder.push(wholeRange, "parameter");
     }
 
-    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string) {
+    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string): void {
         
         if(scope === ".lang.tokens") {
             return; // Don't add a semantic token to  lang values and let tmLanguage handle it.
@@ -82,9 +82,9 @@ export class CaptionColorsProvider implements DocumentColorProvider {
             const clrInfo = populateColorTagMatches(kv.value);
             clrInfo.forEach((clr) => {
                 const colorInfo = new ColorInformation(kv.valueRange.with(kv.valueRange.start.translate(0, clr.start), kv.valueRange.start.translate(0, clr.end)), 
-                                                        new Color(clr.color.r / 255, clr.color.g / 255, clr.color.b / 255, 1.0));
+                    new Color(clr.color.r / 255, clr.color.g / 255, clr.color.b / 255, 1.0));
                 colorInfos.push(colorInfo);
-            })
+            });
         }
 
         return colorInfos;
