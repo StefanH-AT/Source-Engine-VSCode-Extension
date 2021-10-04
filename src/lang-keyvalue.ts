@@ -10,8 +10,7 @@
 // ==========================================================================
 
 import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector } from 'vscode';
-import { KeyvalueDocumentFormatter } from './keyvalue-document';
-import { KvTokensProviderBase, Processor } from './kv-core/kv-token-provider-base';
+import { KeyvalueDocumentFormatter, KvTokensProviderBase, Processor } from './keyvalue-document';
 import { Token, TokenType } from './kv-core/kv-tokenizer';
 
 export const legend = new SemanticTokensLegend([
@@ -47,16 +46,16 @@ export class KeyvalueSemanticTokensProvider extends KvTokensProviderBase {
         super(legend, languages.createDiagnosticCollection('keyvalue3'));
     }
     
-    processValueNumber(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
-        tokensBuilder.push(range, 'number', []);
+    processValueNumber(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
+        tokensBuilder.push(wholeRange, 'number', []);
     }
 
-    processValueArray(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
+    processValueArray(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
         // [] {}
-        tokensBuilder.push(new Range(range.start, range.start.translate(0, 1)), 'operator', []);
-        tokensBuilder.push(new Range(range.end.translate(0, -1), range.end), 'operator', []);
+        tokensBuilder.push(new Range(contentRange.start, contentRange.start.translate(0, 1)), 'operator', []);
+        tokensBuilder.push(new Range(contentRange.end.translate(0, -1), contentRange.end), 'operator', []);
 
-        tokensBuilder.push(new Range(range.start.translate(0, 1), range.end.translate(0, -1)), 'number', [])
+        tokensBuilder.push(new Range(contentRange.start.translate(0, 1), contentRange.end.translate(0, -1)), 'number', [])
     }
 
 }

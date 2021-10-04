@@ -8,8 +8,7 @@
 // ==========================================================================
 
 import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector } from 'vscode'
-import { KeyvalueDocument, getDocument, KeyValue, tokenizeDocument, KeyvalueDocumentFormatter } from './keyvalue-document';
-import { KvTokensProviderBase, Processor } from './kv-core/kv-token-provider-base';
+import { KeyvalueDocument, getDocument, KeyValue, tokenizeDocument, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor } from './keyvalue-document';
 import { Token, Tokenizer } from './kv-core/kv-tokenizer';
 import { ShaderParam } from './kv-core/shader-param';
 import { listFilesSync } from 'list-files-in-dir'
@@ -63,43 +62,43 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         super(legend, languages.createDiagnosticCollection('vmt'));
     }
 
-    processKeyShader(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
-        tokensBuilder.push(range, 'parameter');
+    processKeyShader(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
+        tokensBuilder.push(wholeRange, 'parameter');
     }
 
-    processKeyCompile(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
-        tokensBuilder.push(range, 'parameter', ['readonly']);
+    processKeyCompile(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
+        tokensBuilder.push(wholeRange, 'parameter', ['readonly']);
     }
 
-    processValue(content: string, range: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
+    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
 
         // Get the key value document
-        if(!range.isSingleLine) return;
+        if(!contentRange.isSingleLine) return;
         const kvDoc = getDocument(document);
         if(kvDoc == null) return;
 
         // Get the key value type at that line
-        const kv = kvDoc.getKeyValueAt(range.start.line);
+        const kv = kvDoc.getKeyValueAt(contentRange.start.line);
         if(kv == null) return;
         const param = shaderParams.find(p => p.name === kv.key);
         if(param == null) {
-            this.processValueString(kv, range, tokensBuilder, kvDoc);
+            this.processValueString(kv, contentRange, tokensBuilder, kvDoc);
             return;
         }
         if(param.type == null || param.type == "") return;
 
         // Bit copy paste?
         switch(param.type) {
-            case "bool": this.processValueBool(kv, range, tokensBuilder, kvDoc); break;
-            case "int": this.processValueInt(kv, range, tokensBuilder, kvDoc); break;
-            case "float": this.processValueFloat(kv, range, tokensBuilder, kvDoc); break;
-            case "scalar": this.processValueScalar(kv, range, tokensBuilder, kvDoc); break;
-            case "texture": this.processValueTexture(kv, range, tokensBuilder, kvDoc); break;
-            case "color": this.processValueColor(kv, range, tokensBuilder, kvDoc); break;
-            case "env_cubemap": this.processValueCubemap(kv, range, tokensBuilder, kvDoc); break;
+            case "bool": this.processValueBool(kv, contentRange, tokensBuilder, kvDoc); break;
+            case "int": this.processValueInt(kv, contentRange, tokensBuilder, kvDoc); break;
+            case "float": this.processValueFloat(kv, contentRange, tokensBuilder, kvDoc); break;
+            case "scalar": this.processValueScalar(kv, contentRange, tokensBuilder, kvDoc); break;
+            case "texture": this.processValueTexture(kv, contentRange, tokensBuilder, kvDoc); break;
+            case "color": this.processValueColor(kv, contentRange, tokensBuilder, kvDoc); break;
+            case "env_cubemap": this.processValueCubemap(kv, contentRange, tokensBuilder, kvDoc); break;
             
             case "string": 
-            default: this.processValueString(kv, range, tokensBuilder, kvDoc); break;
+            default: this.processValueString(kv, contentRange, tokensBuilder, kvDoc); break;
         }
         
     }
