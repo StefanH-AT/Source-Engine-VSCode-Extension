@@ -217,7 +217,7 @@
         "configuration": {
             "title": "Source Engine",
             "properties": {
-                "sourceEngine.captionCompile.executablePath": {
+                "sourceEngine.captionCompiler.executablePath": {
                     "type": "string",
                     "default": "",
                     "examples": [
@@ -227,7 +227,7 @@
                     ],
                     "description": "Path to captioncompile.exe for in-editor captions compiling."
                 },
-                "sourceEngine.captionCompile.openOutputWindow": {
+                "sourceEngine.captionCompiler.openOutputWindow": {
                     "type": "boolean",
                     "default": false,
                     "description": "Re-open the output window on every compile."

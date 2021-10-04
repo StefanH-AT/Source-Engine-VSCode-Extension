@@ -1,8 +1,8 @@
-import { commands, ExtensionContext, OutputChannel, ProgressLocation, TextEditor, window, workspace } from "vscode";
+import { commands, ExtensionContext, FileType, OutputChannel, ProgressLocation, TextEditor, Uri, window, workspace } from "vscode";
 import { config } from "./main";
 import * as fs from 'fs';
 import { isWhitespace } from "./keyvalue-parser/kv-string-util";
-import { spawn } from "child_process";
+import { exec, execFile, spawn } from "child_process";
 
 let ccChannel: OutputChannel;
 
@@ -11,14 +11,19 @@ export function init(context: ExtensionContext) {
     context.subscriptions.push(ccCommand);
 }
 
-function compileCaptions(editor: TextEditor) {
+async function compileCaptions(editor: TextEditor) {
 
     if(ccChannel == null) {
         ccChannel = window.createOutputChannel("Captions Compiler");
     }
 
-    const ccExePath = config.get<string>("");
-    const ccFilePath = editor.document.uri.path;
+    const ccExePath: string = config.get("captionCompiler.executablePath") ?? "";
+    const ccOpenOutput: boolean = config.get("captionCompiler.openOutputWindow") ?? false;
+
+    const ccFileUri = editor.document.uri;
+    const ccFileStat = await workspace.fs.stat(ccFileUri);
+    if(ccFileStat.type !== FileType.File) return; // TODO: Display an error message?
+    const ccFilePath = ccFileUri.fsPath;
 
     if( ccExePath == null || isWhitespace(ccExePath) ) {
         window.showErrorMessage("Captions compiler path is empty. Please configure!");
@@ -30,27 +35,26 @@ function compileCaptions(editor: TextEditor) {
         return;
     }
 
-    const ccProcess = spawn(ccExePath, [ ccFilePath ]);
+    // Prepare output -------------
 
-    
-    ccChannel.appendLine(`Compiling captions for ${ccFilePath}`);
     ccChannel.clear();
-    ccChannel.show();
-
-    ccProcess.stdout.on('data', data => {
-        ccChannel.appendLine("> " + data);
-    });
+    ccChannel.appendLine(`Compiling captions for ${ccFilePath}`);
     
-    ccProcess.stderr.on('data', data => {
-        ccChannel.appendLine("! " + data);
-    })
+    if(ccOpenOutput) {
+        ccChannel.show();
+    }
 
-    ccProcess.stdout.on('close', (exitCode: Number) => {
-        if(exitCode === 0) {
-            ccChannel.appendLine("Completed successfully!");
-        } else {
-            ccChannel.appendLine("Compilation failed with error code " + exitCode);
+    // Start process ----------------
+
+    const workDir = Uri.joinPath(ccFileUri, "..").fsPath;
+    const ccProcess = execFile(ccExePath, [ ccFilePath ], {
+        cwd: workDir
+    }, (error, stdout, stderr) => {
+        if(error) {
+            ccChannel.appendLine("ERROR: " + error.message);
         }
+        if(stdout) ccChannel.appendLine("> " + stdout);
+        if(stderr) ccChannel.appendLine("! " + stderr);
     });
 
     window.withProgress({
@@ -59,8 +63,25 @@ function compileCaptions(editor: TextEditor) {
         cancellable: true
     }, (progress, token) => {
 
+        token.onCancellationRequested(e => {
+            ccProcess.kill();
+            ccChannel.appendLine("Cancelled compilation process")
+        });
+
+        progress.report({ message: "Compiling", increment: 0});
+        
         const promise = new Promise<void>(resolve => {
-            // Put loading bar code here. I'm coding this on linux and captioncompile is a windows program :(
+
+            ccProcess.on('exit', (exitCode: Number) => {
+                if(exitCode === 0) {
+                    ccChannel.appendLine("Completed successfully!");
+                } else {
+                    ccChannel.appendLine("Compilation failed with error code " + exitCode);
+                }
+                progress.report({ message: "Compiling", increment: 100});
+                resolve();
+            });
+
         });
 
         return promise;
