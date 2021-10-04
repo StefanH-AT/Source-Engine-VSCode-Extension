@@ -28,7 +28,7 @@ export class Tokenizer {
 
     _tokens : Token[] = [];
 
-    addToken(type: TokenType, start: number, end: number, value: string) {
+    addToken(type: TokenType, start: number, end: number, value: string): void {
         this._tokens.push(new Token(type, start, end, value));
     }
 
@@ -40,7 +40,7 @@ export class Tokenizer {
      * Sets basic tokens for the file provided. The semantic token provider must do analysis on these, as it's not done here. These tokens could be in illegal positions, but since we might want to do different analysis depending on the keyvalue format (eg VMT), it's better to analyse later.
      * @param text The text of the file to tokenize
      */
-    public tokenizeFile(text: string) {
+    public tokenizeFile(text: string): void {
         const textSize = text.length;
         this.text = text;
         this._tokens = [];
@@ -83,12 +83,10 @@ export class Tokenizer {
         }
     }
 
-    consumeComment(i: number) : number {
-        let n = 0;
-        while(true) {
-            const c = this.text[i + n++];
-            if(c == null) break;
-
+    consumeComment(i: number): number {
+        let n = 1;
+        let c = this.text[i];
+        for(; c != null; c = this.text[i + n++]) {
             if(c === "\n" || c === "\r") {
                 break;
             }
@@ -97,20 +95,20 @@ export class Tokenizer {
         return n + 1;
     }
 
-    consumeString(i: number) : number {
+    consumeString(i: number): number {
         const c = this.text[i];
 
         // Is it quoted?
-        if(c === '"' || c === "'") {
+        if(c === "\"" || c === "'") {
             
             // Multiline?
-            if(this.text[i + 0] === '"' &&
-                this.text[i + 1] === '"' &&
-                this.text[i + 2] === '"') {
-                    return this.consumeStringMultiline(i + 3);
-                } else {
-                    return this.consumeStringQuoted(i + 1, c);
-                }
+            if(this.text[i + 0] === "\"" &&
+                this.text[i + 1] === "\"" &&
+                this.text[i + 2] === "\"") {
+                return this.consumeStringMultiline(i + 3);
+            } else {
+                return this.consumeStringQuoted(i + 1, c);
+            }
         } else {
             return this.consumeStringUnquoted(i + 1);
         }
@@ -118,13 +116,12 @@ export class Tokenizer {
 
     }
 
-    consumeStringQuoted(i: number, startingQuote: string) : number {
-        let n = 0;
+    consumeStringQuoted(i: number, startingQuote: string): number {
+        let n = 1;
         let escaped = false;
-        while(true) {
-            const c = this.text[i + n++];
-            if(c == null) break;
-            if(c === '\\') {
+        let c = this.text[i];
+        for(; c != null; c = this.text[i + n++]) {
+            if(c === "\\") {
                 escaped = !escaped;
                 continue;
             }
@@ -144,24 +141,23 @@ export class Tokenizer {
         return n + 1;
     }
 
-    consumeStringMultiline(i: number) : number {
-        let n = 0;
+    consumeStringMultiline(i: number): number {
+        let n = 1;
         let escaped = false;
-        while(true) {
-            const c = this.text[i + n];
-            if(c == null) break;
-            if(c === '\\') {
+        let c = this.text[i];
+        for(; c != null; c = this.text[i + n]) {
+            if(c === "\\") {
                 escaped = true;
                 continue;
             }
 
-            if(c === '"') {
+            if(c === "\"") {
                 if(escaped) continue;
                 
                 const c1 = this.text[i + n + 1];
                 const c2 = this.text[i + n + 2];
 
-                if(c1 === '"' && c2 === '"') {
+                if(c1 === "\"" && c2 === "\"") {
                     break;
                 }
             }
@@ -172,8 +168,9 @@ export class Tokenizer {
         return n + 5;
     }
 
-    consumeStringUnquoted(i: number) : number {
-        for(var n = 0; i + n < this.text.length && !isWhitespace(this.text[i + n]); n++) { }
+    consumeStringUnquoted(i: number): number {
+        let n = 0;
+        for(; i + n < this.text.length && !isWhitespace(this.text[i + n]); n++);
         return n + 1;
     }
 

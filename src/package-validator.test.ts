@@ -7,14 +7,15 @@
 // https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
-const packageJson = require('../package.json');
+import { ShaderParam } from "./kv-core/shader-param";
+import packageJson = require("../package.json");
 
 // This is a pretty dirty unit test. It's more of a method to validate the configuration.
 test("Validate shader param config in package.json", () => {
     const params = packageJson.contributes.configuration.properties["sourceEngine.shaderParameters"].default;
     
     let i = 0;
-    params.forEach((p: any) => {
+    params.forEach((p: ShaderParam) => {
         expect(p.name).toBeDefined();
         expect(p.type).toBeDefined();
         i++;

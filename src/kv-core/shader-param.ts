@@ -11,11 +11,11 @@ export class ShaderParam {
 
     public name: string;
     public type: string;
-    public defaultCompletion: string | null | undefined;
-    public description: string | null | undefined;
-    public wikiUri: string | null | undefined;
+    public defaultCompletion?: string | boolean | number;
+    public description?: string;
+    public wikiUri?: string;
 
-    constructor(name: string, type: string, defaultCompletion: string | null, description: string, wikiUri: string | null) {
+    constructor(name: string, type: string, defaultCompletion: string, description: string, wikiUri: string) {
         this.name = name;
         this.type = type;
         this.defaultCompletion = defaultCompletion;

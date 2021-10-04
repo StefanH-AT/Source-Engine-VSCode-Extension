@@ -7,27 +7,27 @@
 // https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
-import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector } from 'vscode'
-import { KeyvalueDocument, getDocument, KeyValue, tokenizeDocument, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor } from './keyvalue-document';
-import { Token, Tokenizer } from './kv-core/kv-tokenizer';
-import { ShaderParam } from './kv-core/shader-param';
-import { listFilesSync } from 'list-files-in-dir'
-import { getParentDocumentDirectory } from './source-fs';
-import { config } from './main';
+import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector } from "vscode";
+import { KeyvalueDocument, getDocument, KeyValue, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor } from "./keyvalue-document";
+import { Token } from "./kv-core/kv-tokenizer";
+import { ShaderParam } from "./kv-core/shader-param";
+import { listFilesSync } from "list-files-in-dir";
+import { getParentDocumentDirectory } from "./source-fs";
+import { config } from "./main";
 
 export const legend = new SemanticTokensLegend([
-    'struct',
-    'comment',
-    'variable',
-    'string',
-    'number',
-    'boolean',
-    'operator',
-    'keyword',
-    'parameter'
+    "struct",
+    "comment",
+    "variable",
+    "string",
+    "number",
+    "boolean",
+    "operator",
+    "keyword",
+    "parameter"
 ], [
-    'declaration',
-    'readonly'
+    "declaration",
+    "readonly"
 ]);
 
 export const selector: DocumentSelector = "vmt";
@@ -35,12 +35,12 @@ export const selector: DocumentSelector = "vmt";
 export let shaderParams: ShaderParam[];
 export let internalTextures: string[];
 
-export function init(context: ExtensionContext) {
+export function init(context: ExtensionContext): void {
     shaderParams = config.get("shaderParameters") ?? [];
     internalTextures = config.get("internalTextures") ?? [];
 
     const vmtSemantics = languages.registerDocumentSemanticTokensProvider(selector, new VmtSemanticTokenProvider(), legend);
-    const vmtCompletion = languages.registerCompletionItemProvider(selector, new ShaderParamCompletionItemProvider(), '$', '%'); // BUG: Trigger characters don't seem to work?
+    const vmtCompletion = languages.registerCompletionItemProvider(selector, new ShaderParamCompletionItemProvider(), "$", "%"); // BUG: Trigger characters don't seem to work?
     const vmtHover = languages.registerHoverProvider(selector, new ShaderParamHoverProvider());
     const vmtColors = languages.registerColorProvider(selector, new ShaderParamColorsProvider());
     const vmtFormatter = languages.registerDocumentFormattingEditProvider(selector, new KeyvalueDocumentFormatter());
@@ -51,7 +51,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
 
     protected keyProcessors: Processor[] = [
         { regex: /\$\w+/, processor: this.processKeyShader },
-        { regex: /\%\w+/, processor: this.processKeyCompile }
+        { regex: /%\w+/, processor: this.processKeyCompile }
     ];
 
     protected valueProcessors: Processor[] = [
@@ -59,18 +59,18 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     ];
 
     constructor() {
-        super(legend, languages.createDiagnosticCollection('vmt'));
+        super(legend, languages.createDiagnosticCollection("vmt"));
     }
 
-    processKeyShader(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
-        tokensBuilder.push(wholeRange, 'parameter');
+    processKeyShader(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument): void {
+        tokensBuilder.push(wholeRange, "parameter");
     }
 
-    processKeyCompile(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
-        tokensBuilder.push(wholeRange, 'parameter', ['readonly']);
+    processKeyCompile(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument): void {
+        tokensBuilder.push(wholeRange, "parameter", ["readonly"]);
     }
 
-    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument) {
+    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument): void {
 
         // Get the key value document
         if(!contentRange.isSingleLine) return;
@@ -89,21 +89,21 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
 
         // Bit copy paste?
         switch(param.type) {
-            case "bool": this.processValueBool(kv, contentRange, tokensBuilder, kvDoc); break;
-            case "int": this.processValueInt(kv, contentRange, tokensBuilder, kvDoc); break;
-            case "float": this.processValueFloat(kv, contentRange, tokensBuilder, kvDoc); break;
-            case "scalar": this.processValueScalar(kv, contentRange, tokensBuilder, kvDoc); break;
-            case "texture": this.processValueTexture(kv, contentRange, tokensBuilder, kvDoc); break;
-            case "color": this.processValueColor(kv, contentRange, tokensBuilder, kvDoc); break;
-            case "env_cubemap": this.processValueCubemap(kv, contentRange, tokensBuilder, kvDoc); break;
+        case "bool": this.processValueBool(kv, contentRange, tokensBuilder, kvDoc); break;
+        case "int": this.processValueInt(kv, contentRange, tokensBuilder, kvDoc); break;
+        case "float": this.processValueFloat(kv, contentRange, tokensBuilder, kvDoc); break;
+        case "scalar": this.processValueScalar(kv, contentRange, tokensBuilder, kvDoc); break;
+        case "texture": this.processValueTexture(kv, contentRange, tokensBuilder, kvDoc); break;
+        case "color": this.processValueColor(kv, contentRange, tokensBuilder, kvDoc); break;
+        case "env_cubemap": this.processValueCubemap(kv, contentRange, tokensBuilder, kvDoc); break;
             
-            case "string": 
-            default: this.processValueString(kv, contentRange, tokensBuilder, kvDoc); break;
+        case "string": 
+        default: this.processValueString(kv, contentRange, tokensBuilder, kvDoc); break;
         }
         
     }
 
-    processValueBool(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+    processValueBool(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
         if(kv.value.match(/^[01]$/)) {
             tokensBuilder.push(range, "boolean");
         } else {
@@ -111,7 +111,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         }
     }
 
-    processValueInt(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+    processValueInt(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
         if(kv.value.match(/^\d+$/)) {
             tokensBuilder.push(range, "number");
         } else {
@@ -119,7 +119,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         }
     }
 
-    processValueFloat(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+    processValueFloat(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
         if(kv.value.match(/^(\d+)(\.\d+)?$/)) {
             tokensBuilder.push(range, "number");
         } else {
@@ -127,7 +127,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         }
     }
 
-    processValueScalar(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+    processValueScalar(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
         if(kv.value.match(/^0?\.\d+$/)) {
             tokensBuilder.push(range, "number");
         } else {
@@ -135,11 +135,11 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         }
     }
 
-    processValueString(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+    processValueString(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
         tokensBuilder.push(range, "string");
     }
 
-    processValueTexture(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+    processValueTexture(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
 
         if(internalTextures.includes(kv.value)) {
             tokensBuilder.push(range, "keyword");
@@ -149,7 +149,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         tokensBuilder.push(range, "string");
     }
 
-    processValueColor(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+    processValueColor(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
 
         // Don't put any semantic tokens here. The textmate highlighting is good enough. We only validate the input and provide warning messages
         const colorMatches = getColorMatches(kv.value);
@@ -160,7 +160,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         }
     }
 
-    processValueCubemap(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument) {
+    processValueCubemap(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
         
         if(kv.value === "env_cubemap") {
             tokensBuilder.push(range, "keyword");
@@ -198,7 +198,7 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
                 if(s.defaultCompletion != null) {
                     completion.insertText += " " + s.defaultCompletion.toString();
                 } else if(s.type === "string" || s.type === "texture") {
-                    completion.insertText = new SnippetString(completion.insertText + ' "${1}"');
+                    completion.insertText = new SnippetString(completion.insertText + " \"${1}\"");
                 }
 
                 if(s.type === "texture") {
@@ -289,7 +289,7 @@ export class ShaderParamHoverProvider implements HoverProvider {
         const uri = param.wikiUri;
 
         if(kv.keyRange.contains(position) && kv.key !== "") {
-            let hoverText = `(Shader Parameter) **${name}** [${param.type}] ${defaultCompletion != null ? ("- Default: " + defaultCompletion) : ""}`
+            let hoverText = `(Shader Parameter) **${name}** [${param.type}] ${defaultCompletion != null ? ("- Default: " + defaultCompletion) : ""}`;
             if(description != null) hoverText += `\n\n${description}`;
             if(uri != null) hoverText += `\n\n[Wiki](${uri})`;
 
@@ -339,7 +339,7 @@ export class ShaderParamColorsProvider implements DocumentColorProvider {
     }
 
     provideColorPresentations(color: Color, context: { document: TextDocument; range: Range; }, token: CancellationToken): ProviderResult<ColorPresentation[]> {
-        throw new Error('Method not implemented.');
+        throw new Error("Method not implemented.");
     }
 
 }
@@ -351,7 +351,7 @@ function getColorMatches(colorString: string): { validFormat: boolean, outOfBoun
         outOfBounds: false,
         color: null,
         matches: null
-    }
+    };
 
     const r = parseInt(matches[1]);
     const g = parseInt(matches[2]);
@@ -362,7 +362,7 @@ function getColorMatches(colorString: string): { validFormat: boolean, outOfBoun
         outOfBounds: true,
         color: null,
         matches: matches
-    }
+    };
 
     return {
         validFormat: true,

@@ -103,8 +103,8 @@ export class KeyvalueDocument {
     public findTokensInRange(range: Range): Token[] {
         
         return this._tokens.filter(t => {
-            let startPos = this._document.positionAt(t.start);
-            let endPos = this.document.positionAt(t.end);
+            const startPos = this._document.positionAt(t.start);
+            const endPos = this.document.positionAt(t.end);
             return startPos.isAfterOrEqual(range.start) && startPos.isBefore(range.end) && endPos.isAfter(range.start) && endPos.isBeforeOrEqual(range.end);
         });
 
@@ -169,8 +169,8 @@ export type ProcessorFunction = (content: string,
                                 scope: string) => void;
 
 export class Processor {
-    public processor: ProcessorFunction = (content, range, tokensBuilder, captures, document, scope) => { };
-    public regex: RegExp = /.+/;
+    public processor: ProcessorFunction;
+    public regex = /.+/;
 
     constructor(processor: ProcessorFunction, regex: RegExp) {
         this.processor = processor;
@@ -191,7 +191,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
     
     tokenizer: Tokenizer;
     diagnostics: Diagnostic[] = [];
-    bracketStack: number = 0;
+    bracketStack = 0;
 
     protected abstract valueProcessors: Processor[];
 
@@ -217,7 +217,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
     buildTokens(tokens: Token[], tokensBuilder: SemanticTokensBuilder, document: TextDocument): SemanticTokens {
         
         const keys: string[] = [];
-        let currentScope: string = "";
+        let currentScope = "";
 
         for(let i = 0; i < tokens.length; i++) {
             const token = tokens[i];
@@ -225,7 +225,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
 
             // No further processing on comments
             if(token.type === TokenType.Comment) {
-                tokensBuilder.push(tokenRange, 'comment', []);
+                tokensBuilder.push(tokenRange, "comment", []);
             }
 
             if(token.type === TokenType.Key) {
@@ -236,7 +236,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
 
                 // We're an object key
                 if(nextToken.type === TokenType.ObjectStart) {
-                    tokensBuilder.push(tokenRange, 'struct', []);
+                    tokensBuilder.push(tokenRange, "struct", []);
                     this.bracketStack++;
                     currentScope += `.${stripQuotes(token.value.toLowerCase())}`;
                     continue;
@@ -298,11 +298,11 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
 
     protected processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument, scope: string): void {
         const processed = this.processString(token, range, tokensBuilder, this.keyProcessors, document, scope);
-        if(!processed) tokensBuilder.push(range, 'variable', ['declaration']);
+        if(!processed) tokensBuilder.push(range, "variable", ["declaration"]);
     }
     protected processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument, scope: string): void {
         const processed = this.processString(token, range, tokensBuilder, this.valueProcessors, document, scope);
-        if(!processed) tokensBuilder.push(range, 'string', []);
+        if(!processed) tokensBuilder.push(range, "string", []);
     }
 
     processString(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, processors: Processor[], document: TextDocument, scope: string): boolean {
@@ -331,12 +331,12 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
             return {
                 content: token.value.substring(1, token.value.length - 1),
                 range: new Range(range.start.translate(0, 1), range.end.translate(0, -1))
-            }
+            };
         } else {
             return {
                 content: token.value,
                 range: range
-            }
+            };
         }
     }
 

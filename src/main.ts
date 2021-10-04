@@ -7,17 +7,17 @@
 // https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
-import * as vscode from 'vscode'
-import * as vmt from './lang-vmt'
-import * as captions from './lang-captions'
-import * as keyvalue from './lang-keyvalue'
+import * as vscode from "vscode";
+import * as vmt from "./lang-vmt";
+import * as captions from "./lang-captions";
+import * as keyvalue from "./lang-keyvalue";
 
 
-const packageJson = require('../package.json');
+import * as packageJson from "../package.json";
 
 export let output: vscode.OutputChannel;
 
-export function activate(context: vscode.ExtensionContext) {
+export function activate(context: vscode.ExtensionContext): void {
 
     output = vscode.window.createOutputChannel("Source Engine Support");
     context.subscriptions.push(output);
@@ -33,4 +33,4 @@ export function activate(context: vscode.ExtensionContext) {
 
 export let config: vscode.WorkspaceConfiguration; 
 
-export function deactivate() {}
+export function deactivate(): void {}
