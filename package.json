@@ -1061,7 +1061,7 @@
     },
     "jest": {
         "transform": {
-            ".(ts|tsx|json)": "ts-jest"
+            ".(ts|tsx)": "ts-jest"
         },
         "testRegex": "(/tests?/.*|\\.(test|spec))\\.(ts|tsx|js)$",
         "moduleFileExtensions": [
