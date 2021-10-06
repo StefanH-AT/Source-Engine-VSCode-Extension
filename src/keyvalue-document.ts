@@ -17,6 +17,22 @@ import { Token, Tokenizer, TokenType } from "./kv-core/kv-tokenizer";
 const keyvalueDocuments: { file: string, document: KeyvalueDocument }[] = [];
 const tokenizer = new Tokenizer();
 
+export const legend = new SemanticTokensLegend([
+    "struct",
+    "comment",
+    "variable",
+    "string",
+    "number",
+    "operator",
+    "macro",
+    "boolean",
+    "keyword",
+    "parameter"
+], [
+    "declaration",
+    "readonly"
+]);
+
 export function getDocument(document: TextDocument): KeyvalueDocument | undefined {
     if(!hasDocument(document)) {
         tokenizeDocument(document);
@@ -272,6 +288,25 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
             if(token.type === TokenType.ObjectEnd) {
                 this.bracketStack--;
                 currentScope = currentScope.substring(0, currentScope.lastIndexOf("."));
+            }
+
+            if(token.type === TokenType.PreprocessorKey) {
+
+                // Get next token that isn't a comment 
+                const interestingToken = this.getNextInterestingToken(tokens, i);
+                const nextToken = interestingToken.token;
+
+                if(nextToken.type === TokenType.Value) {
+
+                    const nextTokenRange = new Range(document.positionAt(nextToken.start), document.positionAt(nextToken.end));
+
+                    tokensBuilder.push(tokenRange, "macro", []);
+                    tokensBuilder.push(nextTokenRange, "string", []);
+
+                    continue;
+                }
+
+                this.diagnostics.push(new Diagnostic(tokenRange, "Preprocessor key without value. Please add a value.", DiagnosticSeverity.Error));
             }
         }
         

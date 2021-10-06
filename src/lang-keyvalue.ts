@@ -10,19 +10,7 @@
 // ==========================================================================
 
 import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector } from "vscode";
-import { KeyvalueDocumentFormatter, KvTokensProviderBase, Processor } from "./keyvalue-document";
-import { Token, TokenType } from "./kv-core/kv-tokenizer";
-
-export const legend = new SemanticTokensLegend([
-    "struct",
-    "comment",
-    "variable",
-    "string",
-    "number",
-    "operator"
-], [
-    "declaration"
-]);
+import { KeyvalueDocumentFormatter, KvTokensProviderBase, legend, Processor } from "./keyvalue-document";
 
 export const selector: DocumentSelector = "keyvalue3";
 

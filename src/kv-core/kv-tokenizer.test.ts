@@ -9,7 +9,7 @@
 
 import * as tokenizer from "./kv-tokenizer";
 
-test("Tokenize File", () => {
+test("Tokenize Simple KV", () => {
     const tkn = new tokenizer.Tokenizer();
     tkn.tokenizeFile(`
         "File"
@@ -76,6 +76,34 @@ test("Tokenize File", () => {
     expect(tokens[50].type).toBe(tokenizer.TokenType.Value);
     expect(tokens[50].value).toBe("\"\\\"world\\\"\"");
 
+});
+
+test("Tokenize preprocessor", () => {
+    const tkn = new tokenizer.Tokenizer();
+    tkn.tokenizeFile(`
+    // Example file for a file with preprocessor statements
+    
+    #base "file_this_is_based_on.txt"
+    
+    "Obj" {
+        #include "some/file.txt"
+        "hello" "world :)"
+    }`);
+
+    expect(tkn).toBeDefined();
+
+    const tokens = tkn.tokens;
+    expect(tokens.length).toBe(10);
+    expect(tokens[0].type).toBe(tokenizer.TokenType.Comment);
+    expect(tokens[1].type).toBe(tokenizer.TokenType.PreprocessorKey);
+    expect(tokens[2].type).toBe(tokenizer.TokenType.Value);
+    expect(tokens[3].type).toBe(tokenizer.TokenType.Key);
+    expect(tokens[4].type).toBe(tokenizer.TokenType.ObjectStart);
+    expect(tokens[5].type).toBe(tokenizer.TokenType.PreprocessorKey);
+    expect(tokens[6].type).toBe(tokenizer.TokenType.Value);
+    expect(tokens[7].type).toBe(tokenizer.TokenType.Key);
+    expect(tokens[8].type).toBe(tokenizer.TokenType.Value);
+    expect(tokens[9].type).toBe(tokenizer.TokenType.ObjectEnd);
 });
 
 test("Consume Unquoted string", () => {
