@@ -3,7 +3,7 @@
 		"module": "commonjs",
 		"esModuleInterop": true,
 		"rootDir": ".",
-		"outDir": "../out",
+		"outDir": "../out/",
 		"target": "es2020",
 		"lib": [
 			"es2020"

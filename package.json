@@ -30,8 +30,8 @@
     },
     "scripts": {
         "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./",
-        "watch": "tsc -watch -p ./",
+        "compile": "tsc -p ./src",
+        "watch": "tsc -watch -p ./src",
         "pretest": "npm run compile",
         "test": "jest",
         "lint": "eslint ./src"
