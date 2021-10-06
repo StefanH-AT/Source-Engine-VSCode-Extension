@@ -1,5 +1,14 @@
+
+# !!
 node_modules
-*.vsix
+
+# Compile output
 out
 
+*.vsix
+
+# Typescript build garbage
 tsconfig.tsbuildinfo
+
+# Jest coverage results
+coverage
