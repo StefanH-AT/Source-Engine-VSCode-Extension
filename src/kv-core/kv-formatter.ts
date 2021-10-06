@@ -23,7 +23,7 @@ export function formatTokens(tokens: Token[], bracketOnNewline: boolean): string
         } else if(token.type === TokenType.ObjectEnd) {
             indentation--;
             text += indent.substring(1) + "}\n";
-        } else if(token.type === TokenType.Key) {
+        } else if(token.type === TokenType.Key || token.type === TokenType.PreprocessorKey) {
             text += indent + token.value;
         } else if(token.type === TokenType.Value) {
             text += " " + token.value + "\n";

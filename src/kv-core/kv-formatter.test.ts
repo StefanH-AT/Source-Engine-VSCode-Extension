@@ -3,7 +3,7 @@ import { formatTokens } from "./kv-formatter";
 import { Token, Tokenizer } from "./kv-tokenizer";
 
 
-test("Formatting Pentest 1, Bracket on Newline", () => {
+test("Simple Formatting 1, Bracket not on Newline", () => {
     
     const tokens = getTokensFor("samples/pentest/test1.kv");
 
@@ -30,7 +30,7 @@ test("Formatting Pentest 1, Bracket on Newline", () => {
 
 });
 
-test("Formatting Pentest 1, Bracket on Newline", () => {
+test("Simple Formatting 1, Bracket on Newline", () => {
 
     const tokens = getTokensFor("samples/pentest/test1.kv");
 
@@ -60,6 +60,23 @@ test("Formatting Pentest 1, Bracket on Newline", () => {
 
 });
 
+test("Preprocessor Formatting", () => {
+
+    const tokens = getTokensFor("samples/pentest/test_preprocessor.kv");
+
+    const formattedStringNewline = formatTokens(tokens, true);
+    expect(formattedStringNewline).toBe(
+        `// Example file for a file with preprocessor statements
+#base "file_this_is_based_on.txt"
+"Obj"
+{
+\t#include "some/file.txt"
+\t"hello" "world :)"
+}
+`);
+
+});
+
 function getTokensFor(filePath: string): Token[] {
     const testFile = readFileSync(filePath, "utf-8");
         
@@ -69,7 +86,6 @@ function getTokensFor(filePath: string): Token[] {
     tokenizer.tokenizeFile(testFile);
     const tokens = tokenizer.tokens;
     expect(tokens).not.toBeNull();
-    expect(tokens.length).toBe(24);
 
     return tokens;
 }

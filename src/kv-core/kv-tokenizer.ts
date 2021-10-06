@@ -5,7 +5,9 @@ export enum TokenType {
     Key,
     Value,
     ObjectStart,
-    ObjectEnd
+    ObjectEnd,
+    PreprocessorKey,
+    Conditional
 }
 
 export class Token {
@@ -27,6 +29,8 @@ export class Tokenizer {
     text = "";
 
     _tokens : Token[] = [];
+
+    _preprocessorRegex = /#(base|include)/;
 
     addToken(type: TokenType, start: number, end: number, value: string): void {
         this._tokens.push(new Token(type, start, end, value));
@@ -77,7 +81,16 @@ export class Tokenizer {
 
             // No, it's a string!
             const stringLength = this.consumeString(i);
-            this.addToken(expectingKey ? TokenType.Key : TokenType.Value, i, i + stringLength, text.substring(i, i + stringLength));
+            const stringContent = text.substring(i, i + stringLength);
+            let tokenType = expectingKey ? TokenType.Key : TokenType.Value;
+
+            // Are we a preprocessor key?
+
+            if(expectingKey && stringContent.match(this._preprocessorRegex)) {
+                tokenType = TokenType.PreprocessorKey;
+            }
+
+            this.addToken(tokenType, i, i + stringLength, stringContent);
             expectingKey = !expectingKey;
             i += stringLength;
         }
@@ -173,6 +186,5 @@ export class Tokenizer {
         for(; i + n < this.text.length && !isWhitespace(this.text[i + n]); n++);
         return n + 1;
     }
-
     
 }
