@@ -12,7 +12,7 @@ import { KeyvalueDocument, getDocument, KeyValue, KeyvalueDocumentFormatter, KvT
 import { Token } from "./kv-core/kv-tokenizer";
 import { ShaderParam } from "./kv-core/shader-param";
 import { listFilesSync } from "list-files-in-dir";
-import { getParentDocumentDirectory } from "./source-fs";
+import { getParentDocumentDirectory } from "./kv-core/source-fs";
 import { config } from "./main";
 
 
