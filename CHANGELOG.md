@@ -4,6 +4,12 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.16]
+
+**General**
+- Fixed tokenization bugs
+- Added tokenization support for #include and #base. (Auto complete and other features coming later)
+
 ## [0.0.15]
 
 **General**
