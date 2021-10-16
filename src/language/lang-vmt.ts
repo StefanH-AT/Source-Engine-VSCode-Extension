@@ -8,12 +8,12 @@
 // ==========================================================================
 
 import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector } from "vscode";
-import { KeyvalueDocument, getDocument, KeyValue, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor, legend } from "./keyvalue-document";
-import { Token } from "./kv-core/kv-tokenizer";
-import { ShaderParam } from "./kv-core/shader-param";
+import { KeyvalueDocument, getDocument, KeyValue, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor, legend } from "../keyvalue-document";
+import { Token } from "../kv-core/kv-tokenizer";
+import { ShaderParam } from "../kv-core/shader-param";
 import { listFilesSync } from "list-files-in-dir";
-import { getParentDocumentDirectory } from "./kv-core/source-fs";
-import { config } from "./main";
+import { getParentDocumentDirectory } from "../kv-core/source-fs";
+import { config } from "../main";
 
 
 export const selector: DocumentSelector = "vmt";
