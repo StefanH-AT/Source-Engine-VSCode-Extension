@@ -12,7 +12,7 @@ import * as vscode from "vscode";
 import * as vmt from "./lang-vmt";
 import * as captions from "./lang-captions";
 import * as keyvalue from "./lang-keyvalue";
-import * as captionsCompile from "./captions-compile";
+import * as captionsCompile from "./compiler/captions-compile";
 
 
 import * as packageJson from "../package.json";
