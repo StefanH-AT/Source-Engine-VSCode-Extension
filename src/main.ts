@@ -9,9 +9,9 @@
 
 
 import * as vscode from "vscode";
-import * as vmt from "./lang-vmt";
-import * as captions from "./lang-captions";
-import * as keyvalue from "./lang-keyvalue";
+import * as vmt from "./language/lang-vmt";
+import * as captions from "./language/lang-captions";
+import * as keyvalue from "./language/lang-keyvalue";
 import * as captionsCompile from "./compiler/captions-compile";
 
 
