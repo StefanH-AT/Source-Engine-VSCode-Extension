@@ -1,7 +1,16 @@
+// ==========================================================================
+// Purpose:
+// Adds commands to compile caption files.
+// 
+// Author: Stefan Heinz
+//
+// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
+// ==========================================================================
+
 import { commands, ExtensionContext, FileType, OutputChannel, ProgressLocation, TextEditor, Uri, window, workspace } from "vscode";
-import { config } from "./main";
+import { config } from "../main";
 import * as fs from "fs";
-import { isWhitespace } from "./kv-core/kv-string-util";
+import { isWhitespace } from "../kv-core/kv-string-util";
 import { execFile } from "child_process";
 
 let ccChannel: OutputChannel;
