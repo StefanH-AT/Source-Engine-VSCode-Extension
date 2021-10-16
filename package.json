@@ -203,6 +203,16 @@
                     "light": "./icons/start-light.svg",
                     "dark": "./icons/start-dark.svg"
                 }
+            },
+            {
+                "command": "mdl.compile",
+                "title": "Compile Model",
+                "shortTitle": "Compile Model",
+                "category": "Model",
+                "icon": {
+                    "light": "./icons/start-light.svg",
+                    "dark": "./icons/start-dark.svg"
+                }
             }
         ],
         "menus": {
@@ -210,6 +220,11 @@
                 {
                     "when": "editorLangId == captions",
                     "command": "captions.compile",
+                    "group": "navigation"
+                },
+                {
+                    "when": "editorLangId == qc",
+                    "command": "mdl.compile",
                     "group": "navigation"
                 }
             ]
