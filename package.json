@@ -196,7 +196,7 @@
         "commands": [
             {
                 "command": "captions.compile",
-                "title": "Compile captions file",
+                "title": "Compile Captions file",
                 "shortTitle": "Compile Captions",
                 "category": "Captions",
                 "icon": {
@@ -206,7 +206,7 @@
             },
             {
                 "command": "mdl.compile",
-                "title": "Compile Model",
+                "title": "Compile Model file",
                 "shortTitle": "Compile Model",
                 "category": "Model",
                 "icon": {
@@ -246,6 +246,26 @@
                     "type": "boolean",
                     "default": false,
                     "description": "Re-open the output window on every compile."
+                },
+                "sourceEngine.modelCompiler.executablePath": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Portal 2\\bin\\studiomdl.exe",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Half Life 2\\bin\\studiomdl.exe",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Counter Strike Global Offensive\\bin\\studiomdl.exe"
+                    ],
+                    "description": "Path to studiomdl.exe for in-editor captions compiling."
+                },
+                "sourceEngine.modelCompiler.openOutputWindow": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Re-open the output window on every compile."
+                },
+                "sourceEngine.modelCompiler.additionalParameters": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Additional parameters to run while compiling buttons."
                 },
                 "sourceEngine.keyvalueBracesOnNewline": {
                     "type": "boolean",

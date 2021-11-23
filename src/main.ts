@@ -13,6 +13,7 @@ import * as vmt from "./language/lang-vmt";
 import * as captions from "./language/lang-captions";
 import * as keyvalue from "./language/lang-keyvalue";
 import * as captionsCompile from "./compiler/captions-compile";
+import * as modelCompile from "./compiler/model-compile";
 
 
 import * as packageJson from "../package.json";
@@ -29,7 +30,9 @@ export function activate(context: vscode.ExtensionContext): void {
     keyvalue.init(context);
     vmt.init(context);
     captions.init(context);
+    
     captionsCompile.init(context);
+    modelCompile.init(context);
 
     output.appendLine(`Started Source Engine Support v${packageJson.version}`);
 }
