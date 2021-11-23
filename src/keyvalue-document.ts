@@ -82,14 +82,10 @@ export class KeyvalueDocument {
 
         const line = this._document.lineAt(lineNumber);
         if(line.isEmptyOrWhitespace) return null;
-
-        const range = line.range;
-        const tokens = this.findTokensInRange(range);
+        const tokens = this.findTokensOnLine(lineNumber);
 
         // FIXME: Very repetetive code
         if(tokens.length == 2 && tokens[0].type === TokenType.Key && tokens[1].type === TokenType.Value) {
-            const key = tokens[0].value;
-            const value = tokens[1].value;
             const keyRange = new Range(this.document.positionAt(tokens[0].start), this.document.positionAt(tokens[0].end));
             const valueRange = new Range(this.document.positionAt(tokens[1].start), this.document.positionAt(tokens[1].end));
 
@@ -116,14 +112,8 @@ export class KeyvalueDocument {
         return this._tokens;
     }
 
-    public findTokensInRange(range: Range): Token[] {
-        
-        return this._tokens.filter(t => {
-            const startPos = this._document.positionAt(t.start);
-            const endPos = this.document.positionAt(t.end);
-            return startPos.isAfterOrEqual(range.start) && startPos.isBefore(range.end) && endPos.isAfter(range.start) && endPos.isBeforeOrEqual(range.end);
-        });
-
+    public findTokensOnLine(line: number): Token[] {
+        return this._tokens.filter(t => t.line == line);
     }
 
 }

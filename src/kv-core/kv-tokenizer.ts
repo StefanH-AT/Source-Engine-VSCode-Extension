@@ -15,12 +15,14 @@ export class Token {
     start: number;
     end: number;
     value: string;
+    line: number;
 
-    constructor(type: TokenType, start: number, end: number, value: string) {
+    constructor(type: TokenType, start: number, end: number, value: string, line: number) {
         this.type = type;
         this.start = start;
         this.end = end;
         this.value = value;
+        this.line = line;
     }
 }
 
@@ -32,8 +34,8 @@ export class Tokenizer {
 
     _preprocessorRegex = /#(base|include)/;
 
-    addToken(type: TokenType, start: number, end: number, value: string): void {
-        this._tokens.push(new Token(type, start, end, value));
+    addToken(type: TokenType, start: number, end: number, value: string, line: number): void {
+        this._tokens.push(new Token(type, start, end, value, line));
     }
 
     public get tokens(): Token[] {
@@ -48,7 +50,8 @@ export class Tokenizer {
         const textSize = text.length;
         this.text = text;
         this._tokens = [];
-
+        
+        let line = 0;
         let expectingKey = true;
         for(let i = 0; i < textSize; i++) {
             const c = text[i];
@@ -56,6 +59,9 @@ export class Tokenizer {
             // Skip forward to the next interesting token
             if(c === " " || c === "\t") continue;
             if(c === "\r" || c === "\n") {
+                if(c === "\n") {
+                    line++;
+                }
                 expectingKey = true;
                 continue;
             }
@@ -63,19 +69,19 @@ export class Tokenizer {
             // Is it a comment?
             if(c === "/" && text[i + 1] === "/") {
                 const commentLength = this.consumeComment(i + 2);
-                this.addToken(TokenType.Comment, i, i + commentLength, text.substring(i, i + commentLength));
+                this.addToken(TokenType.Comment, i, i + commentLength, text.substring(i, i + commentLength), line);
                 i += commentLength;
                 continue;
             }
 
             // Is it an object?
             if(c === "{") {
-                this.addToken(TokenType.ObjectStart, i, i, text[i]);
+                this.addToken(TokenType.ObjectStart, i, i, text[i], line);
                 expectingKey = true;
                 continue;
             }
             if(c === "}") {
-                this.addToken(TokenType.ObjectEnd, i, i, text[i]);
+                this.addToken(TokenType.ObjectEnd, i, i, text[i], line);
                 continue;
             }
 
@@ -90,7 +96,7 @@ export class Tokenizer {
                 tokenType = TokenType.PreprocessorKey;
             }
 
-            this.addToken(tokenType, i, i + stringLength, stringContent);
+            this.addToken(tokenType, i, i + stringLength, stringContent, line);
             expectingKey = !expectingKey;
             i += stringLength;
         }
