@@ -37,6 +37,9 @@ Checklist for features that are planned or already implemented.
 
 ## QC
 - [x] QC highlighting
+- [x] Compile model button
+  - [x] Configuration for mdlcompile.exe
+  - [x] Configuration for game root path
 
 ### Captions
 - [x] Captions highlighting
@@ -63,9 +66,6 @@ This is what is planned for this extension. In case you wish to contribute, this
 
 ### QC
 - [ ] QC smd/dmx path completion
-- [ ] Compile model button
-  - [ ] Configuration for mdlcompile.exe
-  - [ ] Configuration for game root path
 
 ### VPC
 - [ ] $File path completion

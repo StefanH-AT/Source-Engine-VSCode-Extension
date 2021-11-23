@@ -4,6 +4,14 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.17]
+
+**QC**
+- Added button to compile a .QC file (Must configure studiomdl.exe path)
+
+**Captions**
+- Fixed colorization bugs on large files
+
 ## [0.0.16]
 
 **General**
