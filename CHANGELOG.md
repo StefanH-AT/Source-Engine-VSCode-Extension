@@ -4,6 +4,11 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.18]
+
+**General**
+- Fix bugs where certain language features would be broken before opening a keyvalue, vmt or captions file
+
 ## [0.0.17]
 
 **QC**
