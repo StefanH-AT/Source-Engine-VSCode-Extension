@@ -51,5 +51,27 @@
             "}"
         ],
         "description": "Define a non-moving, single-mesh collision model with concave parts"
+    },
+    "Texture Group / Family / Skins": {
+        "prefix": "$texturegroup",
+        "body": [
+            "\\$texturegroup \"${1:skins}\"",
+            "{",
+            "\t{ \"${2:material1}\" }",
+            "\t{ \"${3:material2}\" }",
+            "}"
+        ]
+    },
+    "Enable Texture Shadows": {
+        "prefix": "$casttextureshadows",
+        "body": [
+            "\\$casttextureshadows"
+        ]
+    },
+    "Illumination Position": {
+        "prefix": "$illumposition",
+        "body": [
+            "\\$illumposition ${1:0} ${2:0} ${3:0} $4"
+        ]
     }
 }
