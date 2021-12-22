@@ -1,0 +1,22 @@
+LightmappedGeneric
+{
+    $basetexture "metal/black_ceiling_metal_large"
+    $surfaceprop metal
+    $bumpmap "metal/black_ceiling_metal_large_height-ssbump"
+    $ssbump 1
+    $ssbumpmathfix 1
+    $reflectivity "[0.6 0.6 0.6]" 
+    $envmap "env_cubemap"
+    $envmaplightscale 0.6
+
+    $normalmapalphaenvmapmask 1
+    $envmapcontrast 1
+    $envmapsaturation 0.2
+    $envmaptint "[0.2 0.2 0.2]"
+    "%noportal" 1
+    $detail "detail/detail_tile"
+    $detailscale 9
+    $detailblendfactor 1
+    $detailblendmode 7
+    "%keywords" "portal2 noportal chamber"
+}
