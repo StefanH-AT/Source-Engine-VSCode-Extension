@@ -14,6 +14,7 @@ import { ShaderParam } from "../kv-core/shader-param";
 import { listFilesSync } from "list-files-in-dir";
 import { getParentDocumentDirectory } from "../kv-core/source-fs";
 import { config } from "../main";
+import { isFloatValue, isScalarValue } from "../kv-core/kv-string-util";
 
 
 export const selector: DocumentSelector = "vmt";
@@ -106,7 +107,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     }
 
     processValueFloat(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
-        if(kv.value.match(/^(\d+)(\.\d+)?$/)) {
+        if(isFloatValue(kv.value)) {
             tokensBuilder.push(range, "number");
         } else {
             this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting a float.", DiagnosticSeverity.Warning));
@@ -114,7 +115,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
     }
 
     processValueScalar(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
-        if(kv.value.match(/^0?\.\d+$/)) {
+        if(isScalarValue(kv.value)) {
             tokensBuilder.push(range, "number");
         } else {
             this.diagnostics.push(new Diagnostic(range, "Unexpected shader parameter value type. Expecting a scalar. (0-1)", DiagnosticSeverity.Warning));
@@ -325,13 +326,13 @@ export class ShaderParamColorsProvider implements DocumentColorProvider {
     }
 
     provideColorPresentations(color: Color, context: { document: TextDocument; range: Range; }, token: CancellationToken): ProviderResult<ColorPresentation[]> {
-        throw new Error("Method not implemented.");
+        return [];
     }
 
 }
 
 function getColorMatches(colorString: string): { validFormat: boolean, outOfBounds: boolean, color: Color | null, matches: RegExpMatchArray | null }  {
-    const matches = colorString.match(/\[(\d{1,3}) (\d{1,3}) (\d{1,3})\]/);
+    const matches = colorString.match(/\[(0?\.\d+|1|0) (0?\.\d+|1|0) (0?\.\d+|1|0)\]/);
     if(!matches) return {
         validFormat: false,
         outOfBounds: false,
@@ -339,11 +340,11 @@ function getColorMatches(colorString: string): { validFormat: boolean, outOfBoun
         matches: null
     };
 
-    const r = parseInt(matches[1]);
-    const g = parseInt(matches[2]);
-    const b = parseInt(matches[3]);
+    const r = parseFloat(matches[1]);
+    const g = parseFloat(matches[2]);
+    const b = parseFloat(matches[3]);
 
-    if(r > 255 || r < 0 || g > 255 || g < 0 || b > 255 || b < 0) return {
+    if(r > 1 || r < 0 || g > 1 || g < 0 || b > 1 || b < 0) return {
         validFormat: true,
         outOfBounds: true,
         color: null,
@@ -353,7 +354,7 @@ function getColorMatches(colorString: string): { validFormat: boolean, outOfBoun
     return {
         validFormat: true,
         outOfBounds: false,
-        color: new Color(r / 255, g / 255, b / 255, 1),
+        color: new Color(r, g, b, 1),
         matches: matches
     };
 }
