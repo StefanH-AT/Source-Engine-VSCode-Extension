@@ -4,6 +4,12 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.19]
+
+**VMT**
+- Fixed scalar values not accepting 0 and 1
+- Fixed color array values accepting 0-255 not 0-1
+
 ## [0.0.18]
 
 **General**
