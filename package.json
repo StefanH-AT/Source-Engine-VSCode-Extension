@@ -549,8 +549,16 @@
                             "type": "scalar"
                         },
                         {
+                            "name": "$envmaplightscale",
+                            "type": "scalar"
+                        },
+                        {
                             "name": "$envmaptint",
                             "type": "color"
+                        },
+                        {
+                            "name": "$normalmapalphaenvmapmask",
+                            "type": "bool"
                         },
                         {
                             "name": "$halflambert",
@@ -752,6 +760,13 @@
                             "type": "bool",
                             "defaultCompletion": 1,
                             "description": "Enables self-shadowing of the bumpmap. \nTip: You can use `height2ssbump.exe` to generate this map.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$ssbump"
+                        },
+                        {
+                            "name": "$ssbumpmathfix",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "description": "Modifies the amount of light received",
                             "wikiUri": "https://developer.valvesoftware.com/wiki/$ssbump"
                         },
                         {
