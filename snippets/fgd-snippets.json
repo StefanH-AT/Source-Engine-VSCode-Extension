@@ -25,5 +25,21 @@
         "body": [
             "input ${1:name}(${2|string,integer,float,boolean,choices,flags,axis,angle,angle_negative_pitch,color255,color1,filterclass,instance_file,instance_param,instance_variable,material,node_dest,node_id,npcclass,origin,particlesystem,pointentityclass,scene,script,scriptlist,sidelist,sound,sprite,decal,studio,target_destination,target_name_or_class,target_source,vecline,vector|}) : \"${3:description}\""
         ]
+    },
+    "Output": {
+        "prefix": "output",
+        "body": [
+            "output ${1:name}(${2|string,integer,float,boolean,choices,flags,axis,angle,angle_negative_pitch,color255,color1,filterclass,instance_file,instance_param,instance_variable,material,node_dest,node_id,npcclass,origin,particlesystem,pointentityclass,scene,script,scriptlist,sidelist,sound,sprite,decal,studio,target_destination,target_name_or_class,target_source,vecline,vector|}) : \"${3:description}\""
+        ]
+    },
+    "Parameter Choices": {
+        "prefix": "choices",
+        "body": [
+            "${1:name}(choices) : \"${3:display name}\" : ${4:0} : \"${5:description}\" = ",
+            "[",
+            "\t0 : \"Choice 1\"",
+            "\t1 : \"Choice 2\"",
+            "]"
+        ]
     }
 }
