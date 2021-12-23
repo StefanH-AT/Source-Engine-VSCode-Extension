@@ -141,9 +141,9 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         // Don't put any semantic tokens here. The textmate highlighting is good enough. We only validate the input and provide warning messages
         const colorMatches = getColorMatches(kv.value);
         if(!colorMatches.validFormat) {
-            this.diagnostics.push(new Diagnostic(range, "Invalid color value. Format: [0 50 255]", DiagnosticSeverity.Warning));
+            this.diagnostics.push(new Diagnostic(range, "Invalid color value. Format: [0 0.25 1]", DiagnosticSeverity.Warning));
         } else if(colorMatches.outOfBounds) {
-            this.diagnostics.push(new Diagnostic(range, "Color values out of bounds. Must be between 0 and 255", DiagnosticSeverity.Warning));
+            this.diagnostics.push(new Diagnostic(range, "Color values out of bounds. Must be between 0 and 1", DiagnosticSeverity.Warning));
         }
     }
 
