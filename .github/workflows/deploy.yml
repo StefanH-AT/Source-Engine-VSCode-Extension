@@ -7,15 +7,12 @@ on:
   push:
     branches: [ master ]
 
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [12.x, 14.x, 16.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - uses: actions/checkout@v2
@@ -42,13 +39,19 @@ jobs:
       env:
         VSCE_PAT: ${{ secrets.VSCE_PAT }}
         
-    - name: Read package.json version
-      uses: dutscher/read-package-json-endpoint-actions@v1.33.7
-      id: package-json-endpoint
+    - id: package-json
+      run: |
+        content=`cat ./path/to/package.json`
+        # the following lines are only required for multi line json
+        content="${content//'%'/'%25'}"
+        content="${content//$'\n'/'%0A'}"
+        content="${content//$'\r'/'%0D'}"
+        # end of optional handling for multi line json
+        echo "::set-output name=packageJson::$content"
       
     - name: Get Changelog
       run: |
-        echo "::set-output name::changelog::${sed -n '/^## \[${{ steps.package-json-endpoint.outputs.endpoint.version }}]/,/^## /p' CHANGELOG.md | sed '$ d' | sed '1,1d'}"
+        echo "::set-output name::changelog::${sed -n '/^## \[${{fromJson(steps.package-json.outputs.packageJson).version}}]/,/^## /p' CHANGELOG.md | sed '$ d' | sed '1,1d'}"
       id: changelog-endpoint
       
     - name: Discord Message
