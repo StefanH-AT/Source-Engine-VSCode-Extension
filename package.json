@@ -34,7 +34,8 @@
         "watch": "tsc -watch -p ./src",
         "pretest": "npm run compile",
         "test": "jest",
-        "lint": "eslint ./src"
+        "lint": "eslint ./src",
+        "deploy": "vsce publish"
     },
     "main": "./out/main.js",
     "activationEvents": [
