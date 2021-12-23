@@ -1,0 +1,15 @@
+@PointClass base(TargetName, Origin)
+= test : "This is a test entity definition for syntax highlighting"
+[
+
+    spawnflags(flags) =
+    [
+        1 : "Flag" : 0
+    ]
+
+    KeyvalueExample(string) : "Keyvalue Display Name" : "Default" : "Description"
+
+    input InputExample(void) : "Description"
+
+    output OutputExample(void) : "Description"
+]
