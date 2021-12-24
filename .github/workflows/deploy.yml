@@ -16,11 +16,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
   
     - name: Install
       run: npm ci
@@ -51,15 +46,16 @@ jobs:
         echo "::set-output name=packageJson::$content"
       
     - name: Get Changelog
-      id: changelog-endpoint
+      id: changelog
       run: |
         version=${{fromJson(steps.package-json.outputs.packageJson).version}}
-        changelog=`sed -n '/^## \[$version]/,/^## /p' CHANGELOG.md | sed '$ d' | sed '1,1d'`
+        escaped_version=$(printf '%s\n' "$version" | sed -e 's/[]\/$*.^[]/\\&/g')
+        changelog=`sed -n "/^## \[$escaped_version]/,/^## /p" CHANGELOG.md | sed '$ d' | sed '1,1d'`
         echo "::set-output name::changelog::$changelog"
       
     - name: Discord Message
       uses: tsickert/discord-webhook@v4.0.0
       with:
         webhook-uri: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        embed-title: "Update available [${{ steps.package-json-endpoint.outputs.endpoint.version }}]"
-        embed-description: ${{ steps.changelog-endpoint.outputs.changelog }}
+        embed-title: "Update available [${{fromJson(steps.package-json.outputs.packageJson).version}}]"
+        embed-description: ${{ steps.changelog.outputs.changelog }}
