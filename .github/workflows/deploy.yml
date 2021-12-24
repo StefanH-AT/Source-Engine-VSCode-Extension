@@ -39,9 +39,10 @@ jobs:
       env:
         VSCE_PAT: ${{ secrets.VSCE_PAT }}
         
-    - id: package-json
+    - name: Read package.json
+      id: package-json
       run: |
-        content=`cat ./path/to/package.json`
+        content=`cat ./package.json`
         # the following lines are only required for multi line json
         content="${content//'%'/'%25'}"
         content="${content//$'\n'/'%0A'}"
