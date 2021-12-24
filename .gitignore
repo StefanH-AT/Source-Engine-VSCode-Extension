@@ -7,6 +7,8 @@ out
 
 *.vsix
 
+.secrets
+
 # Typescript build garbage
 tsconfig.tsbuildinfo
 
