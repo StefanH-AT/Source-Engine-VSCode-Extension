@@ -4,6 +4,10 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+## [0.0.23]
+
+CI/CD fixes
+
 ## [0.0.22]
 
 **General**
