@@ -51,9 +51,11 @@ jobs:
         echo "::set-output name=packageJson::$content"
       
     - name: Get Changelog
-      run: |
-        echo "::set-output name::changelog::${sed -n '/^## \[${{fromJson(steps.package-json.outputs.packageJson).version}}]/,/^## /p' CHANGELOG.md | sed '$ d' | sed '1,1d'}"
       id: changelog-endpoint
+      run: |
+        version=${{fromJson(steps.package-json.outputs.packageJson).version}}
+        changelog=`sed -n '/^## \[$version]/,/^## /p' CHANGELOG.md | sed '$ d' | sed '1,1d'`
+        echo "::set-output name::changelog::$changelog"
       
     - name: Discord Message
       uses: tsickert/discord-webhook@v4.0.0
