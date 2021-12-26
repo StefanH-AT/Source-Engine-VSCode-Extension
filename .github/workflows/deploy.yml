@@ -51,7 +51,7 @@ jobs:
         version=${{fromJson(steps.package-json.outputs.packageJson).version}}
         escaped_version=$(printf '%s\n' "$version" | sed -e 's/[]\/$*.^[]/\\&/g')
         changelog=`sed -n "/^## \[$escaped_version]/,/^## /p" CHANGELOG.md | sed '$ d' | sed '1,1d'`
-        echo "::set-output name::changelog::$changelog"
+        echo "::set-output name=changelog::$changelog"
       
     - name: Discord Message
       uses: tsickert/discord-webhook@v4.0.0
