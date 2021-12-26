@@ -1,0 +1,18 @@
+lights/white001			250 240 205 100
+lights/white002			189 233 247 425
+lights/white003			232 246 190 350
+lights/white004			170 228 247 425
+ldr:lights/white005			234 235 220 375
+
+
+lights/white006			234 235 220 100 234 235 220 50
+
+forcetextureshadow props_bts/hanging_walkway_128a.mdl
+forcetextureshadow props_bts/hanging_walkway_128a_lod1.mdl
+forcetextureshadow props_bts/hanging_walkway_128b.mdl
+ldr:forcetextureshadow props_bts/hanging_walkway_128c.mdl
+hdr:forcetextureshadow props_bts/hanging_walkway_128d.mdl
+
+noshadow metal/metalgrate018b
+
+ldr:hdr: This can be used as a comment as the engine ignores this line, since you can't use ldr and hdr at the same time
