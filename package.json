@@ -2,7 +2,7 @@
     "name": "source-engine-support",
     "displayName": "Source Engine Support",
     "description": "Adds support for Source Engine file types and other commands",
-    "version": "0.0.24",
+    "version": "0.0.25",
     "icon": "extension-icon-256.png",
     "author": {
         "name": "Stefan Heinz",
