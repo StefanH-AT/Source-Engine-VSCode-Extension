@@ -56,6 +56,6 @@ jobs:
     - name: Discord Message
       uses: tsickert/discord-webhook@v4.0.0
       with:
-        webhook-uri: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
         embed-title: "Update available [${{fromJson(steps.package-json.outputs.packageJson).version}}]"
         embed-description: ${{ steps.changelog.outputs.changelog }}
