@@ -53,6 +53,9 @@ Checklist for features that are planned or already implemented.
 ### VPC
 - [x] VPC highlighting
 
+### Lights.rad
+- [x] .rad file highlighting
+
 ## Planned
 This is what is planned for this extension. In case you wish to contribute, this is a good place to start.
 
