@@ -49,7 +49,8 @@
         "onLanguage:qc",
         "onLanguage:fgd",
         "onLanguage:vpc",
-        "onLanguage:cfg"
+        "onLanguage:cfg",
+        "onLanguage:rad"
     ],
     "contributes": {
         "snippets": [
@@ -163,6 +164,15 @@
                     ".qc",
                     ".mc"
                 ]
+            },
+            {
+                "id": "rad",
+                "aliases": [
+                    "Valve RAD File"
+                ],
+                "extensions": [
+                    ".rad"
+                ]
             }
         ],
         "grammars": [
@@ -200,6 +210,11 @@
                 "language": "qc",
                 "scopeName": "source.qc",
                 "path": "./syntaxes/qc.tmLanguage.json"
+            },
+            {
+                "language": "rad",
+                "scopeName": "source.rad",
+                "path": "./syntaxes/rad.tmLanguage.json"
             }
         ],
         "commands": [
