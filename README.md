@@ -77,7 +77,13 @@ This is what is planned for this extension. In case you wish to contribute, this
 ---
 
 ## Contribution
-Contributions are welcome. Create a pull request!
+Create your pull requests to merge to the **dev** branch. Do not edit changelog.md or the feature listings in readme.md as the changelog will be handled later when merging to master.
+
+Make sure all workflows succeed. To validate locally:
+```
+npm run lint
+npm run test
+```
 
 ## Compiling and testing locally
 Users can just install this extension on the VSCode Marketplace, but developers might want to run the development build of the extension.
