@@ -1,0 +1,51 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "RAD",
+	"scopeName": "source.rad",
+	"patterns": [
+        {
+            "include": "#prefixedProperties"
+        },
+        {
+            "include": "#textureLight"
+        },
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#prefixes"
+        }
+	],
+	"repository": {
+		"prefixedProperties": {
+            "match": "(forcetextureshadow|noshadow)\\s+([\\w/\\.\\\\]+)",
+            "captures": {
+                "1": {
+                    "name": "keyword.rad"
+                },
+                "2": {
+                    "name": "string.unquoted.rad"
+                }
+            }
+        },
+        "textureLight": {
+            "match": "([\\w/\\.\\\\]+)\\s+((\\d+\\s+){4,8})",
+            "captures": {
+                "1": {
+                    "name": "string.unquoted.rad"
+                },
+                "2": {
+                    "name": "constant.numeric.rad"
+                }
+            }
+        },
+        "prefixes": {
+            "match": "^(([hl]dr)(:)){1}",
+            "name": "keyword.control.rad"
+        },
+        "comments": {
+            "match": "(ldr:hdr:|hdr:ldr:).*",
+            "name": "comment.line.rad"
+        }
+	}
+}
