@@ -38,11 +38,9 @@ jobs:
       id: package-json
       run: |
         content=`cat ./package.json`
-        # the following lines are only required for multi line json
         content="${content//'%'/'%25'}"
         content="${content//$'\n'/'%0A'}"
         content="${content//$'\r'/'%0D'}"
-        # end of optional handling for multi line json
         echo "::set-output name=packageJson::$content"
       
     - name: Get Changelog
@@ -51,11 +49,14 @@ jobs:
         version=${{fromJson(steps.package-json.outputs.packageJson).version}}
         escaped_version=$(printf '%s\n' "$version" | sed -e 's/[]\/$*.^[]/\\&/g')
         changelog=`sed -n "/^## \[$escaped_version]/,/^## /p" CHANGELOG.md | sed '$ d' | sed '1,1d'`
-        echo "::set-output name=changelog::$changelog"
-      
+        changelog="${changelog//'%'/'%25'}"
+        changelog="${changelog//$'\n'/'%0A'}"
+        changelog="${changelog//$'\r'/'%0D'}"
+        echo "::set-output name=latestChangelog::$changelog"
+
     - name: Discord Message
       uses: tsickert/discord-webhook@v4.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
         embed-title: "Update available [${{fromJson(steps.package-json.outputs.packageJson).version}}]"
-        embed-description: ${{ steps.changelog.outputs.changelog }}
+        embed-description: "${{steps.changelog.outputs.latestChangelog}}"
