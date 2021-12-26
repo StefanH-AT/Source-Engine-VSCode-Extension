@@ -10,9 +10,13 @@
         "url": "https://www.stefanheinz.at"
     },
     "publisher": "stefan-h-at",
-    "license": "SEE LICENSE IN 'LICENSE'",
+    "bugs": {
+        "url": "https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/issues",
+        "email": "me@stefanheinz.at"
+    },
+    "license": "GPL-3.0+",
     "repository": {
-        "type": "github",
+        "type": "git",
         "url": "https://github.com/StefanH-AT/Source-Engine-VSCode-Extension"
     },
     "categories": [
