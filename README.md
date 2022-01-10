@@ -35,7 +35,7 @@ Checklist for features that are planned or already implemented.
 - [x] .fgd highlighting
 - [x] UnifyFGD support (Hammer Addons)
 
-## QC
+### QC
 - [x] QC highlighting
 - [x] Compile model button
   - [x] Configuration for mdlcompile.exe
