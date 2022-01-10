@@ -11,8 +11,8 @@ import * as tokenizer from "./kv-tokenizer";
 
 test("Tokenize Simple KV", () => {
     const tkn = new tokenizer.Tokenizer();
-    tkn.tokenizeFile(`
-        "File"
+    tkn.tokenizeFile(
+        `"File"
         {
             "Keyvalues" {
 
@@ -63,10 +63,15 @@ test("Tokenize Simple KV", () => {
 
     expect(tokens[0].value).toBe("\"File\"");
     expect(tokens[0].type).toBe(tokenizer.TokenType.Key);
+    expect(tokens[0].line).toBe(0);
     expect(tokens[1].value).toBe("{");
+    expect(tokens[1].line).toBe(1);
     expect(tokens[2].value).toBe("\"Keyvalues\"");
+    expect(tokens[2].line).toBe(2);
     expect(tokens[3].value).toBe("{");
+    expect(tokens[3].line).toBe(2);
     expect(tokens[4].value).toBe("// A comment");
+    expect(tokens[4].line).toBe(4);
     expect(tokens[5].value).toBe("\"Quoted Strings\"");
     expect(tokens[5].type).toBe(tokenizer.TokenType.Key);
     expect(tokens[6].value).toBe("\"a a\"");
