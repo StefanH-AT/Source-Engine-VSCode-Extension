@@ -498,7 +498,28 @@
                         },
                         {
                             "name": "$detail",
-                            "type": "texture"
+                            "type": "texture",
+                            "description": "Specifies a texture which should be laid over the `$basetexture` when the camera is close up.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$detail"
+                        },
+                        {
+                            "name": "$detailscale",
+                            "type": "float",
+                            "defaultCompletion": 1.0,
+                            "description": "Scale of the detail texture.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$detail"
+                        },
+                        {
+                            "name": "$detailblendfactor",
+                            "type": "scalar",
+                            "description": "How much the detail texture affects the `$basetexture`, like opacity.",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$detail"
+                        },
+                        {
+                            "name": "$detailblendmode",
+                            "type": "int",
+                            "description": "The detail blend mode to use.\n\n| ID | Blend Mode |\n| --- | --- |\n| 0 | Decal Modulate |\n| 1 | Additive |\n| 2 | Translucent Detail |\n| 3 | Blend Factor Fade |\n| 4 | Translucent Base |\n| 5 | Unlit Additive |\n| 6 | Unlit Additive Threshold Fade |\n| 7 | Two-Pattern DecalModulate |\n| 8 | Multiply |\n| 9 | Base Mask via Detail Alpha |\n| 10 | Self-Shadowed Bumpmap |\n| 11 | SSBump Albedo |",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/$detail"
                         },
                         {
                             "name": "$displacementmap",
