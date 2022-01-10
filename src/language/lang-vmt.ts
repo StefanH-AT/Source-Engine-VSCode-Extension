@@ -23,7 +23,7 @@ export function init(context: ExtensionContext): void {
     internalTextures = config.get("internalTextures") ?? [];
 
     const vmtSemantics = languages.registerDocumentSemanticTokensProvider(selector, new VmtSemanticTokenProvider(), legend);
-    const vmtCompletion = languages.registerCompletionItemProvider(selector, new ShaderParamCompletionItemProvider(), "$", "%"); // BUG: Trigger characters don't seem to work?
+    const vmtCompletion = languages.registerCompletionItemProvider(selector, new ShaderParamCompletionItemProvider(), "$", "%");
     const vmtHover = languages.registerHoverProvider(selector, new ShaderParamHoverProvider());
     const vmtColors = languages.registerColorProvider(selector, new ShaderParamColorsProvider());
     const vmtFormatter = languages.registerDocumentFormattingEditProvider(selector, new KeyvalueDocumentFormatter());

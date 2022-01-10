@@ -80,18 +80,16 @@ export class KeyvalueDocument {
         if(line.isEmptyOrWhitespace) return null;
         const tokens = this.findTokensOnLine(lineNumber);
 
-        // FIXME: Very repetetive code
+        // Normal old keyvalue
         if(tokens.length == 2 && tokens[0].type === TokenType.Key && tokens[1].type === TokenType.Value) {
-            const keyRange = new Range(this.document.positionAt(tokens[0].start), this.document.positionAt(tokens[0].end));
-            const valueRange = new Range(this.document.positionAt(tokens[1].start), this.document.positionAt(tokens[1].end));
-
-            const unquotedKey = KvTokensProviderBase.unquoteToken(tokens[0], keyRange, null);
-            const unquotedValue = KvTokensProviderBase.unquoteToken(tokens[1], valueRange, null);
+            const unquotedKey = this.getUnquotedToken(tokens[0]);
+            const unquotedValue = this.getUnquotedToken(tokens[1]);
             return new KeyValue(unquotedKey.content, unquotedValue.content, unquotedKey.range, unquotedValue.range);
         }
-
+        
+        // Key without value :'(
         if(tokens.length == 1 && tokens[0].type === TokenType.Key) {
-            const keyRange = new Range(this.document.positionAt(tokens[0].start), this.document.positionAt(tokens[0].end));
+            const keyRange = this.getTokenRange(tokens[0]);
             const unquoted = KvTokensProviderBase.unquoteToken(tokens[0], keyRange, null);
             return new KeyValue(unquoted.content, "", unquoted.range, keyRange.with(keyRange.end, keyRange.end.translate(1)));
         }
@@ -110,6 +108,15 @@ export class KeyvalueDocument {
 
     public findTokensOnLine(line: number): Token[] {
         return this._tokens.filter(t => t.line == line);
+    }
+
+    private getTokenRange(token: Token): Range {
+        return new Range(this.document.positionAt(token.start), this.document.positionAt(token.end));
+    }
+
+    private getUnquotedToken(token: Token): { content: string, range: Range } {
+        const range = this.getTokenRange(token);
+        return KvTokensProviderBase.unquoteToken(token, range, null);
     }
 
 }
