@@ -1,10 +1,6 @@
 // ==========================================================================
 // Purpose:
 // Implementations of language utility providers for the vmt language.
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector } from "vscode";

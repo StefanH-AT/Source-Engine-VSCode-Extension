@@ -1,10 +1,6 @@
 // ==========================================================================
 // Purpose:
 // Tests for string util functions
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 import { isFloatValue, isIntegerValue, isQuoted, isScalarValue, isWhitespace, stripQuotes } from "./kv-string-util";

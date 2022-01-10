@@ -1,10 +1,6 @@
 // ==========================================================================
 // Purpose:
 // Entry point to the extension. Keep code here to a minimum.
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 

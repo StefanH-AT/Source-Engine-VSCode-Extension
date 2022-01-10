@@ -1,10 +1,6 @@
 // ==========================================================================
 // Purpose:
 // Basic string functions for keyvalue tokenization
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 export const regexScalar = /^((0?\.\d+)|([10]?\.\d+)|[01])$/;

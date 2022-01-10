@@ -3,10 +3,6 @@
 // Provides easy and fast access to keyvalue file token data.
 // The VSCode API provides no way of retrieving semantic token data on providers like ColorFormattingProvider as it's stateless.
 // This file provides a map stores the token data for each open keyvalue file. There are also extra utility functions to read the token data of the document.
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 import { CancellationToken, commands, Diagnostic, DiagnosticCollection, DiagnosticSeverity, DocumentFormattingEditProvider, DocumentSemanticTokensProvider, Event, FormattingOptions, OnTypeFormattingEditProvider, Position, ProviderResult, Range, SemanticTokens, SemanticTokensBuilder, SemanticTokensLegend, TextDocument, TextEdit, workspace } from "vscode";
