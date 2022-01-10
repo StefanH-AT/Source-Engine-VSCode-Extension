@@ -1,10 +1,6 @@
 // ==========================================================================
 // Purpose:
 // Reads tag out of captions data for highlighting and other processing
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 export class ClrTagInfo {
