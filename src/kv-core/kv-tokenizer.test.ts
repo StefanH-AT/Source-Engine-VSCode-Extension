@@ -1,10 +1,6 @@
 // ==========================================================================
 // Purpose:
 // Tests for keyvalue file tokenizer
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 import * as tokenizer from "./kv-tokenizer";

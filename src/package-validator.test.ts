@@ -1,10 +1,6 @@
 // ==========================================================================
 // Purpose:
 // Tests to validate the shader parameter default config.
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 import { ShaderParam } from "./kv-core/shader-param";
