@@ -98,7 +98,8 @@ export class Tokenizer {
 
             this.addToken(tokenType, i, i + stringLength, stringContent, line);
             expectingKey = !expectingKey;
-            i += stringLength;
+            i += stringLength - 1; // Prevents skipping the next character after the string
+            continue;
         }
     }
 
