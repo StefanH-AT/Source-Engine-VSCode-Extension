@@ -4,6 +4,16 @@ All notable changes to the "source-engine-support" extension will be documented 
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
+The versions in this file adhere to [semantic versioning](https://semver.org/).
+
+## [0.2.0]
+
+**General**
+- Fixed a bug which caused most intelligent language features to fail in VMT for example
+
+**VMT**
+- Added more shader parameter definitions for common parameters related to `$detail`
+
 ## [0.1.0]
 
 **RAD**
