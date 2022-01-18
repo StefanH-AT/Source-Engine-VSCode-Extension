@@ -8,7 +8,7 @@
 import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector } from "vscode";
 import { KeyvalueDocumentFormatter, KvTokensProviderBase, legend, Processor } from "../keyvalue-document";
 
-export const selector: DocumentSelector = "keyvalue3";
+export const selector: DocumentSelector = [ "keyvalue3", "soundscript" ];
 
 export function init(context: ExtensionContext): void {
     const kvTokenProvider = new KeyvalueSemanticTokensProvider();

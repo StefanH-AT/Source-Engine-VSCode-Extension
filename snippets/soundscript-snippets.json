@@ -1,0 +1,58 @@
+{
+    "Volume": {
+        "prefix": "volume",
+        "body": [
+            "\"volume\"\t\"${1:VOL_NORM}\""
+        ],
+        "description": "Volume"
+    },
+    "Pitch": {
+        "prefix": "pitch",
+        "body": [
+            "\"pitch\"\t\"${1|PITCH_NORM,PITCH_LOW,PITCH_HIGH|}\""
+        ],
+        "description": "Pitch"
+    },
+    "Channel": {
+        "prefix": "channel",
+        "body": [
+            "\"channel\"\t\"${1|CHAN_AUTO,CHAN_STATIC,CHAN_WEAPON,CHAN_VOICE,CHAN_VOICE2,CHAN_ITEM,CHAN_BODY,CHAN_STREAM,CHAN_REPLACE,CHAN_VOICE_BASE|}\""
+        ],
+        "description": "Channel"
+    },
+    "soundlevel": {
+        "prefix": "soundlevel",
+        "body": [
+            "\"soundevel\"\t\"${1|SNDLVL_NONE,SNDLVL_NORM,SNDLVL_IDLE,SNDLVL_STATIC,SNDLVL_TALKING,SNDLVL_GUNFIRE|}\""
+        ],
+        "description": "Soundlevel"
+    },
+    "Operator Stacks": {
+        "prefix": "operator_stacks",
+        "body": [
+            "\"soundentry_version\"\t\"2\"",
+            "\"operator_stacks\"",
+            "{",
+            "\t",
+            "}"
+        ],
+        "description": "Soundscript operator stacks"
+    },
+    "Wave": {
+        "prefix": "wave",
+        "body": [
+            "\"wave\"\t\"$1.wav\""
+        ],
+        "description": "Wave"
+    },
+    "Rndwave": {
+        "prefix": "rndwave",
+        "body": [
+            "\"rndwave\"",
+            "{",
+            "\t\"wave\"\t\"$1.wav\"",
+            "\t\"wave\"\t\"$2.wav\"",
+            "}"
+        ]
+    }
+}
