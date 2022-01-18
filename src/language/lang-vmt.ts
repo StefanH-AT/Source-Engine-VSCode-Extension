@@ -328,7 +328,7 @@ export class ShaderParamColorsProvider implements DocumentColorProvider {
 }
 
 function getColorMatches(colorString: string): { validFormat: boolean, outOfBounds: boolean, color: Color | null, matches: RegExpMatchArray | null }  {
-    const matches = colorString.match(/\[(0?\.\d+|1|0) (0?\.\d+|1|0) (0?\.\d+|1|0)\]/);
+    const matches = colorString.match(/ *\[ *(0?\.\d+|1|0) (0?\.\d+|1|0) (0?\.\d+|1|0) *\] */);
     if(!matches) return {
         validFormat: false,
         outOfBounds: false,
