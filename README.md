@@ -56,6 +56,9 @@ Checklist for features that are planned or already implemented.
 ### Lights.rad
 - [x] .rad file highlighting
 
+### Soundscripts
+- [x] Soundscript snippets
+
 ## Planned
 This is what is planned for this extension. In case you wish to contribute, this is a good place to start.
 

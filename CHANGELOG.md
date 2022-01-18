@@ -6,6 +6,15 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.3.0]
+
+**VMT**
+- Fixed warning annotation on color values with spaces around the brackets
+
+**Soundscript**
+- Added new soundscript language
+- Added snippets for soundscripts
+
 ## [0.2.0]
 
 **General**
