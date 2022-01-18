@@ -9,21 +9,21 @@
     "Pitch": {
         "prefix": "pitch",
         "body": [
-            "\"pitch\"\t\"${1:|PITCH_NORM,PITCH_LOW,PITCH_HIGH|}\""
+            "\"pitch\"\t\"${1|PITCH_NORM,PITCH_LOW,PITCH_HIGH|}\""
         ],
         "description": "Pitch"
     },
     "Channel": {
         "prefix": "channel",
         "body": [
-            "\"channel\"\t\"${1:|CHAN_AUTO,CHAN_STATIC,CHAN_WEAPON,CHAN_VOICE,CHAN_VOICE2,CHAN_ITEM,CHAN_BODY,CHAN_STREAM,CHAN_REPLACE,CHAN_VOICE_BASE|}\""
+            "\"channel\"\t\"${1|CHAN_AUTO,CHAN_STATIC,CHAN_WEAPON,CHAN_VOICE,CHAN_VOICE2,CHAN_ITEM,CHAN_BODY,CHAN_STREAM,CHAN_REPLACE,CHAN_VOICE_BASE|}\""
         ],
         "description": "Channel"
     },
     "soundlevel": {
         "prefix": "soundlevel",
         "body": [
-            "\"soundevel\"\t\"${1:|SNDLVL_NONE,SNDLVL_NORM,SNDLVL_IDLE,SNDLVL_STATIC,SNDLVL_TALKING,SNDLVL_GUNFIRE|}\""
+            "\"soundevel\"\t\"${1|SNDLVL_NONE,SNDLVL_NORM,SNDLVL_IDLE,SNDLVL_STATIC,SNDLVL_TALKING,SNDLVL_GUNFIRE|}\""
         ],
         "description": "Soundlevel"
     },
@@ -31,7 +31,6 @@
         "prefix": "operator_stacks",
         "body": [
             "\"soundentry_version\"\t\"2\"",
-            "",
             "\"operator_stacks\"",
             "{",
             "\t",
