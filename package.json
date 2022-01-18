@@ -50,7 +50,8 @@
         "onLanguage:fgd",
         "onLanguage:vpc",
         "onLanguage:cfg",
-        "onLanguage:rad"
+        "onLanguage:rad",
+        "onLanguage:soundscript"
     ],
     "contributes": {
         "snippets": [
@@ -73,6 +74,10 @@
             {
                 "language": "captions",
                 "path": "./snippets/captions-snippets.json"
+            },
+            {
+                "language": "soundscript",
+                "path": "./snippets/soundscript-snippets.json"
             }
         ],
         "languages": [
@@ -173,11 +178,27 @@
                 "extensions": [
                     ".rad"
                 ]
+            },
+            {
+                "id": "soundscript",
+                "aliases": [
+                    "Valve Soundscript",
+                    "Source Soundscript"
+                ],
+                "filenamePatterns": [
+                    "game_sounds_*.txt"
+                ],
+                "configuration": "./language-configuration.json"
             }
         ],
         "grammars": [
             {
                 "language": "keyvalue3",
+                "scopeName": "source.kv",
+                "path": "./syntaxes/keyvalue3.tmLanguage.json"
+            },
+            {
+                "language": "soundscript",
                 "scopeName": "source.kv",
                 "path": "./syntaxes/keyvalue3.tmLanguage.json"
             },
