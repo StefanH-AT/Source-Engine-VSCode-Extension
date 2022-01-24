@@ -20,8 +20,10 @@ export function activate(context: vscode.ExtensionContext): void {
 
     output = vscode.window.createOutputChannel("Source Engine Support");
     context.subscriptions.push(output);
-
-    config = vscode.workspace.getConfiguration("sourceEngine");
+    
+    updateConfig();
+    const configChangeEvent = vscode.workspace.onDidChangeConfiguration(updateConfig);
+    context.subscriptions.push(configChangeEvent);
 
     keyvalue.init(context);
     vmt.init(context);
@@ -33,6 +35,8 @@ export function activate(context: vscode.ExtensionContext): void {
     output.appendLine(`Started Source Engine Support v${packageJson.version}`);
 }
 
-export let config: vscode.WorkspaceConfiguration; 
+export let config: vscode.WorkspaceConfiguration;
+
+const updateConfig = () => config = vscode.workspace.getConfiguration("sourceEngine");
 
 export function deactivate(): void {}
