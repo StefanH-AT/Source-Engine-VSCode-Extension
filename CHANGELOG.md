@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.3.1]
+
+**General**
+- Fixed config changes not applying until the editor is restarted
+
 ## [0.3.0]
 
 **VMT**
