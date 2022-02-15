@@ -6,7 +6,7 @@ lang
         "character.00" "<clr:255,125,240>Oh hi!"
         "character.01" "<clr:255,125,240>What do you mean you still write captions in notepad?"
         "character.02" "<clr:255,125,240>You know, I used to do the same, but ever since I found this vscode extension, I could never live without it."
-        "character.03" "<clr:255,125,240>It's just great, I'm telling you!"
+        "character.03" "<clr:255,125,240>It's just great, <I>I'm telling you!"
         "character.04" "<clr:255,125,240>It doesn't just color in basic keywords, no it actually formats markup."
         "character.05" "<clr:255,125,240>With this plugin, formatting tags like <B>bold<B> or <I>italic<I> actually receive their styles."
         "character.06" "<clr:55,250,240>But it doesn't end there. In fact, the color value of the clr tag shows you a preview of what this color looks like!<delay:5.0> Isn't that <clr:115,225,240>awesome?"

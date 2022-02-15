@@ -95,20 +95,20 @@
             ]
         },
         "tagItalic": {
-            "begin": "\\<(?i)i(?-i)\\>",
-            "end": "\\<(?i)i(?-i)\\>",
+            "match": "(<[iI]>)([\\w '..,!?&\\[\\]\\(\\)]+)(<[iI]>)?",
             "captures": {
-                "0": { "name": "storage.modifier.fgd" }
+                "1": { "name": "storage.modifier.fgd" },
+                "3": { "name": "storage.modifier.fgd" }
             },
-            "contentName": "markup.italic.fgd"
+            "name": "markup.italic.fgd"
         },
         "tagBold": {
-            "begin": "\\<(?i)b(?-i)\\>",
-            "end": "\\<(?i)b(?-i)\\>",
+            "match": "(<[bB]>)([\\w '..,!?&\\[\\]\\(\\)]+)(<[bB]>)?",
             "captures": {
-                "0": { "name": "storage.modifier.fgd" }
+                "1": { "name": "storage.modifier.fgd" },
+                "3": { "name": "storage.modifier.fgd" }
             },
-            "contentName": "markup.bold.fgd"
+            "name": "markup.bold.fgd"
         },
         "tagSfx": {
             "match": "\\<(?i)sfx(?-i)\\>",
