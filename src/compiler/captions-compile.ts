@@ -1,10 +1,6 @@
 // ==========================================================================
 // Purpose:
 // Adds commands to compile caption files.
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 import { commands, ExtensionContext, OutputChannel, TextEditor, window } from "vscode";
@@ -21,5 +17,10 @@ async function compileCaptions(editor: TextEditor): Promise<void> {
     if(ccChannel == null) {
         ccChannel = window.createOutputChannel("Captions Compiler");
     }
-    await compileSomething(editor, ccChannel, "Captions Compiler", "captionCompiler");
+    await compileSomething({
+        channel: ccChannel,
+        editor: editor,
+        compilerName: "Captions Compiler",
+        configPrefix: "captionCompiler"
+    });
 }
