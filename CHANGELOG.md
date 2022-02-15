@@ -6,6 +6,14 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.3.2]
+
+**General**
+- Add working directory settings for compilation tools
+
+**Captions**
+- Fix `<I>` and `<B>` tags highlighting the entire rest of the file if not closed
+
 ## [0.3.1]
 
 **General**
