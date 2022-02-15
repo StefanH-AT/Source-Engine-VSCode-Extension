@@ -1,10 +1,6 @@
 // ==========================================================================
 // Purpose:
 // Adds commands to compile .qc (model) files.
-// 
-// Author: Stefan Heinz
-//
-// https://github.com/StefanH-AT/Source-Engine-VSCode-Extension
 // ==========================================================================
 
 import { commands, ExtensionContext, OutputChannel, TextEditor, window } from "vscode";
@@ -22,6 +18,11 @@ async function compileModel(editor: TextEditor): Promise<void> {
     if(qcChannel == null) {
         qcChannel = window.createOutputChannel("Model Compiler");
     }
-    const additionalParams: string[] = config.get("modelCompiler.additionalParameters") ?? [];
-    await compileSomething(editor, qcChannel, "Model Compiler", "modelCompiler", additionalParams);
+    
+    await compileSomething({
+        channel: qcChannel,
+        editor: editor,
+        compilerName: "Model Compiler",
+        configPrefix: "modelCompiler"
+    });
 }

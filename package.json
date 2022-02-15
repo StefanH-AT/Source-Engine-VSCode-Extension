@@ -287,6 +287,16 @@
                     ],
                     "description": "Path to captioncompile.exe for in-editor captions compiling."
                 },
+                "sourceEngine.captionCompiler.workingDirectory": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Portal 2",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Half Life 2",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Counter Strike Global Offensive"
+                    ],
+                    "description": "Path to the working directory for caption compiler. Should point to the parent directory of the search paths. Falls back to bin dir if empty."
+                },
                 "sourceEngine.captionCompiler.openOutputWindow": {
                     "type": "boolean",
                     "default": false,
@@ -301,6 +311,16 @@
                         "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Counter Strike Global Offensive\\bin\\studiomdl.exe"
                     ],
                     "description": "Path to studiomdl.exe for in-editor captions compiling."
+                },
+                "sourceEngine.modelCompiler.workingDirectory": {
+                    "type": "string",
+                    "default": "",
+                    "examples": [
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Portal 2",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Half Life 2",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Counter Strike Global Offensive"
+                    ],
+                    "description": "Path to the working directory for model compiler. Should point to the parent directory of the search paths. Falls back to bin dir if empty."
                 },
                 "sourceEngine.modelCompiler.openOutputWindow": {
                     "type": "boolean",
