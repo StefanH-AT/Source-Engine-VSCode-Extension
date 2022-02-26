@@ -2,7 +2,7 @@
     "name": "source-engine-support",
     "displayName": "Source Engine Support",
     "description": "Adds support for Source Engine file types and other commands",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "icon": "extension-icon-256.png",
     "author": {
         "name": "Stefan Heinz",
@@ -14,6 +14,7 @@
         "url": "https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/issues",
         "email": "me@stefanheinz.at"
     },
+    "homepage": "https://source-engine-support.stefanheinz.at/",
     "license": "GPL-3.0+",
     "repository": {
         "type": "git",
