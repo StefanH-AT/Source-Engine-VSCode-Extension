@@ -7,6 +7,9 @@
 			"include": "source.kv#comment"
 		},
         {
+            "include": "#blockComment"
+        },
+        {
             "include": "#command"
         },
         {
@@ -23,6 +26,11 @@
         "command": {
             "match": "\\$\\w+",
             "name": "keyword"
+        },
+        "blockComment": {
+            "begin": "/\\*",
+            "end": "\\*/",
+            "name": "comment.block"
         }
     }
 }
