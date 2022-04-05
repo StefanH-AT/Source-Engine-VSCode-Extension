@@ -23,7 +23,7 @@
     "Body": {
         "prefix": "$body",
         "body": [
-            "\\$body \"${1:body}\" \"${2}.${3|dmx,smd|}"
+            "\\$body \"${1:body}\" \"${2}.${3|dmx,smd|}\""
         ],
         "description": "Define the main body mesh"
     },
