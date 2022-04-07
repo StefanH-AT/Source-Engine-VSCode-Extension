@@ -547,7 +547,7 @@
                         {
                             "name": "$detailscale",
                             "type": "float",
-                            "defaultCompletion": 1.0,
+                            "defaultCompletion": 1,
                             "description": "Scale of the detail texture.",
                             "wikiUri": "https://developer.valvesoftware.com/wiki/$detail"
                         },
@@ -1222,7 +1222,7 @@
         "jest": "^27.0.6",
         "ts-jest": "^27.0.5",
         "typescript": "^4.3.2",
-        "vscode-test": "^1.5.2"
+        "vscode-test": "^1.4.1"
     },
     "dependencies": {
         "@types/jest-expect-message": "^1.0.3",
