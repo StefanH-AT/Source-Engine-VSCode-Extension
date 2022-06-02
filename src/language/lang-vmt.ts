@@ -78,6 +78,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         case "scalar": this.processValueScalar(kv, contentRange, tokensBuilder, kvDoc); break;
         case "texture": this.processValueTexture(kv, contentRange, tokensBuilder, kvDoc); break;
         case "color": this.processValueColor(kv, contentRange, tokensBuilder, kvDoc); break;
+        case "matrix": this.processValueMatrix(kv, contentRange, tokensBuilder, kvDoc); break;
         case "env_cubemap": this.processValueCubemap(kv, contentRange, tokensBuilder, kvDoc); break;
             
         case "string": 
@@ -130,6 +131,15 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         }
 
         tokensBuilder.push(range, "string");
+    }
+
+    processValueMatrix(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
+
+        // Don't put any semantic tokens here. The textmate highlighting is good enough. We only validate the input and provide warning messages
+        const matrixMatches = getMatrixMatches(kv.value);
+        if(!matrixMatches.validFormat) {
+            this.diagnostics.push(new Diagnostic(range, "Invalid matrix format.", DiagnosticSeverity.Warning));
+        }
     }
 
     processValueColor(kv: KeyValue, range: Range, tokensBuilder: SemanticTokensBuilder, kvDoc: KeyvalueDocument): void {
@@ -325,6 +335,21 @@ export class ShaderParamColorsProvider implements DocumentColorProvider {
         return [];
     }
 
+}
+
+function getMatrixMatches(matrixString: string): { validFormat: boolean, values: number[] } {
+    const matches = matrixString.match(/ *\[ ((\d+(\.\d+)?|\.\d+) ?|)+\] */);
+    if(!matches) return {
+        validFormat: false,
+        values: []
+    };
+
+    const vals = matches[1].split(" ").map(v => parseFloat(v));
+    
+    return {
+        validFormat: true,
+        values: vals
+    };
 }
 
 function getColorMatches(colorString: string): { validFormat: boolean, outOfBounds: boolean, color: Color | null, matches: RegExpMatchArray | null }  {
