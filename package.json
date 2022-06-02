@@ -101,7 +101,7 @@
                     "gameinfo.txt"
                 ],
                 "firstLine": "^\"?(?i)\\w(?-i)\"?",
-                "configuration": "./language-configuration.json"
+                "configuration": "./lang-config-kv3.json"
             },
             {
                 "id": "vmt",
@@ -112,7 +112,7 @@
                 "extensions": [
                     ".vmt"
                 ],
-                "configuration": "./language-configuration.json"
+                "configuration": "./lang-config-kv3.json"
             },
             {
                 "id": "fgd",
@@ -124,7 +124,7 @@
                 "extensions": [
                     ".fgd"
                 ],
-                "configuration": "./language-configuration.json"
+                "configuration": "./lang-config-kv3.json"
             },
             {
                 "id": "captions",
@@ -133,7 +133,7 @@
                     "Source Engine Subtitles"
                 ],
                 "firstLine": "^\"?(?i)lang(?-i)\"?",
-                "configuration": "./language-configuration.json",
+                "configuration": "./lang-config-kv3.json",
                 "filenamePatterns": [
                     "subtitles_*.txt",
                     "captions_*.txt"
@@ -151,6 +151,7 @@
             },
             {
                 "id": "vpc",
+                "configuration": "./lang-config-vpc.json",
                 "aliases": [
                     "Valve Project Creator"
                 ],
