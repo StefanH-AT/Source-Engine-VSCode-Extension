@@ -815,7 +815,7 @@
                         },
                         {
                             "name": "$rimlightboost",
-                            "type": "int",
+                            "type": "float",
                             "description": "Boost for ambient cube component of rim lighting.",
                             "wikiUri": "https://developer.valvesoftware.com/wiki/$rimlight#Additional_parameters"
                         },
