@@ -7,6 +7,9 @@
 			"include": "source.kv#comment"
 		},
         {
+            "include": "#variable"
+        },
+        {
             "include": "#blockComment"
         },
         {
@@ -31,6 +34,10 @@
             "begin": "/\\*",
             "end": "\\*/",
             "name": "comment.block"
+        },
+        "variable": {
+            "match": "-?\\$\\w+\\$",
+            "name": "variable.name"
         }
     }
 }
