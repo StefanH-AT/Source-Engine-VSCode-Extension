@@ -23,3 +23,5 @@ $cdmaterials "models/props_examples/"
 $definevariable Test "test"
 $model $Test$
 $model -$Test$
+
+$illumposition 100 -0.24 0.23 
