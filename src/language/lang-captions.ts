@@ -3,16 +3,25 @@
 // Implementations of language utility providers for the captions language.
 // ==========================================================================
 
-import { TextDocument, CancellationToken, DocumentColorProvider, Color, ColorPresentation, Range, ColorInformation, languages, SemanticTokensLegend, SemanticTokensBuilder, ExtensionContext, DocumentSelector } from "vscode";
+import { TextDocument, CancellationToken, DocumentColorProvider, Color, ColorPresentation, Range, ColorInformation, languages, SemanticTokensLegend, SemanticTokensBuilder, ExtensionContext, DocumentSelector, DocumentFilter } from "vscode";
 import { getDocument, KeyvalueDocumentFormatter, KvTokensProviderBase, legend, Processor } from "../keyvalue-document";
 import { populateColorTagMatches } from "../kv-core/kv-caption-tag-matches";
 
-export const selector: DocumentSelector = "captions";
+export const filterCaptionsSaved: DocumentFilter = {
+    language: "captions",
+    scheme: "file"
+};
+export const filterCaptionsUnsaved: DocumentFilter = {
+    language: "captions",
+    scheme: "untitled"
+};
+
+export const selectorAll: ReadonlyArray<DocumentFilter> = [filterCaptionsSaved, filterCaptionsUnsaved];
 
 export function init(context: ExtensionContext): void {
-    const captionsColors = languages.registerColorProvider(selector, new CaptionColorsProvider());
-    const captionsTokenProvider = languages.registerDocumentSemanticTokensProvider(selector, new CaptionsSemanticTokenProvider(), legend);
-    const captionsFormatter = languages.registerDocumentFormattingEditProvider(selector, new KeyvalueDocumentFormatter());
+    const captionsColors = languages.registerColorProvider(selectorAll, new CaptionColorsProvider());
+    const captionsTokenProvider = languages.registerDocumentSemanticTokensProvider(selectorAll, new CaptionsSemanticTokenProvider(), legend);
+    const captionsFormatter = languages.registerDocumentFormattingEditProvider(selectorAll, new KeyvalueDocumentFormatter());
     context.subscriptions.push(captionsColors, captionsTokenProvider, captionsFormatter);
 }
 

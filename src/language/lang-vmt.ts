@@ -3,7 +3,7 @@
 // Implementations of language utility providers for the vmt language.
 // ==========================================================================
 
-import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector } from "vscode";
+import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector, DocumentFilter } from "vscode";
 import { KeyvalueDocument, getDocument, KeyValue, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor, legend } from "../keyvalue-document";
 import { Token } from "../kv-core/kv-tokenizer";
 import { ShaderParam } from "../kv-core/shader-param";
@@ -13,7 +13,15 @@ import { config } from "../main";
 import { isFloatValue, isScalarValue } from "../kv-core/kv-string-util";
 
 
-export const selector: DocumentSelector = "vmt";
+export const filterVmtSaved: DocumentFilter = {
+    language: "vmt",
+    scheme: "file"
+};
+export const filterVmtUnsaved: DocumentFilter = {
+    language: "vmt",
+    scheme: "untitled"
+};
+export const selectorAll: ReadonlyArray<DocumentFilter> = [filterVmtSaved, filterVmtUnsaved];
 
 export let shaderParams: ShaderParam[];
 export let internalTextures: string[];
@@ -22,11 +30,11 @@ export function init(context: ExtensionContext): void {
     shaderParams = config.get("shaderParameters") ?? [];
     internalTextures = config.get("internalTextures") ?? [];
 
-    const vmtSemantics = languages.registerDocumentSemanticTokensProvider(selector, new VmtSemanticTokenProvider(), legend);
-    const vmtCompletion = languages.registerCompletionItemProvider(selector, new ShaderParamCompletionItemProvider(), "$", "%");
-    const vmtHover = languages.registerHoverProvider(selector, new ShaderParamHoverProvider());
-    const vmtColors = languages.registerColorProvider(selector, new ShaderParamColorsProvider());
-    const vmtFormatter = languages.registerDocumentFormattingEditProvider(selector, new KeyvalueDocumentFormatter());
+    const vmtSemantics = languages.registerDocumentSemanticTokensProvider(selectorAll, new VmtSemanticTokenProvider(), legend);
+    const vmtCompletion = languages.registerCompletionItemProvider(selectorAll, new ShaderParamCompletionItemProvider(), "$", "%");
+    const vmtHover = languages.registerHoverProvider(selectorAll, new ShaderParamHoverProvider());
+    const vmtColors = languages.registerColorProvider(selectorAll, new ShaderParamColorsProvider());
+    const vmtFormatter = languages.registerDocumentFormattingEditProvider(selectorAll, new KeyvalueDocumentFormatter());
     context.subscriptions.push(vmtSemantics, vmtCompletion, vmtHover, vmtColors, vmtFormatter);
 }
 
