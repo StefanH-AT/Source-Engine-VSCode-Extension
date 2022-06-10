@@ -19,3 +19,7 @@ $collisionmodel "example_phys.dmx"
 // This model's materials are relative to these paths. Keep / as a fallback just in case
 $cdmaterials "/"
 $cdmaterials "models/props_examples/"
+
+$definevariable Test "test"
+$model $Test$
+$model -$Test$
