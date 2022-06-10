@@ -141,6 +141,7 @@
             },
             {
                 "id": "cfg",
+                "configuration": "./lang-config-kv3.json",
                 "aliases": [
                     "Source Engine Configuration",
                     "Source Engine Commands"
@@ -162,6 +163,7 @@
             },
             {
                 "id": "qc",
+                "configuration": "./lang-config-kv3.json",
                 "aliases": [
                     "Valve QC",
                     "Valve MC",
