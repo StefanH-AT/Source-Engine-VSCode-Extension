@@ -6,6 +6,15 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.3.6]
+
+**KeyValue**
+- Fixed negative and float number highlighting. Affects all keyvalue-like file formats
+
+**QC**
+- Added highlighting for QC macros or variables (Thanks LoveRenamon!)
+- Fixed bracket and quote pair problems
+
 ## [0.3.5]
 
 **VPC**
