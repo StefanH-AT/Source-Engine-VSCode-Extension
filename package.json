@@ -267,12 +267,12 @@
         "menus": {
             "editor/title": [
                 {
-                    "when": "editorLangId == captions",
+                    "when": "resourceLangId == captions && resourceScheme == 'file'",
                     "command": "captions.compile",
                     "group": "navigation"
                 },
                 {
-                    "when": "editorLangId == qc",
+                    "when": "resourceLangId == qc && resourceScheme == 'file'",
                     "command": "mdl.compile",
                     "group": "navigation"
                 }
