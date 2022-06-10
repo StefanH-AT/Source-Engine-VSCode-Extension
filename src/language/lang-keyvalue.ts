@@ -5,15 +5,31 @@
 // This is NOT a base for other formats!
 // ==========================================================================
 
-import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector } from "vscode";
+import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector, DocumentFilter } from "vscode";
 import { KeyvalueDocumentFormatter, KvTokensProviderBase, legend, Processor } from "../keyvalue-document";
 
-export const selector: DocumentSelector = [ "keyvalue3", "soundscript" ];
+export const filterKvSaved: DocumentFilter = {
+    language: "keyvalue3",
+    scheme: "file"
+};
+export const filterKvUnsaved: DocumentFilter = {
+    language: "keyvalue3",
+    scheme: "untitled"
+};
+export const filterSoundscriptSaved: DocumentFilter = {
+    language: "soundscript",
+    scheme: "file"
+};
+export const filterSoundscriptUnsaved: DocumentFilter = {
+    language: "soundscript",
+    scheme: "untitled"
+};
+export const selectorAll: ReadonlyArray<DocumentFilter> = [ filterKvSaved, filterKvUnsaved, filterSoundscriptSaved, filterSoundscriptUnsaved ];
 
 export function init(context: ExtensionContext): void {
     const kvTokenProvider = new KeyvalueSemanticTokensProvider();
-    const kvSemantics = languages.registerDocumentSemanticTokensProvider(selector, kvTokenProvider, kvTokenProvider.legend);
-    const kvFormatter = languages.registerDocumentFormattingEditProvider(selector, new KeyvalueDocumentFormatter());
+    const kvSemantics = languages.registerDocumentSemanticTokensProvider(selectorAll, kvTokenProvider, kvTokenProvider.legend);
+    const kvFormatter = languages.registerDocumentFormattingEditProvider(selectorAll, new KeyvalueDocumentFormatter());
     context.subscriptions.push(kvSemantics, kvTokenProvider.diagnosticCollection, kvFormatter);
 }
 
