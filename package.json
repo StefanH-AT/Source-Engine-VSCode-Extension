@@ -84,6 +84,7 @@
         "languages": [
             {
                 "id": "keyvalue3",
+                "configuration": "./lang-config-kv3.json",
                 "aliases": [
                     "Valve Keyvalue 3",
                     "keyvalue3"
@@ -95,27 +96,28 @@
                     ".txt",
                     ".acf",
                     ".vmf",
+                    ".vmm",
                     ".vmx"
                 ],
                 "filenames": [
                     "gameinfo.txt"
                 ],
-                "firstLine": "^\"?(?i)\\w(?-i)\"?",
-                "configuration": "./lang-config-kv3.json"
+                "firstLine": "^([\\w ]+|\"[\\w ]+\")"
             },
             {
                 "id": "vmt",
+                "configuration": "./lang-config-kv3.json",
                 "aliases": [
                     "Valve Material Type",
                     "vmt"
                 ],
                 "extensions": [
                     ".vmt"
-                ],
-                "configuration": "./lang-config-kv3.json"
+                ]
             },
             {
                 "id": "fgd",
+                "configuration": "./lang-config-kv3.json",
                 "aliases": [
                     "FGD",
                     "Forge Game Data",
@@ -123,17 +125,16 @@
                 ],
                 "extensions": [
                     ".fgd"
-                ],
-                "configuration": "./lang-config-kv3.json"
+                ]
             },
             {
                 "id": "captions",
+                "configuration": "./lang-config-kv3.json",
                 "aliases": [
                     "Source Engine Captions",
                     "Source Engine Subtitles"
                 ],
                 "firstLine": "^\"?(?i)lang(?-i)\"?",
-                "configuration": "./lang-config-kv3.json",
                 "filenamePatterns": [
                     "subtitles_*.txt",
                     "captions_*.txt"
@@ -185,14 +186,16 @@
             },
             {
                 "id": "soundscript",
+                "configuration": "./lang-config-kv3.json",
                 "aliases": [
                     "Valve Soundscript",
                     "Source Soundscript"
                 ],
                 "filenamePatterns": [
-                    "game_sounds_*.txt"
-                ],
-                "configuration": "./language-configuration.json"
+                    "game_sounds_*.txt",
+                    "npc_sounds_*.txt",
+                    "level_sounds_*.txt"
+                ]
             }
         ],
         "grammars": [
