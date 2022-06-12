@@ -6,6 +6,21 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.3.7]
+
+**General**
+- Added automatic indentation detection
+- Other bugfixes
+
+**Soundscripts**
+- Fixed bracket and quote pair problems
+
+**VPC**
+- Added `$QtFile` keyword
+
+**QC, Captions**
+- Compile button is now hidden when file is unsaved
+
 ## [0.3.6]
 
 **KeyValue**
