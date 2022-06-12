@@ -152,7 +152,7 @@
             },
             {
                 "id": "vpc",
-                "configuration": "./lang-config-vpc.json",
+                "configuration": "./lang-config-kv3.json",
                 "aliases": [
                     "Valve Project Creator"
                 ],
