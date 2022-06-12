@@ -891,6 +891,10 @@
 				},
 				{
 					"name": "keyword.control.vpc",
+					"match": "\\$[Q]tFile"
+				},
+				{
+					"name": "keyword.control.vpc",
 					"match": "\\$[Ss]ystem[Ii]ncludes"
 				},
 				{
