@@ -54,9 +54,17 @@ jobs:
         changelog="${changelog//$'\r'/'%0D'}"
         echo "::set-output name=latestChangelog::$changelog"
 
+    - name: Github Release
+      id: release
+      uses: softprops/action-gh-release@v1
+      with:
+        body: "${{steps.changelog.outputs.latestChangelog}}"
+        tag_name: "${{fromJson(steps.package-json.outputs.packageJson).version}}"
+
     - name: Discord Message
       uses: tsickert/discord-webhook@v4.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        embed-title: "Update available [${{fromJson(steps.package-json.outputs.packageJson).version}}]"
+        embed-title: "[Update available [${{fromJson(steps.package-json.outputs.packageJson).version}}]](${{steps.release.outputs.url}})"
         embed-description: "${{steps.changelog.outputs.latestChangelog}}"
+        token: "${{ secrets.GITHUB_TOKEN }}"
