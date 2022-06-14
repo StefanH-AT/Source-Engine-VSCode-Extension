@@ -21,14 +21,21 @@
         {
 			"include": "source.kv#stringQuoted"
 		},
-        {
-			"include": "source.kv#stringUnquoted"
-		}
+		{
+            "include": "#stringUnquoted"
+        }
 	],
     "repository": {
         "command": {
-            "match": "\\$\\w+",
-            "name": "keyword"
+            "match": "(\\$(\\w+))",
+            "captures": {
+                "1": {
+                    "name": "keyword.qc"
+                },
+                "2": {
+                    "name": "command.qc"
+                }
+            }
         },
         "blockComment": {
             "begin": "/\\*",
@@ -36,8 +43,19 @@
             "name": "comment.block"
         },
         "variable": {
-            "match": "-?\\$\\w+\\$",
-            "name": "variable.name"
+            "match": "-?(\\$(\\w+)\\$)",
+            "captures": {
+                "1": {
+                    "name": "keyword.qc"
+                },
+                "2": {
+                    "name": "variable.qc"
+                }
+            }
+        },
+        "stringUnquoted": {
+            "name": "string.unquoted.qc",
+            "match": "[\\w|\\*\\.\\\\/%#\\-\\[\\]]+"
         }
     }
 }
