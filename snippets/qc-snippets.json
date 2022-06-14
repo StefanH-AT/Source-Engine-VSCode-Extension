@@ -32,7 +32,14 @@
         "body": [
             "\\$sequence \"${1:idle}\" \"${2}.${3|dmx,smd|}\""
         ],
-        "description": "Compile the model as a static prop"
+        "description": "Define a simple animation sequence"
+    },
+    "Simple Ragdoll": {
+        "prefix": "$sequence",
+        "body": [
+            "\\$sequence \"${1:ragdoll}\" \"${2}.${3|dmx,smd|}\" activity \"ACT_DIERAGDOLL\" ${4:1}"
+        ],
+        "description": "Define a simple ragdoll sequence"
     },
     "Simple Collision Model": {
         "prefix": "$collisionmodel",
@@ -73,5 +80,38 @@
         "body": [
             "\\$illumposition ${1:0} ${2:0} ${3:0} $4"
         ]
+    },
+    "Origin Position": {
+        "prefix": "$origin",
+        "body": [
+            "\\$origin ${1:0} ${2:0} ${3:0} ${4:0}"
+        ]
+    },
+    "Scale": {
+        "prefix": "$scale",
+        "body": [
+            "\\$scale ${1:1.0}"
+        ],
+        "description": "Relative scale model by this amount"
+    },
+    "Define Variable": {
+        "prefix": "$definevariable",
+        "body": [
+            "\\$definevariable ${1:variable} \"${2:value}\""
+        ]
+    },
+    "Define Macro": {
+        "prefix": "$definemacro",
+        "body": [
+            "\\$definemacro ${1:MacroName} ${2:Variable1} ${3:Variable2} \\\\\n"
+        ],
+        "description": "Create a macro"
+    },
+    "Continue Macro": {
+        "prefix": "$continue",
+        "body": [
+            "\\$continue ${1:sequence or animation name}"
+        ],
+        "description": "Trick the compiler parser by continue insert commands into a `$animation` or `$sequence`"
     }
 }
