@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.3.8]
+
+**FGD**
+- Fix `BaseClass` not getting detected as a valid class definition
+
 ## [0.3.7]
 
 **General**
