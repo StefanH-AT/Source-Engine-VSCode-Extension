@@ -32,3 +32,11 @@ $sequence idle01 "a_foobar" activity ACT_IDLE
 $illumposition 100 -0.24 0.23
 
 $origin 0 10 .0 -.0001
+
+// some weird unquoted and valid ascii
+$sequence abc_!-@#$%*)|\/.,><:=?^ idle
+$sequence :   idle
+$sequence <   idle
+
+// Semicolons are the only character from 33~127 range that need quoting
+$sequence ";" idle 
