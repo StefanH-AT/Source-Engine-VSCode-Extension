@@ -9,7 +9,7 @@
 	],
 	"repository": {
 		"classDefinition": {
-            "begin": "(\\@)(PointClass|NPCClass|SolidClass|KeyFrameClass|MoveClass|FilterClass)",
+            "begin": "(\\@)(PointClass|NPCClass|SolidClass|KeyFrameClass|MoveClass|FilterClass|BaseClass)",
             "beginCaptures": {
                 "1": {
                     "name": "entity.name.type.fgd"
