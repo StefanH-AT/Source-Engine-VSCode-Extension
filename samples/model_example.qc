@@ -22,6 +22,7 @@ $cdmaterials "models/props_examples/"
 
 $definevariable Test "test"
 $body -$Test$ foo/$Test$/bar
+$body -$Test$ "foo/$Test$/bar"
 
 $animation a_foobar foo/$Test$/bar {
    subtract a_foobar 0
