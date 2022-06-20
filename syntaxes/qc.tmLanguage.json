@@ -19,7 +19,7 @@
 			"include": "source.kv#number"
 		},
         {
-			"include": "source.kv#stringQuoted"
+			"include": "#stringQuoted"
 		},
         {
 			"include": "#stringUnquoted"
@@ -27,13 +27,16 @@
 	],
     "repository": {
         "variable": {
-            "match": "(\\$([\\w]+)\\$)",
+            "match": "(\\$)([\\w]+)(\\$)",
             "captures": {
                 "1": {
                     "name": "keyword.qc"
                 },
                 "2": {
                     "name": "variable.qc"
+                },
+                "3": {
+                    "name": "keyword.qc"
                 }
             }
         },
@@ -55,7 +58,21 @@
         },
         "stringUnquoted": {
             "name": "string.unquoted.qc",
-            "match": "[\\|~%&!-#(-:<-z]+"
-        }
+            "begin": "[\\w|\\*\\.\\\\/%#\\-\\[\\]]+",
+            "end": "\\s",
+            "patterns": [
+                {
+                    "include": "#variable"
+                }
+            ]
+        },
+        "stringQuoted": {
+			"name": "string.quoted.double.qc",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [{
+				"include": "#variable"
+			}]
+		}
     }
 }
