@@ -1,0 +1,15 @@
+{
+  "embeds": [
+      {
+          "type": "rich",
+          "title": "Update available [#VERSION#]",
+          "description": "#DESCRIPTION#",
+          "color": "4238322",
+          "footer": {
+            "text": "Source Engine Support",
+            "icon_url": "https://raw.githubusercontent.com/StefanH-AT/Source-Engine-VSCode-Extension/master/extension-icon-128.png"
+          },
+          "url": "#URL#"
+      }
+  ]
+}

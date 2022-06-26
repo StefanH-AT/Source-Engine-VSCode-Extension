@@ -22,13 +22,13 @@ jobs:
       
     - name: Lint
       run: npm run lint
-      
+     
     - name: Test
       run: npm run test
-            
+           
     - name: Set up publishing
       run: npm install vsce --save-dev
-      
+     
     - name: Publish
       run: npm run deploy
       env:
@@ -49,22 +49,34 @@ jobs:
         version=${{fromJson(steps.package-json.outputs.packageJson).version}}
         escaped_version=$(printf '%s\n' "$version" | sed -e 's/[]\/$*.^[]/\\&/g')
         changelog=`sed -n "/^## \[$escaped_version]/,/^## /p" CHANGELOG.md | sed '$ d' | sed '1,1d'`
-        changelog="${changelog//'%'/'%25'}"
-        changelog="${changelog//$'\n'/'%0A'}"
-        changelog="${changelog//$'\r'/'%0D'}"
-        echo "::set-output name=latestChangelog::$changelog"
+        changelog1="${changelog//'%'/'%25'}"
+        changelog1="${changelog1//$'\n'/'%0A'}"
+        changelog1="${changelog1//$'\r'/'%0D'}"
+        changelog2="${changelog//$'\n'/'\\n'}"
+        changelog2="${changelog2//$'\r'/'\\r'}"
+        echo "::set-output name=escaped::$changelog"
+        echo "::set-output name=unescaped::$changelog1"
+        echo "::set-output name=doubleescaped::$changelog2"
 
     - name: Github Release
       id: release
       uses: softprops/action-gh-release@v1
       with:
-        body: "${{steps.changelog.outputs.latestChangelog}}"
+        body: "${{steps.changelog.outputs.unescaped}}"
         tag_name: "${{fromJson(steps.package-json.outputs.packageJson).version}}"
 
-    - name: Discord Message
+    - name: Prepare Discord Message
+      id: discord-msg
+      run: |
+        awk '{
+          gsub("#VERSION#","${{fromJson(steps.package-json.outputs.packageJson).version}}",$0)
+          gsub("#DESCRIPTION#","${{steps.changelog.outputs.doubleescaped}}",$0)
+          gsub("#URL#","${{steps.release.outputs.url}}",$0)
+          print $0
+        }' ./.github/workflows/deploy_discord_message.json > ./.github/workflows/deploy_discord_message2.json
+
+    - name: Send Discord Message
       uses: tsickert/discord-webhook@v4.0.0
       with:
         webhook-url: ${{ secrets.DISCORD_WEBHOOK_URL }}
-        embed-title: "[Update available [${{fromJson(steps.package-json.outputs.packageJson).version}}]](${{steps.release.outputs.url}})"
-        embed-description: "${{steps.changelog.outputs.latestChangelog}}"
-        token: "${{ secrets.GITHUB_TOKEN }}"
+        raw-data: "./.github/workflows/deploy_discord_message2.json"
