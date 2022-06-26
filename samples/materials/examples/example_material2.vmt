@@ -1,8 +1,35 @@
 LightmappedGeneric {
 	$basetexture "examples/example_texture"
-	// comment
-	proxies {
+	$zero 0
+	$one 1
+	$two 2
+	$sum 0
 
-		"gfg" 124
+	$color2 " [ 1 1 1 ] "
+
+	// comment
+	Proxies
+	{
+		Add
+		{
+			srcVar1   $one
+			srcVar2   $two
+			resultVar $sum // three
+		}
+		Equals
+		{
+			srcVar1   $sum
+			resultVar "$color2[0]" // set Red HDR color2 as 3
+		}
+		Equals
+		{
+			srcVar1   $zero
+			resultVar "$color2[1]" // set Green HDR color2 as 0
+		}
+		Equals
+		{
+			srcVar1   $zero
+			resultVar "$color2[2]" // set Blue HDR color2 as 0
+		}
 	}
 }

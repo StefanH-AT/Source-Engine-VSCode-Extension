@@ -30,7 +30,7 @@
 		},
 		"number": {
 			"name": "constant.numeric.keyvalue3",
-			"match": "-?[0-9]+(.[0-9]+)?"
+			"match": "-?([0-9]+)?\\.?[0-9]+"
 		},
 		"stringUnquoted": {
 			"name": "string.unquoted.keyvalue3",

@@ -19,25 +19,60 @@
 			"include": "source.kv#number"
 		},
         {
-			"include": "source.kv#stringQuoted"
+			"include": "#stringQuoted"
 		},
         {
-			"include": "source.kv#stringUnquoted"
+			"include": "#stringUnquoted"
 		}
 	],
     "repository": {
+        "variable": {
+            "match": "(\\$)([\\w]+)(\\$)",
+            "captures": {
+                "1": {
+                    "name": "keyword.qc"
+                },
+                "2": {
+                    "name": "variable.qc"
+                },
+                "3": {
+                    "name": "keyword.qc"
+                }
+            }
+        },
         "command": {
-            "match": "\\$\\w+",
-            "name": "keyword"
+            "match": "\\B(\\$(\\w+))",
+            "captures": {
+                "1": {
+                    "name": "keyword.qc"
+                },
+                "2": {
+                    "name": "command.qc"
+                }
+            }
         },
         "blockComment": {
             "begin": "/\\*",
             "end": "\\*/",
             "name": "comment.block"
         },
-        "variable": {
-            "match": "-?\\$\\w+\\$",
-            "name": "variable.name"
-        }
+        "stringUnquoted": {
+            "name": "string.unquoted.qc",
+            "begin": "[\\w|\\*\\.\\\\/%#\\-\\[\\]]+",
+            "end": "\\s",
+            "patterns": [
+                {
+                    "include": "#variable"
+                }
+            ]
+        },
+        "stringQuoted": {
+			"name": "string.quoted.double.qc",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [{
+				"include": "#variable"
+			}]
+		}
     }
 }
