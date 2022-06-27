@@ -5,7 +5,14 @@ LightmappedGeneric {
 	$two 2
 	$sum 0
 
+	$phongfresnelranges "[.02 .1 1]"
+
 	$color2 " [ 1 1 1 ] "
+
+	$detailblendfactor 0
+
+	$color "{ 255 0 255 }"
+	$fogcolor "{ 255 0 355 }"
 
 	// comment
 	Proxies
