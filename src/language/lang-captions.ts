@@ -4,7 +4,7 @@
 // ==========================================================================
 
 import { TextDocument, CancellationToken, DocumentColorProvider, Color, ColorPresentation, Range, ColorInformation, languages, SemanticTokensLegend, SemanticTokensBuilder, ExtensionContext, DocumentSelector, DocumentFilter } from "vscode";
-import { getDocument, KeyvalueDocumentFormatter, KvTokensProviderBase, legend, Processor } from "../keyvalue-document";
+import { KeyvalueDocument, KeyvalueDocumentFormatter, KvTokensProviderBase, legend, Processor, tokenizeDocument } from "../keyvalue-document";
 import { populateColorTagMatches } from "../kv-core/kv-caption-tag-matches";
 
 export const filterCaptionsSaved: DocumentFilter = {
@@ -38,11 +38,11 @@ export class CaptionsSemanticTokenProvider extends KvTokensProviderBase {
         super(legend, languages.createDiagnosticCollection("captions"));
     }
 
-    processKey(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string): void {
+    processKey(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, kvDocument: KeyvalueDocument, scope: string): void {
         tokensBuilder.push(wholeRange, "parameter");
     }
 
-    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument, scope: string): void {
+    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, kvDocument: KeyvalueDocument, scope: string): void {
         
         if(scope === ".lang.tokens") {
             return; // Don't add a semantic token to  lang values and let tmLanguage handle it.
@@ -57,7 +57,7 @@ export class CaptionColorsProvider implements DocumentColorProvider {
     provideDocumentColors(document: TextDocument, cancellationToken: CancellationToken) : ColorInformation[] {
         const lines = document.lineCount;
 
-        const kvDoc = getDocument(document);
+        const kvDoc = new KeyvalueDocument(document, tokenizeDocument(document));
         if(kvDoc == null) return [];
 
         const colorInfos: ColorInformation[] = [];
