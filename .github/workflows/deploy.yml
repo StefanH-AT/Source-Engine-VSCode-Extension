@@ -25,7 +25,7 @@ jobs:
      
     - name: Test
       run: npm run test
-           
+          
     - name: Set up publishing
       run: npm install vsce --save-dev
      
@@ -54,6 +54,11 @@ jobs:
         changelog1="${changelog1//$'\r'/'%0D'}"
         changelog2="${changelog//$'\n'/'\\n'}"
         changelog2="${changelog2//$'\r'/'\\r'}"
+        changelog2="${changelog2//$'('/'\('}"
+        changelog2="${changelog2//$')'/'\)'}"
+        changelog2="${changelog2//$'`'/'\`'}"
+        changelog2="${changelog2//$'"'/'\"'}"
+        changelog2="${changelog2//"'"/"'\''"}"
         echo "::set-output name=escaped::$changelog"
         echo "::set-output name=unescaped::$changelog1"
         echo "::set-output name=doubleescaped::$changelog2"
@@ -69,10 +74,10 @@ jobs:
       id: discord-msg
       run: |
         awk '{
-          gsub("#VERSION#","${{fromJson(steps.package-json.outputs.packageJson).version}}",$0)
-          gsub("#DESCRIPTION#","${{steps.changelog.outputs.doubleescaped}}",$0)
-          gsub("#URL#","${{steps.release.outputs.url}}",$0)
-          print $0
+          gsub("#VERSION#","${{fromJson(steps.package-json.outputs.packageJson).version}}",$0);
+          gsub("#DESCRIPTION#","${{steps.changelog.outputs.doubleescaped}}",$0);
+          gsub("#URL#","${{steps.release.outputs.url}}",$0);
+          print $0;
         }' ./.github/workflows/deploy_discord_message.json > ./.github/workflows/deploy_discord_message2.json
 
     - name: Send Discord Message
