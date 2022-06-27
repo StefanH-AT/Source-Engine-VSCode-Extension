@@ -6,6 +6,22 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.4.0]
+
+**KeyValue**
+- Added keyvalue tokenization performance profiling. Can be optionally enabled in the settings
+- Fixed major issues with tokenization that made language features break frequently. This will make language features much more reliable in all keyvalue files and its decendents
+- Fixed syntax highlighting for negative numbers
+
+**VMT**
+- Improved support for color value detection and added brace syntax (`{255 0 30}`)
+- Fixed issues with matrix value detection
+- Fixed `$fogcolor`'s default completion value
+
+**QC**
+- Added more snippets for QC values (Thanks LoveRenamon!)
+- Added syntax highlighting for macros (variables) e.g: `$body $bodyname$` (Thanks LoveRenamon!)
+
 ## [0.3.8]
 
 **FGD**
