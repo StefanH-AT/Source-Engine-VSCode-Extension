@@ -934,7 +934,7 @@
                         {
                             "name": "$fogcolor",
                             "type": "color",
-                            "defaultCompletion": "[255 255 255]",
+                            "defaultCompletion": "[1 1 1]",
                             "description": "Color of the water's volumetric fog. Should match the color used in the `$bottommaterial`",
                             "wikiUri": "https://developer.valvesoftware.com/wiki/Water_(shader)"
                         },
