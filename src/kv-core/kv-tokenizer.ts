@@ -1,4 +1,5 @@
 import { isWhitespace } from "./kv-string-util";
+import { performance } from "perf_hooks";
 
 export enum TokenType {
     Comment,
@@ -34,19 +35,24 @@ export class Tokenizer {
 
     _preprocessorRegex = /#(base|include)/;
 
+    
     addToken(type: TokenType, start: number, end: number, value: string, line: number): void {
         this._tokens.push(new Token(type, start, end, value, line));
     }
-
+    
     public get tokens(): Token[] {
         return this._tokens;
     }
-
+    
+    _tokenizeFileFunction = performance.timerify(this.tokenizeFileInternal);
+    public tokenizeFile(text: string): void {
+        this._tokenizeFileFunction(text);
+    }
     /**
      * Sets basic tokens for the file provided. The semantic token provider must do analysis on these, as it's not done here. These tokens could be in illegal positions, but since we might want to do different analysis depending on the keyvalue format (eg VMT), it's better to analyse later.
      * @param text The text of the file to tokenize
      */
-    public tokenizeFile(text: string): void {
+    private tokenizeFileInternal(text: string): void {
         const textSize = text.length;
         this.text = text;
         this._tokens = [];
@@ -70,7 +76,7 @@ export class Tokenizer {
             if(c === "/" && text[i + 1] === "/") {
                 const commentLength = this.consumeComment(i + 2);
                 this.addToken(TokenType.Comment, i, i + commentLength, text.substring(i, i + commentLength), line);
-                i += commentLength;
+                i += commentLength - 1;
                 continue;
             }
 
