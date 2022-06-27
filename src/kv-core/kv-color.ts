@@ -66,7 +66,7 @@ export function getColorMatches(colorString: string): ColorMatchDescription {
         is255 = true;
         limitMax = 255;
     }
-    const parenType = is255 ? ColorMatchParenthesisType.Braces : ColorMatchParenthesisType.Brackets
+    const parenType = is255 ? ColorMatchParenthesisType.Braces : ColorMatchParenthesisType.Brackets;
 
     let r = parseFloat(matches[2]);
     let g = parseFloat(matches[3]);

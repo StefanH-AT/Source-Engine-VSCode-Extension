@@ -1,4 +1,4 @@
-import { performance, PerformanceObserver } from "perf_hooks";
+import { PerformanceObserver } from "perf_hooks";
 import { ExtensionContext } from "vscode";
 import { config, output } from "./main";
 
@@ -9,6 +9,6 @@ const performanceObserver = new PerformanceObserver((list) => {
     }
 });
 
-export function init(context: ExtensionContext, ) {
+export function init(context: ExtensionContext): void {
     performanceObserver.observe({ entryTypes: ["function"] });
 }
