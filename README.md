@@ -1,8 +1,21 @@
 # Source Engine Support for Visual Studio Code
 
-This extension adds intelligent support for Source Engine file types.
+[![CI Test](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/actions/workflows/test.yml/badge.svg)](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/actions/workflows/test.yml)
+[![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
+![Release](https://img.shields.io/github/release/StefanH-AT/Source-Engine-VSCode-Extension.svg)
 
-[Marketplace](https://marketplace.visualstudio.com/items?itemName=stefan-h-at.source-engine-support) - [Discord](https://discord.gg/BDDxkNwXWw) - [Roadmap](ROADMAP.md)
+![VSCODE](https://img.shields.io/badge/Visual_Studio_Code-0078D4?style=&logo=visual%20studio%20code&logoColor=white)
+![ESLINT](https://img.shields.io/badge/eslint-3A33D1?style=flat&logo=eslint&logoColor=white)
+![TYPESCRIPT](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white)
+![NODE.JS](https://img.shields.io/badge/Node.js-43853D?style=flat&logo=node.js&logoColor=white)
+
+<a href="https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/graphs/contributors">
+<img src="https://contrib.rocks/image?repo=StefanH-AT/Source-Engine-VSCode-Extension" height="24"/>
+</a>
+
+This extension adds intelligent support for Source Engine file types like VMT, QC, FGD, gameinfo.txt and many more.
+
+[Marketplace](https://marketplace.visualstudio.com/items?itemName=stefan-h-at.source-engine-support) - [Discord](https://discord.gg/BDDxkNwXWw)
 
 ![VMT Highlighting](vmt-highlighting.jpg)
 
