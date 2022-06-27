@@ -4,14 +4,14 @@
 // ==========================================================================
 
 import { CompletionItemProvider, TextDocument, Position, CancellationToken, CompletionItem, CompletionList, Range, SemanticTokensBuilder, SemanticTokensLegend, languages, HoverProvider, Hover, ProviderResult, Diagnostic, DiagnosticSeverity, DocumentColorProvider, Color, ColorInformation, ColorPresentation, CompletionItemKind, SnippetString, MarkdownString, ExtensionContext, DocumentSelector, DocumentFilter } from "vscode";
-import { KeyvalueDocument, getDocument, KeyValue, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor, legend } from "../keyvalue-document";
+import { KeyvalueDocument, KeyValue, KeyvalueDocumentFormatter, KvTokensProviderBase, Processor, legend, tokenizeDocument } from "../keyvalue-document";
 import { Token } from "../kv-core/kv-tokenizer";
 import { ShaderParam } from "../kv-core/shader-param";
 import { listFilesSync } from "list-files-in-dir";
 import { getParentDocumentDirectory } from "../kv-core/source-fs";
 import { config } from "../main";
 import { isFloatValue, isScalarValue } from "../kv-core/kv-string-util";
-
+import { getColorMatches, ColorMatchDescription, ColorMatchParenthesisType } from "../kv-core/kv-color";
 
 export const filterVmtSaved: DocumentFilter = {
     language: "vmt",
@@ -53,20 +53,18 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         super(legend, languages.createDiagnosticCollection("vmt"));
     }
 
-    processKeyShader(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument): void {
+    processKeyShader(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, kvDocument: KeyvalueDocument): void {
         tokensBuilder.push(wholeRange, "parameter");
     }
 
-    processKeyCompile(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument): void {
+    processKeyCompile(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, kvDocument: KeyvalueDocument): void {
         tokensBuilder.push(wholeRange, "parameter", ["readonly"]);
     }
 
-    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument): void {
+    processValue(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, kvDoc: KeyvalueDocument): void {
 
         // Get the key value document
         if(!contentRange.isSingleLine) return;
-        const kvDoc = getDocument(document);
-        if(kvDoc == null) return;
 
         // Get the key value type at that line
         const kv = kvDoc.getKeyValueAt(contentRange.start.line);
@@ -155,9 +153,15 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         // Don't put any semantic tokens here. The textmate highlighting is good enough. We only validate the input and provide warning messages
         const colorMatches = getColorMatches(kv.value);
         if(!colorMatches.validFormat) {
-            this.diagnostics.push(new Diagnostic(range, "Invalid color value. Format: [0 0.25 1]", DiagnosticSeverity.Warning));
-        } else if(colorMatches.outOfBounds) {
-            this.diagnostics.push(new Diagnostic(range, "Color values out of bounds. Must be between 0 and 1", DiagnosticSeverity.Warning));
+            this.diagnostics.push(new Diagnostic(range, "Invalid color value. Format: [0 0.25 1] or {0 200 49}", DiagnosticSeverity.Warning));
+            return;
+        } 
+        if(colorMatches.valuesOutOfBounds) {
+            if(colorMatches.parenthesisType === ColorMatchParenthesisType.Brackets) {
+                this.diagnostics.push(new Diagnostic(range, "Color values out of bounds. Must be between 0 and 1", DiagnosticSeverity.Warning));
+            } else if(colorMatches.parenthesisType === ColorMatchParenthesisType.Braces) {
+                this.diagnostics.push(new Diagnostic(range, "Color values out of bounds. Must be between 0 and 255", DiagnosticSeverity.Warning));
+            }
         }
     }
 
@@ -180,7 +184,7 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
 
     public provideCompletionItems(document: TextDocument, position: Position, cancellationToken: CancellationToken): CompletionList {
         
-        const kvDoc = getDocument(document);
+        const kvDoc = new KeyvalueDocument(document, tokenizeDocument(document));
         if(kvDoc == null) return new CompletionList();
         const kv = kvDoc.getKeyValueAt(position.line);
 
@@ -276,7 +280,7 @@ export class ShaderParamHoverProvider implements HoverProvider {
 
     provideHover(document: TextDocument, position: Position, token: CancellationToken): Hover | null {
 
-        const kvDoc = getDocument(document);
+        const kvDoc = new KeyvalueDocument(document, tokenizeDocument(document));
         if(kvDoc == null) return null;
         const kv = kvDoc.getKeyValueAt(position.line);
 
@@ -312,7 +316,7 @@ export class ShaderParamHoverProvider implements HoverProvider {
 export class ShaderParamColorsProvider implements DocumentColorProvider {
 
     provideDocumentColors(document: TextDocument, token: CancellationToken): ColorInformation[] | null {
-        const kvDoc = getDocument(document);
+        const kvDoc = new KeyvalueDocument(document, tokenizeDocument(document));
         if(kvDoc == null) return null;
 
         const colorInfos: ColorInformation[] = [];
@@ -330,9 +334,10 @@ export class ShaderParamColorsProvider implements DocumentColorProvider {
             if(param.type !== "color") return;
             
             const colorMatches = getColorMatches(kv.value);
-            if(!colorMatches.validFormat || colorMatches.outOfBounds || colorMatches.color == null) return;
+            if(!colorMatches.validFormat || colorMatches.valuesOutOfBounds) return;
 
-            const colorInfo = new ColorInformation(kv.valueRange, colorMatches.color);
+            const color = new Color(colorMatches.r, colorMatches.g, colorMatches.b, colorMatches.a);
+            const colorInfo = new ColorInformation(kv.valueRange, color);
             colorInfos.push(colorInfo);
         });
 
@@ -360,30 +365,3 @@ function getMatrixMatches(matrixString: string): { validFormat: boolean, values:
     };
 }
 
-function getColorMatches(colorString: string): { validFormat: boolean, outOfBounds: boolean, color: Color | null, matches: RegExpMatchArray | null }  {
-    const matches = colorString.match(/ *\[ *(0?\.\d+|1|0) (0?\.\d+|1|0) (0?\.\d+|1|0) *\] */);
-    if(!matches) return {
-        validFormat: false,
-        outOfBounds: false,
-        color: null,
-        matches: null
-    };
-
-    const r = parseFloat(matches[1]);
-    const g = parseFloat(matches[2]);
-    const b = parseFloat(matches[3]);
-
-    if(r > 1 || r < 0 || g > 1 || g < 0 || b > 1 || b < 0) return {
-        validFormat: true,
-        outOfBounds: true,
-        color: null,
-        matches: matches
-    };
-
-    return {
-        validFormat: true,
-        outOfBounds: false,
-        color: new Color(r, g, b, 1),
-        matches: matches
-    };
-}
