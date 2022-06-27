@@ -3,14 +3,13 @@
 // Entry point to the extension. Keep code here to a minimum.
 // ==========================================================================
 
-
 import * as vscode from "vscode";
 import * as vmt from "./language/lang-vmt";
 import * as captions from "./language/lang-captions";
 import * as keyvalue from "./language/lang-keyvalue";
 import * as captionsCompile from "./compiler/captions-compile";
 import * as modelCompile from "./compiler/model-compile";
-
+import * as performance from "./performance";
 
 import * as packageJson from "../package.json";
 
@@ -33,6 +32,8 @@ export function activate(context: vscode.ExtensionContext): void {
     modelCompile.init(context);
 
     output.appendLine(`Started Source Engine Support v${packageJson.version}`);
+
+    performance.init(context);
 }
 
 export let config: vscode.WorkspaceConfiguration;
