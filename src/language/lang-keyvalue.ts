@@ -6,7 +6,7 @@
 // ==========================================================================
 
 import { Range, SemanticTokensBuilder, SemanticTokensLegend, languages, TextDocument, ExtensionContext, DocumentSelector, DocumentFilter } from "vscode";
-import { KeyvalueDocumentFormatter, KvTokensProviderBase, legend, Processor } from "../keyvalue-document";
+import { KeyvalueDocument, KeyvalueDocumentFormatter, KvTokensProviderBase, legend, Processor } from "../keyvalue-document";
 
 export const filterKvSaved: DocumentFilter = {
     language: "keyvalue3",
@@ -46,11 +46,11 @@ export class KeyvalueSemanticTokensProvider extends KvTokensProviderBase {
         super(legend, languages.createDiagnosticCollection("keyvalue3"));
     }
     
-    processValueNumber(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument): void {
+    processValueNumber(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, kvDocument: KeyvalueDocument): void {
         tokensBuilder.push(wholeRange, "number", []);
     }
 
-    processValueArray(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, document: TextDocument): void {
+    processValueArray(content: string, contentRange: Range, wholeRange: Range, tokensBuilder: SemanticTokensBuilder, captures: RegExpMatchArray, kvDocument: KeyvalueDocument): void {
         // [] {}
         tokensBuilder.push(new Range(contentRange.start, contentRange.start.translate(0, 1)), "operator", []);
         tokensBuilder.push(new Range(contentRange.end.translate(0, -1), contentRange.end), "operator", []);

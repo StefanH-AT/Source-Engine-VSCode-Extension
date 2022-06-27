@@ -10,7 +10,6 @@ import { formatTokens } from "./kv-core/kv-formatter";
 import { isQuoted, stripQuotes } from "./kv-core/kv-string-util";
 import { Token, Tokenizer, TokenType } from "./kv-core/kv-tokenizer";
 
-const keyvalueDocuments: { file: string, document: KeyvalueDocument }[] = [];
 const tokenizer = new Tokenizer();
 
 export const legend = new SemanticTokensLegend([
@@ -29,34 +28,11 @@ export const legend = new SemanticTokensLegend([
     "readonly"
 ]);
 
-export function getDocument(document: TextDocument): KeyvalueDocument | undefined {
-    if(!hasDocument(document)) {
-        tokenizeDocument(document);
-    }
-    return keyvalueDocuments.find(d => d.file === document.uri.path)?.document;
-}
-
-export function hasDocument(document: TextDocument): boolean {
-    return keyvalueDocuments.some(d => d.file === document.uri.path);
-}
-
-export function addDocument(document: TextDocument, tokens: Token[]): void {
-    const kvDoc = new KeyvalueDocument(document, tokens);
-    if(hasDocument(document)) {
-        const kvd = keyvalueDocuments.find(kd => kd.file);
-        if(kvd == null) return;
-        kvd.document = kvDoc;
-    } else {
-        keyvalueDocuments.push({ file: document.uri.path, document: kvDoc });
-    }
-}
-
 export function tokenizeDocument(document: TextDocument): Token[] {
     const text = document.getText();
     tokenizer.tokenizeFile(text);
     const tokens = tokenizer.tokens;
 
-    addDocument(document, tokens);
     return tokens;
 }
 
@@ -68,10 +44,14 @@ export class KeyvalueDocument {
     public get document() : TextDocument {
         return this._document;
     }
+
+    public get tokens() : Token[] {
+        return this._tokens;
+    }
     
-    constructor(document: TextDocument, tokens: Token[]) {
+    constructor(document: TextDocument, tks: Token[]) {
         this._document = document;
-        this._tokens = tokens;
+        this._tokens = tks;
     }
 
     public getKeyValueAt(lineNumber: number) : KeyValue | null {
@@ -149,10 +129,9 @@ export class KeyvalueDocumentFormatter implements DocumentFormattingEditProvider
 
     provideDocumentFormattingEdits(document: TextDocument, options: FormattingOptions, token: CancellationToken): TextEdit[] {
 
-        const kvDoc = getDocument(document);
-        if(kvDoc == null) return [];
+        const tokens = tokenizeDocument(document);
+        if(tokens == null) return [];
 
-        const tokens = kvDoc.getAllTokens();
         const startPos = document.positionAt(0);
         
         // We just delete and reconstruct the entire file. Much easier.
@@ -174,7 +153,7 @@ export type ProcessorFunction = (content: string,
                                 wholeRange: Range,
                                 tokensBuilder: SemanticTokensBuilder,
                                 captures: RegExpMatchArray,
-                                document: TextDocument,
+                                kvDocument: KeyvalueDocument,
                                 scope: string) => void;
 
 export class Processor {
@@ -198,16 +177,17 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
     public legend: SemanticTokensLegend;
     public diagnosticCollection: DiagnosticCollection;
     
-    tokenizer: Tokenizer;
     diagnostics: Diagnostic[] = [];
     bracketStack = 0;
+    
+    protected tokens: Token[];
 
     protected abstract valueProcessors: Processor[];
 
     protected abstract keyProcessors: Processor[];
 
     constructor(legend: SemanticTokensLegend, diagnosticCollection: DiagnosticCollection) {
-        this.tokenizer = new Tokenizer();
+        this.tokens = [];
         this.legend = legend;
         this.diagnosticCollection = diagnosticCollection;
     }
@@ -220,17 +200,18 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
 
         const tokensBuilder = new SemanticTokensBuilder(this.legend);
 
-        return this.buildTokens(tokenizeDocument(document), tokensBuilder, document);
+        this.tokens = tokenizeDocument(document);
+        return this.buildTokens(new KeyvalueDocument(document, this.tokens), tokensBuilder);
     }
 
-    buildTokens(tokens: Token[], tokensBuilder: SemanticTokensBuilder, document: TextDocument): SemanticTokens {
+    buildTokens(kvDoc: KeyvalueDocument, tokensBuilder: SemanticTokensBuilder): SemanticTokens {
         
         const keys: string[] = [];
         let currentScope = "";
 
-        for(let i = 0; i < tokens.length; i++) {
-            const token = tokens[i];
-            const tokenRange = new Range(document.positionAt(token.start), document.positionAt(token.end));
+        for(let i = 0; i < kvDoc.tokens.length; i++) {
+            const token = kvDoc.tokens[i];
+            const tokenRange = new Range(kvDoc.document.positionAt(token.start), kvDoc.document.positionAt(token.end));
 
             // No further processing on comments
             if(token.type === TokenType.Comment) {
@@ -240,7 +221,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
             if(token.type === TokenType.Key) {
                 
                 // Get next token that isn't a comment 
-                const interestingToken = this.getNextInterestingToken(tokens, i);
+                const interestingToken = this.getNextInterestingToken(kvDoc.tokens, i);
                 const nextToken = interestingToken.token;
 
                 // We're an object key
@@ -254,10 +235,10 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
                 // We're a keyvalue's key. Process the value too and skip forward
                 if(nextToken.type === TokenType.Value) {
                     
-                    this.processKvKey(token, tokenRange, tokensBuilder, document, currentScope);
+                    this.processKvKey(token, tokenRange, tokensBuilder, kvDoc, currentScope);
                     
-                    const nextTokenRange = new Range(document.positionAt(nextToken.start), document.positionAt(nextToken.end));
-                    this.processKvValue(nextToken, nextTokenRange, tokensBuilder, document, currentScope);
+                    const nextTokenRange = new Range(kvDoc.document.positionAt(nextToken.start), kvDoc.document.positionAt(nextToken.end));
+                    this.processKvValue(nextToken, nextTokenRange, tokensBuilder, kvDoc, currentScope);
                     i += interestingToken.offset;
                     
                     // Check for duplicates
@@ -286,12 +267,12 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
             if(token.type === TokenType.PreprocessorKey) {
 
                 // Get next token that isn't a comment 
-                const interestingToken = this.getNextInterestingToken(tokens, i);
+                const interestingToken = this.getNextInterestingToken(kvDoc.tokens, i);
                 const nextToken = interestingToken.token;
 
                 if(nextToken.type === TokenType.Value) {
 
-                    const nextTokenRange = new Range(document.positionAt(nextToken.start), document.positionAt(nextToken.end));
+                    const nextTokenRange = new Range(kvDoc.document.positionAt(nextToken.start), kvDoc.document.positionAt(nextToken.end));
 
                     tokensBuilder.push(tokenRange, "macro", []);
                     tokensBuilder.push(nextTokenRange, "string", []);
@@ -304,11 +285,11 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         }
         
         if(this.bracketStack > 0) {
-            this.diagnostics.push(new Diagnostic(document.lineAt(document.lineCount - 1).range, `Object brackets unbalanced. Missing ${this.bracketStack} closing '}'`, DiagnosticSeverity.Error));
+            this.diagnostics.push(new Diagnostic(kvDoc.document.lineAt(kvDoc.document.lineCount - 1).range, `Object brackets unbalanced. Missing ${this.bracketStack} closing '}'`, DiagnosticSeverity.Error));
         }
 
         this.diagnosticCollection.clear();
-        this.diagnosticCollection.set(document.uri, this.diagnostics);
+        this.diagnosticCollection.set(kvDoc.document.uri, this.diagnostics);
 
         return tokensBuilder.build();
     }
@@ -324,16 +305,16 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         return { token: nextToken, offset: n };
     }
 
-    protected processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument, scope: string): void {
-        const processed = this.processString(token, range, tokensBuilder, this.keyProcessors, document, scope);
+    protected processKvKey(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, kvDocument: KeyvalueDocument, scope: string): void {
+        const processed = this.processString(token, range, tokensBuilder, this.keyProcessors, kvDocument, scope);
         if(!processed) tokensBuilder.push(range, "variable", ["declaration"]);
     }
-    protected processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, document: TextDocument, scope: string): void {
-        const processed = this.processString(token, range, tokensBuilder, this.valueProcessors, document, scope);
+    protected processKvValue(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, kvDocument: KeyvalueDocument, scope: string): void {
+        const processed = this.processString(token, range, tokensBuilder, this.valueProcessors, kvDocument, scope);
         if(!processed) tokensBuilder.push(range, "string", []);
     }
 
-    processString(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, processors: Processor[], document: TextDocument, scope: string): boolean {
+    processString(token: Token, range: Range, tokensBuilder: SemanticTokensBuilder, processors: Processor[], kvDocument: KeyvalueDocument, scope: string): boolean {
         const unquoted = KvTokensProviderBase.unquoteToken(token, range, tokensBuilder);
         const content = unquoted.content;
         const contentRange = unquoted.range;
@@ -341,7 +322,7 @@ export abstract class KvTokensProviderBase implements DocumentSemanticTokensProv
         const processed = processors.some(processor => {
             const matches = content.match(processor.regex);
             if(matches) {
-                processor.processor.call(this, token.value, contentRange, range, tokensBuilder, matches, document, scope);
+                processor.processor.call(this, token.value, contentRange, range, tokensBuilder, matches, kvDocument, scope);
                 return true;
             }
             return false;
