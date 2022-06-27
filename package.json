@@ -284,6 +284,11 @@
         "configuration": {
             "title": "Source Engine",
             "properties": {
+                "sourceEngine.performance.log": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Log performance information. Mainly for debugging purposes."
+                },
                 "sourceEngine.captionCompiler.executablePath": {
                     "type": "string",
                     "default": "",
