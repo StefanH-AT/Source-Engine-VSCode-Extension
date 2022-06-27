@@ -69,10 +69,13 @@ test("Tokenize Simple KV", () => {
     expect(tokens[4].value).toBe("// A comment");
     expect(tokens[4].line).toBe(4);
     expect(tokens[5].value).toBe("\"Quoted Strings\"");
+    expect(tokens[5].line).toBe(6);
     expect(tokens[5].type).toBe(tokenizer.TokenType.Key);
     expect(tokens[6].value).toBe("\"a a\"");
+    expect(tokens[6].line).toBe(6);
     expect(tokens[6].type).toBe(tokenizer.TokenType.Value);
     expect(tokens[7].value).toBe("// Comment after the line");
+    expect(tokens[7].line).toBe(6);
 
     expect(tokens[50].type).toBe(tokenizer.TokenType.Value);
     expect(tokens[50].value).toBe("\"\\\"world\\\"\"");
