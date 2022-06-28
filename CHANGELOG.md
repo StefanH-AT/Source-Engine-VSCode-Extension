@@ -6,6 +6,14 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.5.0]
+
+**VMT**
+- Added auto completion for texture paths
+
+**SMD**
+- Added basic SMD file syntax highlighting
+
 ## [0.4.0]
 
 **KeyValue**

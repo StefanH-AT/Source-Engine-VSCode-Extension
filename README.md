@@ -72,6 +72,9 @@ Checklist for features that are planned or already implemented.
 ### Soundscripts
 - [x] Soundscript snippets
 
+### SMD
+- [x] .smd highlighting
+
 ## Planned
 This is what is planned for this extension. In case you wish to contribute, this is a good place to start.
 
