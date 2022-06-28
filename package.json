@@ -196,6 +196,16 @@
                     "npc_sounds_*.txt",
                     "level_sounds_*.txt"
                 ]
+            },
+            {
+                "id": "smd",
+                "aliases": [
+                    "Valve SMD",
+                    "Source SMD"
+                ],
+                "extensions": [
+                    ".smd"
+                ]
             }
         ],
         "grammars": [
@@ -243,6 +253,11 @@
                 "language": "rad",
                 "scopeName": "source.rad",
                 "path": "./syntaxes/rad.tmLanguage.json"
+            },
+            {
+                "language": "smd",
+                "scopeName": "source.smd",
+                "path": "./syntaxes/smd.tmLanguage.json"
             }
         ],
         "commands": [
