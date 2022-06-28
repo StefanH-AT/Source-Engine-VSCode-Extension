@@ -1,0 +1,28 @@
+{
+	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "SMD",
+	"scopeName": "source.smd",
+	"patterns": [
+        {
+            "include": "source.kv#comment"
+        },
+        {
+            "include": "source.kv#number"
+        },
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "source.kv#stringUnquoted"
+        },
+        {
+            "include": "source.kv#stringQuoted"
+        }
+	],
+	"repository": {
+		"keywords": {
+            "match": "(version|nodes|end|triangles|skeleton|time)",
+            "name": "keyword.smd"
+        }
+	}
+}
