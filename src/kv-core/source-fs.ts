@@ -1,3 +1,5 @@
+import { normalize } from "path";
+
 // ==========================================================================
 // Purpose:
 // Utility functions to navigate in a source-engine-like filesystem.
@@ -8,5 +10,5 @@ export function getParentDocumentDirectory(path: string, directoryName: string):
     const materialPathIndex = path.indexOf(directoryName) + directoryName.length;
     if(materialPathIndex < 0) return null;
 
-    return path.substring(0, materialPathIndex);
+    return normalize(path.substring(0, materialPathIndex));
 }

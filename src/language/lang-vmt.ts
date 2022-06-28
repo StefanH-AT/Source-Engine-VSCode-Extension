@@ -12,6 +12,8 @@ import { getParentDocumentDirectory } from "../kv-core/source-fs";
 import { config } from "../main";
 import { isFloatValue, isScalarValue } from "../kv-core/kv-string-util";
 import { getColorMatches, ColorMatchDescription, ColorMatchParenthesisType } from "../kv-core/kv-color";
+import { exists, existsSync, fstat } from "fs";
+import path from "path";
 
 export const filterVmtSaved: DocumentFilter = {
     language: "vmt",
@@ -135,6 +137,12 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
             tokensBuilder.push(range, "keyword");
             return;
         }
+        const materialDir = getParentDocumentDirectory(kvDoc.document.uri.fsPath, "materials");
+        if(materialDir != null) {
+            if(!existsSync(path.join(materialDir, kv.value + ".vtf"))) {
+                this.diagnostics.push(new Diagnostic(range, "Texture not found on disk", DiagnosticSeverity.Warning));
+            }
+        }
 
         tokensBuilder.push(range, "string");
     }
@@ -217,7 +225,7 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
         }
 
 
-        if(kv.valueRange.contains(position) && kv.value === "") {
+        if(kv.valueRange.contains(position)) {
             const param = shaderParams.find(p => p.name == kv.key);
 
             const completions = new CompletionList();
@@ -256,23 +264,40 @@ export class ShaderParamCompletionItemProvider implements CompletionItemProvider
             completions.items.push(completion);
         });
 
-        const materialRoot = getParentDocumentDirectory(document.uri.path, "material");
+        const materialRoot = getParentDocumentDirectory(document.uri.fsPath, "materials");
+        if(materialRoot == null) return;
 
-        if(materialRoot != null) {
-            
-            const textureFiles = listFilesSync(materialRoot, "vtf");
-            textureFiles.forEach( t => {
-                const filePath = t.substring(materialRoot.length + 1);
-                const filePathWithoutExtension = filePath.substring(0, filePath.length - 4);
-
-                const completion = new CompletionItem(filePath);
-                completion.insertText = filePathWithoutExtension;
-                completion.detail = "Texture Path";
-                completion.kind = CompletionItemKind.File;
-                completion.preselect = true;
-                completions.items.push(completion);
-            });
+        // Exit early if file already exists
+        if(existsSync(path.join(materialRoot, kv.value + ".vtf"))) {
+            return;
         }
+
+        let cursorStartDir;
+        if(kv.value.endsWith("\\") || kv.value.endsWith("/")) {
+            cursorStartDir = kv.value;
+        } else {
+            cursorStartDir = path.dirname(kv.value);
+        }
+        const startDir = path.join(materialRoot, cursorStartDir);
+
+        if(!existsSync(startDir)) return;
+
+        const textureFiles = listFilesSync(startDir, "vtf");
+        textureFiles.forEach( t => {
+            let filePath = t.substring(startDir.length);
+            if(filePath.startsWith("\\") || filePath.startsWith("/")) {
+                filePath = filePath.slice(1);
+            }
+            const filePathWithoutExtension = filePath.substring(0, filePath.length - 4).replace("\\", "/");
+
+            const completion = new CompletionItem(filePathWithoutExtension);
+            completion.insertText = filePathWithoutExtension;
+            completion.detail = "Texture Path";
+            completion.kind = CompletionItemKind.File;
+            completion.preselect = true;
+            completions.items.push(completion);
+        });
+        
     }
 }
 
