@@ -3,20 +3,19 @@
 // Adds commands to compile .qc (model) files.
 // ==========================================================================
 
-import { commands, ExtensionContext, OutputChannel, TextEditor, window } from "vscode";
-import { config } from "../main";
+import vscode from "vscode";
 import { compileSomething } from "./compiler-base";
 
-let qcChannel: OutputChannel;
+let qcChannel: vscode.OutputChannel;
 
-export function init(context: ExtensionContext): void {
-    const ccCommand = commands.registerTextEditorCommand("mdl.compile", compileModel);
+export function init(context: vscode.ExtensionContext): void {
+    const ccCommand = vscode.commands.registerTextEditorCommand("mdl.compile", compileModel);
     context.subscriptions.push(ccCommand);
 }
 
-async function compileModel(editor: TextEditor): Promise<void> {
+async function compileModel(editor: vscode.TextEditor): Promise<void> {
     if(qcChannel == null) {
-        qcChannel = window.createOutputChannel("Model Compiler");
+        qcChannel = vscode.window.createOutputChannel("Model Compiler");
     }
     
     await compileSomething({
