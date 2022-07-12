@@ -91,6 +91,14 @@ export class Tokenizer {
                 continue;
             }
 
+            // Is it a conditional?
+            if(c === "[") {
+                const conditionalLength = this.consumeConditional(i);
+                this.addToken(TokenType.Conditional, i, i + conditionalLength, text.substring(i, i + conditionalLength), line);
+                i += conditionalLength - 1;
+                continue;
+            }
+
             // No, it's a string!
             const stringLength = this.consumeString(i);
             const stringContent = text.substring(i, i + stringLength);
@@ -103,7 +111,7 @@ export class Tokenizer {
             }
 
             this.addToken(tokenType, i, i + stringLength, stringContent, line);
-            expectingKey = !expectingKey;
+            if(expectingKey) expectingKey = false;
             i += stringLength - 1; // Prevents skipping the next character after the string
             continue;
         }
@@ -119,6 +127,17 @@ export class Tokenizer {
         }
 
         return n + 1;
+    }
+
+    consumeConditional(i: number): number {
+        let n = 1;
+        let c = this.text[i];
+        for(; c != null; c = this.text[i + n++]) {
+            if(c === "]" || c === "\n" || c === "\r") {
+                break;
+            }
+        }
+        return n;
     }
 
     consumeString(i: number): number {
@@ -147,6 +166,9 @@ export class Tokenizer {
         let escaped = false;
         let c = this.text[i];
         for(; c != null; c = this.text[i + n++]) {
+            if(c === "\n") {
+                return n;
+            }
             if(c === "\\") {
                 escaped = !escaped;
                 continue;

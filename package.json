@@ -42,7 +42,7 @@
         "lint": "eslint ./src",
         "deploy": "vsce publish"
     },
-    "main": "./out/main.js",
+    "main": "./out/extension/main.js",
     "activationEvents": [
         "onLanguage:keyvalue3",
         "onLanguage:vmt",
