@@ -6,6 +6,14 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.6.0]
+
+**KeyValue**
+- Added rudimentary highlighting to conditionals (The `[$Debug]` syntax which can enable/disable lines depending on certain engine conditions)
+- Fixed multiple values breaking syntax highlighting
+- Fixed bugs related to unclosed strings
+- Fixed bugs related to lookahead tokenization logic
+
 ## [0.5.0]
 
 **VMT**

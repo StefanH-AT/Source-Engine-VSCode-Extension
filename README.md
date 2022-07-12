@@ -33,7 +33,8 @@ Checklist for features that are planned or already implemented.
 - [x] Error detection
 - [x] Duplicate key detection
 - [x] Keyvalue file auto indentation and formatting
-- [x] Support for #include, #base
+- [x] Support for `#include` and `#base`
+- [x] Support for conditionals (e.g.: `[$Debug]`)
 
 ### VMT
 - [x] VMT highlighting
@@ -79,7 +80,6 @@ Checklist for features that are planned or already implemented.
 This is what is planned for this extension. In case you wish to contribute, this is a good place to start.
 
 ### General
-- [ ] Conditionals
 - [ ] Tree view
 - [ ] Schema implementation
   - [ ] Schema for gameinfo 
