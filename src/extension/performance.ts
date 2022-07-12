@@ -1,11 +1,11 @@
 import { PerformanceObserver } from "perf_hooks";
 import { ExtensionContext } from "vscode";
-import { config, output } from "./main";
+import * as main from "./main";
 
 const performanceObserver = new PerformanceObserver((list) => {
     const entry = list.getEntries()[0];
-    if(config.get<boolean>("performance.log")) {
-        output.appendLine(`${entry.name}: ${entry.duration}ms`);
+    if(main.config.get<boolean>("performance.log")) {
+        main.output.appendLine(`${entry.name}: ${entry.duration}ms`);
     }
 });
 

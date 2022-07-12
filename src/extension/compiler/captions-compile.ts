@@ -8,9 +8,13 @@ import { compileSomething } from "./compiler-base";
 
 let ccChannel: OutputChannel;
 
-export function init(context: ExtensionContext): void {
-    const ccCommand = commands.registerTextEditorCommand("captions.compile", compileCaptions);
-    context.subscriptions.push(ccCommand);
+export async function init(context: ExtensionContext): Promise<void> {
+    const commandList = await commands.getCommands(true);
+    const exists = commandList.some(c => c === "captions.compile");
+    if(!exists) {
+        const ccCommand = commands.registerTextEditorCommand("captions.compile", compileCaptions);
+        context.subscriptions.push(ccCommand);
+    }
 }
 
 async function compileCaptions(editor: TextEditor): Promise<void> {
