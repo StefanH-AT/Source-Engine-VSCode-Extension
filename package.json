@@ -337,7 +337,7 @@
                         "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Half Life 2\\bin\\studiomdl.exe",
                         "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Counter Strike Global Offensive\\bin\\studiomdl.exe"
                     ],
-                    "description": "Path to studiomdl.exe for in-editor captions compiling."
+                    "description": "Path to studiomdl.exe for in-editor model compiling."
                 },
                 "sourceEngine.modelCompiler.workingDirectory": {
                     "type": "string",
