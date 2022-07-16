@@ -2,6 +2,7 @@ export default {
     "transform": {
         ".ts": "ts-jest"
     },
+    "testEnvironment": "node",
     "testRegex": "(/tests?/.*|\\.(test|spec))\\.(ts|js)$",
     "moduleFileExtensions": [
         "ts",
@@ -9,5 +10,10 @@ export default {
     ],
     "modulePathIgnorePatterns": [
         "out"
-    ]
-}
+    ],
+    "globals": {
+        "ts-jest": {
+            "isolatedModules": true
+        }
+    }
+};
