@@ -37,7 +37,6 @@
         "vscode:prepublish": "npm run compile",
         "compile": "tsc -p ./src",
         "watch": "tsc -watch -p ./src",
-        "pretest": "npm run compile",
         "test": "jest --projects jest.config.ts",
         "lint": "eslint ./src",
         "deploy": "vsce publish"
