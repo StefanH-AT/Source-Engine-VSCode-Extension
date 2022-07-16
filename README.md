@@ -117,7 +117,10 @@ Users can just install this extension on the VSCode Marketplace, but developers 
 4) Run `npm install` in the repository's folder, to install the dependencies
 
 ### Testing
-To start the unit tests, run `npm run test`. The project will automatically be compiled.
+To start the unit tests, run `npm run test`. The project will be automatically compiled.
+
+### Benchmarking
+To run the benchmark tests, run `npm run benchmark`. The project will be automatically compiled
 
 ### Running the extension
 1) To start the extension, first compile the project `npm run compile` (Or `npm run watch` to auto-compile on every file change)
