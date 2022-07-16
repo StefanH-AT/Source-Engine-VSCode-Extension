@@ -1,0 +1,381 @@
+import { Tokenizer } from "./kv-tokenizer";
+import { benchmarkSuite } from "jest-bench";
+
+const tokenizer = new Tokenizer();
+benchmarkSuite("kv-tokenizer", {
+    ["Tokenize Small File"]: () => {
+        tokenizer.tokenizeFile(`"Keyvalues"
+        {
+        
+            // A comment
+        
+            "Quoted Strings"        "a a"  // Comment after the line
+            unquoted_strings        b       // Unquoted strings cannot have spaces
+        
+            integers                130     // 130
+            floats                  5.03
+            negative                -5.03
+            in_brackets             "500.5"
+        
+            "booleans"              "true"    //
+            booleans                "false"   //
+        
+            array                   "[1.0 0.5 0.0]"     //gf
+            
+            matrix                  "{255 128 0}"       // {}
+        
+        
+            "Subobject" { // yes {}]]}}}}
+                "key"               "value"
+                "valueless key"
+            }
+        
+            Unquoted
+            {
+                key val
+            }
+        
+        }`);
+    },
+    ["Tokenize Soundmixers File"]: () => {
+        tokenizer.tokenizeFile(`// Portal: Revolution custom sound mixers.
+        // These Sound Mixers are referenced by name from Soundscapes, and are used to provide
+        // custom volume control over various sound categories, called 'mix groups'
+        
+        // "GROUPRULES" specifies the rules for inclusion of a sound in a mix group.
+        // Rules are checked sequentially (from top to bottom). All fields must match
+        // in a row in order for a sound to match the group.  A sound my be included 
+        // in up to 8 mix groups.
+        
+        // LIMITS: 
+        //        up to 64 unique mix groups
+        //        up to 76 group rules entries
+        //        up to 32 sound mixers
+        //        all strings are limited to 31 characters!
+        
+        // NOTE2: at runtime, you can display the classname of the sound source by
+        // setting snd_showclassname 1 in the console.
+        
+        // NOTE3: main character dialog during critical scenes is ducked using a separate code path which, when
+        // active, temporarilly disables mixer ducking (prevent double ducking).  
+        // Lower priority sounds are ducked by higher priority sounds, if "is ducked" is enabled. 
+        // Only sounds with "causes ducking" enabled can cause a lower priority sound to be ducked.
+        
+        // DO NOT USE TABS FOR INDENTATION IN THIS FILE IT WILL JUST MESS UP MY BEAUTIFUL ALIGNMENT
+        
+        "MixGroups"
+        {
+        // NOTE: order these from least general to most general
+        
+        //                        directory or .wav                     classname                                                                Causes  Duck to  Ducker
+        //    group name          name substring                        substring     chan              sndlvl_min    sndlvl_max    priority    Is Ducked   Ducking    Percent         Threshold
+        //  ---------             ------------------                    ---------     -----------       ----------    ----------    --------    --------    -------    -------         ---------
+            
+        "voip"                    "?VoiceSfx"                           ""            ""                ""            ""            "60"        "0"         "0"        "100"           "40"
+        
+        "UI"                      "ui/"                                 ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "commentary"              "commentary/"                         ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "mstr"                    "mstr/"                               ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "noDSP"                   "nodsp"                               ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        "inTBeam"                 "player_enter_tbeam_lp"               ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "gelBounce"               "player_bounce_jump_paint"            ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        "Music"                   "music/"                              ""            ""                ""            ""            "60"        "0"         "0"        "75"           "40"
+        "beep"                    "xray/beep"                           ""            ""                ""            ""            "60"        "0"         "0"        "75"           "40"
+        
+        "bullethit"               "impact_bullet"                       ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "bulletmiss"              "nearmiss"                            ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "Explosions"              "explo"                               ""            ""                "120"         ""            "60"        "0"         "0"        "100"          "40"
+        
+        "Player_Fall"             "fall_whoosh"                         ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "Portalgun"               "portalgun"                           ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "Player_Weapons_Loud"     "weapon"                              "Player"      ""                "140"         ""            "60"        "0"         "0"        "100"          "40"
+        "Player_Weapons"          "weapon"                              "Player"      ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "Player"                  "player/"                             "Player"      ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        "turrets"                 "npc/turret"                          ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "defective_turrets"       "vo/turret"                           ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "NPC_Voice"               ""                                    "NPC"         "CHAN_VOICE"      ""            ""            "60"        "0"         "0"        "100"          "40"
+        "NPC_Weapons_Loud"        ""                                    "NPC"         "CHAN_WEAPON"     "140"         ""            "60"        "0"         "0"        "100"          "40"
+        "NPC_Weapons"             ""                                    "NPC"         "CHAN_WEAPON"     ""            ""            "60"        "0"         "0"        "100"          "40"
+        "NPC_Body"                ""                                    "NPC"         "CHAN_BODY"       ""            ""            "60"        "0"         "0"        "100"          "40"
+        "NPC_Looping"             ""                                    "NPC"         "CHAN_STATIC"     ""            ""            "60"        "0"         "0"        "100"          "40"
+        "NPC"                     ""                                    "NPC"         ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        "Ambient"                 "ambien"                              ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        "Container"               "container"                           ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        "Robot"                   "robot_parts/"                        ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        "Trains"                  "plats/"                              ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "Doors"                   "doors/"                              ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "Buttons"                 "buttons/"                            ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "Items"                   "items/"                              ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "Beams"                   "beams/"                              ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "Vehicles"                "vehicles/"                           ""            ""                ""            ""            "60"        "0"         "0"        "68"           "40"
+        "Vehicles_Looping"        "vehicles/"                           ""            "CHAN_STATIC"     ""            ""            "60"        "0"         "0"        "68"           "40"
+        
+        
+        
+        "Physics"                 "physics/"                            ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        
+        "Dialog"                  "combined/"                           ""            ""                ""            ""            "60"        "0"         "0"        "100"          "20"
+        "Combat"                  "explo"                               ""            ""                "110"         ""            "60"        "0"         "0"        "100"          "40"
+        "Weapons"                 "weapon"                              ""            ""                "120"         ""            "60"        "0"         "0"        "100"          "40"
+        
+        "Quiet"                   ""                                    ""            ""                "0"           "70"          "60"        "0"         "0"        "100"          "40"
+        "Medium"                  ""                                    ""            ""                "71"          "90"          "60"        "0"         "0"        "100"          "40"
+        "Loud"                    ""                                    ""            ""                "91"          "100"         "60"        "0"         "0"        "100"          "40"
+        "VeryLoud"                ""                                    ""            ""                "101"         "149"         "60"        "0"         "0"        "100"          "40"
+        "SuperLoud"               ""                                    ""            ""                "150"         ""            "60"        "0"         "0"        "100"          "40"
+        
+        "All"                     ""                                    ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        "Claw"                    "asdfasdf"                            ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "ReducedDuckingSm"        "asdfxxx"                             ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "ReducedDuckingMd"        "asdfwww"                             ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "ReducedDuckingLg"        "asdfyyy"                             ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "ReducedDuckingXl"        "asdfbbb"                             ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "ReducedDuckingXxl"       "asdfhhh"                             ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "ReducedDuckingMstr"      "asdfqqd"                             ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        "testTBin"                "asdfaef"                             ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "testGelBounce"           "asxdrf"                              ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "testGelSpeed"            "asxdrf"                              ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "unduckedMusic"           "music/"                              ""            ""                ""            ""            "60"        "0"         "0"        "75"           "40"
+        "unTBeam"                 "untbeam"                             ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        "xLoud"                   "xloud"                               ""            ""                ""            ""            "60"        "0"         "0"        "100"          "40"
+        
+        }
+        
+        
+        //----------------------------------------------------------------
+        // first 3 fields are multipliers, last 2 are additive
+        //                                  vol   level dsp   solo  mute
+        "SoundMixers"
+        {
+            "Default_Mix"
+            {
+                "voip"                     "0.6" "1.0" "1.0" "0.0" "0.0"
+                "commentary"               "0.7" "1.0" "0.0" "0.0" "0.0"
+                "mstr"                     "1.0" "1.0" "0.0" "0.0" "0.0"
+                "noDSP"                    "0.6" "1.0" "0.0" "0.0" "0.0"
+        
+                "inTBeam"                  "0.6" "1.0" "1.0" "0.0" "0.0"
+                "gelBounce"                "0.6" "1.0" "1.0" "0.0" "0.0"
+        
+                "beep"                     "0.6" "1.0" "1.0" "0.0" "0.0"
+                "epilogueMusic"            "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Music"                    "0.6" "1.0" "1.0" "0.0" "0.0"
+        
+                "bullethit"                "0.6" "1.0" "1.0" "0.0" "0.0"
+                "bulletmiss"               "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Explosions"               "0.6" "1.0" "1.0" "0.0" "0.0"
+                
+                "Player_Fall"              "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Portalgun"                "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Player_Weapons_Loud"      "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Player_Weapons"           "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Player"                   "0.6" "1.0" "1.0" "0.0" "0.0"
+                        
+        
+                "turrets"                  "0.6" "1.05" "1.0" "0.0" "0.0"
+                "defective_turrets"        "0.6" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Voice"                "0.6" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Weapons_Loud"         "0.6" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Weapons"              "0.6" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Body"                 "0.6" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Looping"              "0.6" "1.0" "1.0" "0.0" "0.0"
+                "NPC"                      "0.6" "1.0" "1.0" "0.0" "0.0"
+                
+                "Ambient"                  "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Container"                "0.6" "1.0" "1.0" "0.0" "0.0"
+                
+                
+                "ReducedDuckingSm"         "0.6" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingMd"         "0.6" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingLg"         "0.6" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingXl"         "0.6" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingXxl"        "0.8" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingMstr"       "0.6" "1.0" "1.0" "0.0" "0.0"
+                
+                "Robot"                    "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Claw"                     "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Trains"                   "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Doors"                    "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Buttons"                  "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Items"                    "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Beams"                    "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Vehicles"                 "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Vehicles_Looping"         "0.6" "1.0" "1.0" "0.0" "0.0"
+                
+                "UI"                       "1.0" "1.0" "1.0" "0.0" "0.0"
+                
+                "Physics"                  "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Dialog"                   "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Combat"                   "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Weapons"                  "0.6" "1.0" "1.0" "0.0" "0.0"
+                
+                "Quiet"                    "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Medium"                   "0.6" "1.0" "1.0" "0.0" "0.0"
+                "Loud"                     "0.6" "1.0" "1.0" "0.0" "0.0"
+                "VeryLoud"                 "0.6" "1.0" "1.0" "0.0" "0.0"
+                "SuperLoud"                "0.6" "1.0" "1.0" "0.0" "0.0"
+                
+                "All"                      "0.6" "1.0" "1.0" "0.0" "0.0"
+        
+                "testTBin"                 "1.0" "1.0" "1.0" "0.0" "0.0"
+                "testGelBounce"            "1.0" "1.0" "1.0" "0.0" "0.0"
+                "testGelSpeed"             "1.0" "1.0" "1.0" "0.0" "0.0"
+                "unduckedMusic"            "0.6" "1.0" "1.0" "0.0" "0.0"
+                "unTBeam"                  "0.6" "1.0" "1.0" "0.0" "0.0"
+                "xLoud"                    "0.8" "1.0" "1.0" "0.0" "0.0"
+            }
+            "Silent_Mix"
+            {
+                "voip"                     "0.6" "1.0" "1.0" "0.0" "0.0"
+                "commentary"               "0.7" "1.0" "0.0" "0.0" "0.0"
+                "mstr"                     "0.0" "1.0" "0.0" "0.0" "0.0"
+                "noDSP"                    "0.0" "1.0" "0.0" "0.0" "0.0"
+        
+                "inTBeam"                  "0.0" "1.0" "1.0" "0.0" "0.0"
+                "gelBounce"                "0.0" "1.0" "1.0" "0.0" "0.0"
+        
+                "beep"                     "0.0" "1.0" "1.0" "0.0" "0.0"
+                "epilogueMusic"            "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Music"                    "0.0" "1.0" "1.0" "0.0" "0.0"
+        
+                "bullethit"                "0.0" "1.0" "1.0" "0.0" "0.0"
+                "bulletmiss"               "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Explosions"               "0.0" "1.0" "1.0" "0.0" "0.0"
+                
+                "Player_Fall"              "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Portalgun"                "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Player_Weapons_Loud"      "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Player_Weapons"           "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Player"                   "0.0" "1.0" "1.0" "0.0" "0.0"
+                        
+        
+                "turrets"                  "0.0" "1.05" "1.0" "0.0" "0.0"
+                "defective_turrets"        "0.0" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Voice"                "0.0" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Weapons_Loud"         "0.0" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Weapons"              "0.0" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Body"                 "0.0" "1.0" "1.0" "0.0" "0.0"
+                "NPC_Looping"              "0.0" "1.0" "1.0" "0.0" "0.0"
+                "NPC"                      "0.0" "1.0" "1.0" "0.0" "0.0"
+                
+                "Ambient"                  "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Container"                "0.0" "1.0" "1.0" "0.0" "0.0"
+                
+                
+                "ReducedDuckingSm"         "0.0" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingMd"         "0.0" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingLg"         "0.0" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingXl"         "0.0" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingXxl"        "0.0" "1.0" "1.0" "0.0" "0.0"
+                "ReducedDuckingMstr"       "0.0" "1.0" "1.0" "0.0" "0.0"
+                
+                "Robot"                    "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Claw"                     "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Trains"                   "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Doors"                    "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Buttons"                  "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Items"                    "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Beams"                    "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Vehicles"                 "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Vehicles_Looping"         "0.0" "1.0" "1.0" "0.0" "0.0"
+                
+                "UI"                       "1.0" "1.0" "1.0" "0.0" "0.0"
+                
+                "Physics"                  "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Dialog"                   "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Combat"                   "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Weapons"                  "0.0" "1.0" "1.0" "0.0" "0.0"
+                
+                "Quiet"                    "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Medium"                   "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Loud"                     "0.0" "1.0" "1.0" "0.0" "0.0"
+                "VeryLoud"                 "0.0" "1.0" "1.0" "0.0" "0.0"
+                "SuperLoud"                "0.0" "1.0" "1.0" "0.0" "0.0"
+                
+                "All"                      "0.0" "1.0" "1.0" "0.0" "0.0"
+        
+                "testTBin"                 "0.0" "1.0" "1.0" "0.0" "0.0"
+                "testGelBounce"            "0.0" "1.0" "1.0" "0.0" "0.0"
+                "testGelSpeed"             "0.0" "1.0" "1.0" "0.0" "0.0"
+                "unduckedMusic"            "0.0" "1.0" "1.0" "0.0" "0.0"
+                "unTBeam"                  "0.0" "1.0" "1.0" "0.0" "0.0"
+                "xLoud"                    "0.0" "1.0" "1.0" "0.0" "0.0"
+            }
+        }
+        
+        
+        //----------------------------------------------------------------
+        // first 3 fields are multipliers, last 2 are additive
+        //                 vol level dsp solo mute
+        "MixLayers"
+        {
+            
+            "voipLayer"
+            {
+                "voip"                         "1.0"    "1.0"    "1.0" "0.45" "0.0"
+            }
+            "commentaryLayer"
+            {
+                "commentary"                   "1.0" "1.0" "1.0" "0.8" "0.0"
+                "revo_core0VO"                 "0.1" "1.0" "1.0" "0.8" "1.0"
+                "revo_core1VO"                 "0.1" "1.0" "1.0" "0.8" "1.0"
+                "mstr"                         "0.2" "1.0" "1.0" "0.8" "1.0"
+                "UI"                           "1.0" "1.0" "1.0" "0.8" "0.0"
+            }
+            "inTBeamLayer"
+            {
+                "inTBeam"                      "1.0" "1.0" "1.0" "0.8" "0.0"
+                "revo_core0VO"                 "0.4" "1.0" "1.0" "0.8" "1.0"
+                "revo_core1VO"                 "0.4" "1.0" "1.0" "0.8" "1.0"
+                "testTBin"                     "0.0" "1.0" "1.0" "0.0" "0.0"
+                "Music"                        "0.0" "1.0" "1.0" "0.0" "0.0"
+                "unduckedMusic"                "1.0" "1.0" "1.0" "0.8" "0.0"
+                "unTBeam"                      "1.0" "1.0" "1.0" "0.4" "0.0"
+                "UI"                           "1.0" "1.0" "1.0" "0.8" "0.0"
+        
+            }
+            "gelBounceLayer"
+            {
+                "testGelBounce"                "0.0" "1.0" "1.0" "0.0" "0.0"
+            }
+            "gelSpeedLayer"
+            {
+                "testGelSpeed"                 "0.0" "1.0" "1.0" "0.0" "0.0"
+            }
+            "mstrLayer"
+            {
+                "mstr"                         "1.0" "1.0" "1.0" "0.95" "0.0"
+                "revo_core0VO"                 "1.0" "1.0" "1.0" "0.95" "0.0"
+                "revo_core1VO"                 "1.0" "1.0" "1.0" "0.95" "0.0"
+                "UI"                           "1.0" "1.0" "1.0" "0.95" "0.0"
+                "ReducedDuckingMstr"           "1.0" "1.0" "1.0" "0.95" "0.0"
+            }
+        }
+        
+        // Triggers
+        //
+        // NOTE: you can't mute a group that is a trigger in the triggered layer, you be fuxored
+        //
+        //  mixlayer,            triggering mixgroup,        threshold,   factor,    attack,     release
+        "LayerTriggers"
+        {
+            "voipLayer"               "voip"                   "0.0"       "1.0"      "0.0"      "0.4"
+            "commentaryLayer"         "commentary"             "0.0"       "1.0"      "0.0"      "0.4"
+            "inTBeamLayer"            "inTBeam"                "0.0"       "1.0"      "0.0"      "1.0"
+            "gelBounceLayer"          "gelBounce"              "0.0"       "1.0"      "0.0"      "0.0"
+            "gelSpeedLayer"           "testGelSpeed"           "0.0"       "1.0"      "0.0"      "0.0"
+            "mstrLayer"               "mstr"                   "0.0"       "1.0"      "0.1"      "0.2"
+        }
+        `);
+    }
+});
