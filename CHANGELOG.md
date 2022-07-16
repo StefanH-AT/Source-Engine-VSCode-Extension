@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.6.1]
+
+**Other**
+- Fixed description for studiomdl path setting (Thanks AWildErin!)
+
 ## [0.6.0]
 
 **KeyValue**
