@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.6.2]
+
+**VMT**
+- Fixed texture paths always being marked as missing on filesystem
+
 ## [0.6.1]
 
 **Other**
