@@ -117,7 +117,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
         }
         const materialDir = getParentDocumentDirectory(kvDoc.document.uri.fsPath, "materials");
         if (materialDir != null) {
-            const materialPath = path.join(materialDir, kv.value + ".vtf");
+            const materialPath: string = path.join(materialDir, kv.value.content + ".vtf");
             if (!fs.existsSync(materialPath)) {
                 this.diagnostics.push(new vscode.Diagnostic(range, "Texture not found on disk", vscode.DiagnosticSeverity.Warning));
             }
