@@ -4,8 +4,8 @@ test("Color Matches Valid 0-255", () => {
     const desc = getColorMatches("{0 255 10}");
     expect(desc.validFormat).toBe(true);
     expect(desc.r).toBe(0);
-    expect(desc.g).toBe(255);
-    expect(desc.b).toBe(10);
+    expect(desc.g).toBe(1);
+    expect(desc.b).toBeCloseTo(0.0392);
     expect(desc.a).toBe(1);
     expect(desc.parenthesisType).toBe(ColorMatchParenthesisType.Braces);
 });
@@ -14,8 +14,8 @@ test("Color Matches Valid 0-1", () => {
     const desc = getColorMatches("[0 1 0.1]");
     expect(desc.validFormat).toBe(true);
     expect(desc.r).toBe(0);
-    expect(desc.g).toBe(255);
-    expect(desc.b).toBe(25.5);
+    expect(desc.g).toBe(1);
+    expect(desc.b).toBe(0.1);
     expect(desc.a).toBe(1);
     expect(desc.parenthesisType).toBe(ColorMatchParenthesisType.Brackets);
 });
