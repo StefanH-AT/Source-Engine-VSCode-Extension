@@ -561,6 +561,52 @@
                             "type": "color"
                         },
                         {
+                            "name": "$decal",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Decals",
+                            "description": "Marks the material to be used as an overlay or decal. With this on, this material no longer seals the map and hammer properly displays it in the 3D viewport without Z-fighting"
+                        },
+                        {
+                            "name": "$decalscale",
+                            "type": "float",
+                            "defaultCompletion": 0.25,
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Decals",
+                            "description": "Scale of the texture when applying to surface. Usually 0.25. Same as brush face texture scale."
+                        },
+                        {
+                            "name": "$modelmaterial",
+                            "type": "material",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Decals",
+                            "description": "Path to a separate material to use when this decal is applied to a model"
+                        },
+                        {
+                            "name": "$decalfadeduration",
+                            "type": "float",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Decals",
+                            "description": "Amount of time to spend fading out. Required `$vertexcolor`"
+                        },
+                        {
+                            "name": "$decalfadetime",
+                            "type": "float",
+                            "defaultCompletion": 1,
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Decals",
+                            "description": "Delay before fade out begins"
+                        },
+                        {
+                            "name": "$decalsecondpass",
+                            "type": "bool",
+                            "defaultCompletion": 1,
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Decals",
+                            "description": "Always render this decal on top of materials that don't have this parameter."
+                        },
+                        {
+                            "name": "$fogscale",
+                            "type": "float",
+                            "wikiUri": "https://developer.valvesoftware.com/wiki/Decals",
+                            "description": "Scales the amount of fog affecting the decal. Usefog for making important decals stand out in foggy levels."
+                        },
+                        {
                             "name": "$decaltexture",
                             "type": "texture"
                         },
