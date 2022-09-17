@@ -16,6 +16,7 @@
             "\t\\$basetexture \"$1\"",
             "\t\\$decal 1",
             "\t\\$decalscale 0.25",
+            "\t\\$translucent 1",
             "}"
         ],
         "description": "Basic LightmappedGeneric material to use as a world-placed decal"
