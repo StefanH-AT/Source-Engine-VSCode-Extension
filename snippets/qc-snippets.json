@@ -113,5 +113,12 @@
             "\\$continue ${1:sequence or animation name}"
         ],
         "description": "Trick the compiler parser by continue insert commands into a `$animation` or `$sequence`"
+    },
+    "Attachment": {
+        "prefix": "$attachment",
+        "body": [
+            "\\$attachment ${1:attachment name} ${2:bone name} ${3:0} ${3:0} ${3:0} ${3:-90} ${3:-90} ${3:0}"
+        ],
+        "description": "Attachment point (-90 -90 0 rotation is default)"
     }
 }
