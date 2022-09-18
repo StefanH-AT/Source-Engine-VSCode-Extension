@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 import { KvPiece } from "../Kv";
-import { isQuoted, stripQuotes } from "../../kv-core/kv-string-util";
-import { Token, TokenType } from "../../kv-core/kv-tokenizer";
+import { isQuoted, stripQuotes, Token, TokenList, TokenType } from "@sourcelib/kv";
 import KvDocument from "./KvDocument";
 import { KvSemanticProcessor, KvSemanticProcessorParams } from "./KvSemanticProcessor";
 
@@ -19,14 +18,14 @@ export abstract class KvTokensProviderBase implements vscode.DocumentSemanticTok
     diagnostics: vscode.Diagnostic[] = [];
     bracketStack = 0;
 
-    protected tokens: Token[];
+    protected tokens: TokenList;
 
     protected abstract valueProcessors: KvSemanticProcessor[];
 
     protected abstract keyProcessors: KvSemanticProcessor[];
 
     constructor(legend: vscode.SemanticTokensLegend, diagnosticCollection: vscode.DiagnosticCollection) {
-        this.tokens = [];
+        this.tokens = new TokenList;
         this.legend = legend;
         this.diagnosticCollection = diagnosticCollection;
     }
@@ -49,7 +48,7 @@ export abstract class KvTokensProviderBase implements vscode.DocumentSemanticTok
 
         for (let i = 0; i < kvDoc.tokens.length; i++) {
             const token = kvDoc.tokens[i];
-            const tokenRange = new vscode.Range(kvDoc.document.positionAt(token.start), kvDoc.document.positionAt(token.end));
+            const tokenRange = kvDoc.getTokenRange(token);
 
             // No further processing on comments
             if (token.type === TokenType.Comment) {
@@ -99,8 +98,7 @@ export abstract class KvTokensProviderBase implements vscode.DocumentSemanticTok
                 const interestingToken = this.getNextInterestingToken(kvDoc.tokens, i);
                 if (interestingToken?.token.type === TokenType.Value) {
                     
-                    const nextToken = interestingToken.token;
-                    const nextTokenRange = new vscode.Range(kvDoc.document.positionAt(nextToken.start), kvDoc.document.positionAt(nextToken.end));
+                    const nextTokenRange = kvDoc.getTokenRange(token);
 
                     tokensBuilder.push(tokenRange, "macro", []);
                     tokensBuilder.push(nextTokenRange, "string", []);
@@ -127,7 +125,7 @@ export abstract class KvTokensProviderBase implements vscode.DocumentSemanticTok
         return tokensBuilder.build();
     }
 
-    getNextInterestingToken(tokens: Token[], i: number): { token: Token; offset: number; } | null {
+    getNextInterestingToken(tokens: TokenList, i: number): { token: Token; offset: number; } | null {
         let n = 1;
         if(tokens.length - 1 < i + n) {
             return null;

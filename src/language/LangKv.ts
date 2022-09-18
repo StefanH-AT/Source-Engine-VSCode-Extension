@@ -10,7 +10,7 @@ import { KvTokensProviderBase } from "./KvTokensProviderBase";
 import { KvDocumentFormatter } from "./KvFormatter";
 import { KvSemanticProcessor, KvSemanticProcessorParams } from "./KvSemanticProcessor";
 import KvDocument from "./KvDocument";
-import { matrixRegExp } from "../../kv-core/kv-matrix";
+import { matrixRegExp } from "@sourcelib/kv";
 
 export const filterKvSaved: vscode.DocumentFilter = {
     language: "keyvalue3",

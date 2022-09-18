@@ -11,7 +11,7 @@ import * as captionsCompile from "./compiler/captions-compile";
 import * as modelCompile from "./compiler/captions-compile";
 import * as performance from "./compiler/model-compile";
 
-import * as packageJson from "../../package.json";
+import * as packageJson from "../package.json";
 
 export let output: vscode.OutputChannel;
 export let config: vscode.WorkspaceConfiguration;

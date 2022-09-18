@@ -1,16 +1,15 @@
 import vscode from "vscode";
-import { formatTokens } from "../../kv-core/kv-formatter";
+import { FormattingOptions, formatAll } from "@sourcelib/kv";
 import KvDocument from "./KvDocument";
-
-
+import * as main from "../main";
 
 export class KvDocumentFormatter implements vscode.DocumentFormattingEditProvider {
 
-
-
-    protected doPutBracesOnNewline(): boolean {
-        const config = vscode.workspace.getConfiguration("sourceEngine");
-        return config.get("keyvalueBracesOnNewline") ?? false;
+    protected createFormattingOptions(): FormattingOptions {
+        return {
+            braceOnNewline: main.config.get("keyvalueBracesOnNewline"),
+            alwaysQuote: main.config.get("keyvalueAlwaysQuote")
+        } as FormattingOptions;
     }
 
     provideDocumentFormattingEdits(document: vscode.TextDocument, options: vscode.FormattingOptions, token: vscode.CancellationToken): vscode.TextEdit[] {
@@ -26,7 +25,7 @@ export class KvDocumentFormatter implements vscode.DocumentFormattingEditProvide
             new vscode.TextEdit(new vscode.Range(startPos, document.positionAt(document.getText().length)), "")
         ];
 
-        edits.push(new vscode.TextEdit(new vscode.Range(startPos, startPos), formatTokens(tokens, this.doPutBracesOnNewline())));
+        edits.push(new vscode.TextEdit(new vscode.Range(startPos, startPos), formatAll(tokens, this.createFormattingOptions())));
 
         return edits;
 
