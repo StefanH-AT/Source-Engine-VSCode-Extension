@@ -6,7 +6,7 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
 import { KvDocumentFormatter } from "./KvFormatter";
-import { ShaderParam } from "@sourcelib/kv";
+import { ShaderParam } from "@sourcelib/vmt";
 import * as main from "../main";
 import { ShaderParamCompletionItemProvider } from "./ShaderParamCompletionItemProvider";
 import { ShaderParamHoverProvider } from "./ShaderParamHoverProvider";

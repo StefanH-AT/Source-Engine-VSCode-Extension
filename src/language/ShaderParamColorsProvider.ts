@@ -1,6 +1,7 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
-import { getColorMatches, TokenType } from "@sourcelib/kv";
+import { TokenType } from "@sourcelib/kv";
+import { getColorMatches } from "@sourcelib/vmt";
 import { shaderParams } from "./LangVmt";
 
 

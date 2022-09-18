@@ -3,7 +3,7 @@
 // Tests to validate the shader parameter default config.
 // ==========================================================================
 
-import { Tokenizer, ShaderParam } from "@sourcelib/kv";
+import { ShaderParam } from "@sourcelib/vmt";
 import packageJson = require("../package.json");
 
 // This is a pretty dirty unit test. It's more of a method to validate the configuration.

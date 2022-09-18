@@ -1,7 +1,6 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
-import { populateColorTagMatches, ClrTagInfo } from "@sourcelib/kv";
-
+import {  populateColorTagMatches, ClrTagInfo } from "@sourcelib/captions";
 
 export class CaptionsColorsProvider implements vscode.DocumentColorProvider {
 
