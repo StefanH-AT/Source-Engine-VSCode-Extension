@@ -2,7 +2,7 @@
     "name": "source-engine-support",
     "displayName": "Source Engine Support",
     "description": "Adds support for Source Engine file types and other commands",
-    "version": "0.7.0",
+    "version": "0.8.0",
     "icon": "extension-icon-256.png",
     "author": {
         "name": "Stefan Heinz",
@@ -206,6 +206,15 @@
                 "extensions": [
                     ".smd"
                 ]
+            },
+            {
+                "id": "fxc",
+                "aliases": [
+                    "FXC Shader"
+                ],
+                "extensions": [
+                    ".fxc"
+                ]
             }
         ],
         "grammars": [
@@ -258,6 +267,11 @@
                 "language": "smd",
                 "scopeName": "source.smd",
                 "path": "./syntaxes/smd.tmLanguage.json"
+            },
+            {
+                "language": "fxc",
+                "scopeName": "source.fxc",
+                "path": "./syntaxes/fxc.tmLanguage.json"
             }
         ],
         "commands": [
