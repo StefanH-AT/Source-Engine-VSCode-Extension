@@ -76,6 +76,9 @@ Checklist for features that are planned or already implemented.
 ### SMD
 - [x] .smd highlighting
 
+### FXC
+- [x] .fxc highlighting
+
 ## Planned
 This is what is planned for this extension. In case you wish to contribute, this is a good place to start.
 

@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.8.0]
+
+**FXC**
+- Added syntax highlighting for .fxc (Shader) files based off Vscode's HLSL definition enhanced with special FXC comment syntax
+
 ## [0.7.0]
 
 **VMT**
