@@ -1,0 +1,221 @@
+{
+	"information_for_contributors": [
+		"This file is an extended HLSL definition found here https://github.com/microsoft/vscode/blob/main/extensions/fxc/syntaxes/fxc.tmLanguage.json licensed"
+	],
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+	"name": "FXC Shader",
+	"scopeName": "source.fxc",
+	"patterns": [
+		{
+			"name": "comment.line.block.fxc",
+			"begin": "/\\*",
+			"end": "\\*/"
+		},
+		{
+			"name": "comment.line.double-slash.fxc",
+			"begin": "//",
+			"end": "$",
+            "patterns": [
+                {
+                    "match": "(DYNAMIC|STATIC|SKIP): ",
+                    "name": "keyword.other.fxc"
+                }
+            ]
+		},
+		{
+			"name": "constant.numeric.decimal.fxc",
+			"match": "\\b[0-9]+\\.[0-9]*(F|f)?\\b"
+		},
+		{
+			"name": "constant.numeric.decimal.fxc",
+			"match": "(\\.([0-9]+)(F|f)?)\\b"
+		},
+		{
+			"name": "constant.numeric.decimal.fxc",
+			"match": "\\b([0-9]+(F|f)?)\\b"
+		},
+		{
+			"name": "constant.numeric.hex.fxc",
+			"match": "\\b(0(x|X)[0-9a-fA-F]+)\\b"
+		},
+		{
+			"name": "constant.language.fxc",
+			"match": "\\b(false|true)\\b"
+		},
+		{
+			"name": "keyword.preprocessor.fxc",
+			"match": "^\\s*#\\s*(define|elif|else|endif|ifdef|ifndef|if|undef|include|line|error|pragma)"
+		},
+		{
+			"name": "keyword.control.fxc",
+			"match": "\\b(break|case|continue|default|discard|do|else|for|if|return|switch|while)\\b"
+		},
+		{
+			"name": "keyword.control.fx.fxc",
+			"match": "\\b(compile)\\b"
+		},
+		{
+			"name": "keyword.typealias.fxc",
+			"match": "\\b(typedef)\\b"
+		},
+		{
+			"name": "storage.type.basic.fxc",
+			"match": "\\b(bool([1-4](x[1-4])?)?|double([1-4](x[1-4])?)?|dword|float([1-4](x[1-4])?)?|half([1-4](x[1-4])?)?|int([1-4](x[1-4])?)?|matrix|min10float([1-4](x[1-4])?)?|min12int([1-4](x[1-4])?)?|min16float([1-4](x[1-4])?)?|min16int([1-4](x[1-4])?)?|min16uint([1-4](x[1-4])?)?|unsigned|uint([1-4](x[1-4])?)?|vector|void)\\b"
+		},
+		{
+			"name": "support.function.fxc",
+			"match": "\\b([a-zA-Z_][a-zA-Z0-9_]*)(?=[\\s]*\\()"
+		},
+		{
+			"name": "support.variable.semantic.fxc",
+			"match": "(?<=\\:\\s|\\:)(?i:BINORMAL[0-9]*|BLENDINDICES[0-9]*|BLENDWEIGHT[0-9]*|COLOR[0-9]*|NORMAL[0-9]*|POSITIONT|POSITION|PSIZE[0-9]*|TANGENT[0-9]*|TEXCOORD[0-9]*|FOG|TESSFACTOR[0-9]*|VFACE|VPOS|DEPTH[0-9]*)\\b"
+		},
+		{
+			"name": "support.variable.semantic.sm4.fxc",
+			"match": "(?<=\\:\\s|\\:)(?i:SV_ClipDistance[0-9]*|SV_CullDistance[0-9]*|SV_Coverage|SV_Depth|SV_DepthGreaterEqual[0-9]*|SV_DepthLessEqual[0-9]*|SV_InstanceID|SV_IsFrontFace|SV_Position|SV_RenderTargetArrayIndex|SV_SampleIndex|SV_StencilRef|SV_Target[0-7]?|SV_VertexID|SV_ViewportArrayIndex)\\b"
+		},
+		{
+			"name": "support.variable.semantic.sm5.fxc",
+			"match": "(?<=\\:\\s|\\:)(?i:SV_DispatchThreadID|SV_DomainLocation|SV_GroupID|SV_GroupIndex|SV_GroupThreadID|SV_GSInstanceID|SV_InsideTessFactor|SV_OutputControlPointID|SV_TessFactor)\\b"
+		},
+		{
+			"name": "support.variable.semantic.sm5_1.fxc",
+			"match": "(?<=\\:\\s|\\:)(?i:SV_InnerCoverage|SV_StencilRef)\\b"
+		},
+		{
+			"name": "storage.modifier.fxc",
+			"match": "\\b(column_major|const|export|extern|globallycoherent|groupshared|inline|inout|in|out|precise|row_major|shared|static|uniform|volatile)\\b"
+		},
+		{
+			"name": "storage.modifier.float.fxc",
+			"match": "\\b(snorm|unorm)\\b"
+		},
+		{
+			"name": "storage.modifier.postfix.fxc",
+			"match": "\\b(packoffset|register)\\b"
+		},
+		{
+			"name": "storage.modifier.interpolation.fxc",
+			"match": "\\b(centroid|linear|nointerpolation|noperspective|sample)\\b"
+		},
+		{
+			"name": "storage.modifier.geometryshader.fxc",
+			"match": "\\b(lineadj|line|point|triangle|triangleadj)\\b"
+		},
+		{
+			"name": "support.type.other.fxc",
+			"match": "\\b(string)\\b"
+		},
+		{
+			"name": "support.type.object.fxc",
+			"match": "\\b(AppendStructuredBuffer|Buffer|ByteAddressBuffer|ConstantBuffer|ConsumeStructuredBuffer|InputPatch|OutputPatch)\\b"
+		},
+		{
+			"name": "support.type.object.rasterizerordered.fxc",
+			"match": "\\b(RasterizerOrderedBuffer|RasterizerOrderedByteAddressBuffer|RasterizerOrderedStructuredBuffer|RasterizerOrderedTexture1D|RasterizerOrderedTexture1DArray|RasterizerOrderedTexture2D|RasterizerOrderedTexture2DArray|RasterizerOrderedTexture3D)\\b"
+		},
+		{
+			"name": "support.type.object.rw.fxc",
+			"match": "\\b(RWBuffer|RWByteAddressBuffer|RWStructuredBuffer|RWTexture1D|RWTexture1DArray|RWTexture2D|RWTexture2DArray|RWTexture3D)\\b"
+		},
+		{
+			"name": "support.type.object.geometryshader.fxc",
+			"match": "\\b(LineStream|PointStream|TriangleStream)\\b"
+		},
+		{
+			"name": "support.type.sampler.legacy.fxc",
+			"match": "\\b(sampler|sampler1D|sampler2D|sampler3D|samplerCUBE|sampler_state)\\b"
+		},
+		{
+			"name": "support.type.sampler.fxc",
+			"match": "\\b(SamplerState|SamplerComparisonState)\\b"
+		},
+		{
+			"name": "support.type.texture.legacy.fxc",
+			"match": "\\b(texture2D|textureCUBE)\\b"
+		},
+		{
+			"name": "support.type.texture.fxc",
+			"match": "\\b(Texture1D|Texture1DArray|Texture2D|Texture2DArray|Texture2DMS|Texture2DMSArray|Texture3D|TextureCube|TextureCubeArray)\\b"
+		},
+		{
+			"name": "storage.type.structured.fxc",
+			"match": "\\b(cbuffer|class|interface|namespace|struct|tbuffer)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.fxc",
+			"match": "\\b(FALSE|TRUE|NULL)\\b"
+		},
+		{
+			"name": "support.type.fx.fxc",
+			"match": "\\b(BlendState|DepthStencilState|RasterizerState)\\b"
+		},
+		{
+			"name": "storage.type.fx.technique.fxc",
+			"match": "\\b(technique|Technique|technique10|technique11|pass)\\b"
+		},
+		{
+			"name": "meta.object-literal.key.fx.blendstate.fxc",
+			"match": "\\b(AlphaToCoverageEnable|BlendEnable|SrcBlend|DestBlend|BlendOp|SrcBlendAlpha|DestBlendAlpha|BlendOpAlpha|RenderTargetWriteMask)\\b"
+		},
+		{
+			"name": "meta.object-literal.key.fx.depthstencilstate.fxc",
+			"match": "\\b(DepthEnable|DepthWriteMask|DepthFunc|StencilEnable|StencilReadMask|StencilWriteMask|FrontFaceStencilFail|FrontFaceStencilZFail|FrontFaceStencilPass|FrontFaceStencilFunc|BackFaceStencilFail|BackFaceStencilZFail|BackFaceStencilPass|BackFaceStencilFunc)\\b"
+		},
+		{
+			"name": "meta.object-literal.key.fx.rasterizerstate.fxc",
+			"match": "\\b(FillMode|CullMode|FrontCounterClockwise|DepthBias|DepthBiasClamp|SlopeScaleDepthBias|ZClipEnable|ScissorEnable|MultiSampleEnable|AntiAliasedLineEnable)\\b"
+		},
+		{
+			"name": "meta.object-literal.key.fx.samplerstate.fxc",
+			"match": "\\b(Filter|AddressU|AddressV|AddressW|MipLODBias|MaxAnisotropy|ComparisonFunc|BorderColor|MinLOD|MaxLOD)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.blend.fxc",
+			"match": "\\b(?i:ZERO|ONE|SRC_COLOR|INV_SRC_COLOR|SRC_ALPHA|INV_SRC_ALPHA|DEST_ALPHA|INV_DEST_ALPHA|DEST_COLOR|INV_DEST_COLOR|SRC_ALPHA_SAT|BLEND_FACTOR|INV_BLEND_FACTOR|SRC1_COLOR|INV_SRC1_COLOR|SRC1_ALPHA|INV_SRC1_ALPHA)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.blendop.fxc",
+			"match": "\\b(?i:ADD|SUBTRACT|REV_SUBTRACT|MIN|MAX)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.depthwritemask.fxc",
+			"match": "\\b(?i:ALL)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.comparisonfunc.fxc",
+			"match": "\\b(?i:NEVER|LESS|EQUAL|LESS_EQUAL|GREATER|NOT_EQUAL|GREATER_EQUAL|ALWAYS)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.stencilop.fxc",
+			"match": "\\b(?i:KEEP|REPLACE|INCR_SAT|DECR_SAT|INVERT|INCR|DECR)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.fillmode.fxc",
+			"match": "\\b(?i:WIREFRAME|SOLID)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.cullmode.fxc",
+			"match": "\\b(?i:NONE|FRONT|BACK)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.filter.fxc",
+			"match": "\\b(?i:MIN_MAG_MIP_POINT|MIN_MAG_POINT_MIP_LINEAR|MIN_POINT_MAG_LINEAR_MIP_POINT|MIN_POINT_MAG_MIP_LINEAR|MIN_LINEAR_MAG_MIP_POINT|MIN_LINEAR_MAG_POINT_MIP_LINEAR|MIN_MAG_LINEAR_MIP_POINT|MIN_MAG_MIP_LINEAR|ANISOTROPIC|COMPARISON_MIN_MAG_MIP_POINT|COMPARISON_MIN_MAG_POINT_MIP_LINEAR|COMPARISON_MIN_POINT_MAG_LINEAR_MIP_POINT|COMPARISON_MIN_POINT_MAG_MIP_LINEAR|COMPARISON_MIN_LINEAR_MAG_MIP_POINT|COMPARISON_MIN_LINEAR_MAG_POINT_MIP_LINEAR|COMPARISON_MIN_MAG_LINEAR_MIP_POINT|COMPARISON_MIN_MAG_MIP_LINEAR|COMPARISON_ANISOTROPIC|TEXT_1BIT)\\b"
+		},
+		{
+			"name": "support.constant.property-value.fx.textureaddressmode.fxc",
+			"match": "\\b(?i:WRAP|MIRROR|CLAMP|BORDER|MIRROR_ONCE)\\b"
+		},
+		{
+			"name": "string.quoted.double.fxc",
+			"begin": "\"",
+			"end": "\"",
+			"patterns": [
+				{
+					"name": "constant.character.escape.fxc",
+					"match": "\\\\."
+				}
+			]
+		}
+	]
+}

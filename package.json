@@ -206,6 +206,15 @@
                 "extensions": [
                     ".smd"
                 ]
+            },
+            {
+                "id": "fxc",
+                "aliases": [
+                    "FXC Shader"
+                ],
+                "extensions": [
+                    ".fxc"
+                ]
             }
         ],
         "grammars": [
@@ -258,6 +267,11 @@
                 "language": "smd",
                 "scopeName": "source.smd",
                 "path": "./syntaxes/smd.tmLanguage.json"
+            },
+            {
+                "language": "fxc",
+                "scopeName": "source.fxc",
+                "path": "./syntaxes/fxc.tmLanguage.json"
             }
         ],
         "commands": [
