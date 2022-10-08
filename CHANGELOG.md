@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.8.1]
+
+**FXC**
+- Apply syntax highlighting to `_fxc.h` files so vscode doesn't open the shader code as a C++ file
+
 ## [0.8.0]
 
 **FXC**
