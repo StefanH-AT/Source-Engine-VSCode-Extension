@@ -102,7 +102,9 @@ This is what is planned for this extension. In case you wish to contribute, this
 ---
 
 ## Contribution
-Create your pull requests to merge to the **dev** branch. Do not edit changelog.md or the feature listings in readme.md as the changelog will be handled later when merging to master.
+This repository uses trunk based development, which means that all changes can be pushed straight to master. Every commit is automatically tested via the CI pipeline. Once a new version tag is pushed, the release is deployed. 
+
+As an outside contributor, please create your pull requests to merge to the **master** branch. Do not edit changelog.md or the feature listings in readme.md as the changelog will be handled later when releasing.
 
 Make sure all workflows succeed. To validate locally:
 ```
