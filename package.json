@@ -213,7 +213,8 @@
                     "FXC Shader"
                 ],
                 "extensions": [
-                    ".fxc"
+                    ".fxc",
+                    "_fxc.h"
                 ]
             }
         ],
