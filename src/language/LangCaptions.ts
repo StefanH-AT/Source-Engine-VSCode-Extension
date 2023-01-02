@@ -23,8 +23,9 @@ export const selectorAll: ReadonlyArray<vscode.DocumentFilter> = [filterCaptions
 export function init(context: vscode.ExtensionContext): void {
     const captionsColors = vscode.languages.registerColorProvider(selectorAll, new CaptionsColorsProvider());
     const captionsTokenProvider = vscode.languages.registerDocumentSemanticTokensProvider(selectorAll, new CaptionsSemanticTokenProvider(), KvDocument.tokenLegend);
-    const captionsFormatter = vscode.languages.registerDocumentFormattingEditProvider(selectorAll, new KvDocumentFormatter());
-    context.subscriptions.push(captionsColors, captionsTokenProvider, captionsFormatter);
+    // TODO: Re-enable formatting here too
+    //const captionsFormatter = vscode.languages.registerDocumentFormattingEditProvider(selectorAll, new KvDocumentFormatter());
+    context.subscriptions.push(captionsColors, captionsTokenProvider);
 }
 
 

@@ -101,6 +101,9 @@ This is what is planned for this extension. In case you wish to contribute, this
 
 ---
 
+## Sourcelib
+This extension implements the features seen in [sourcelib](https://github.com/source-lib/sourcelib). 
+
 ## Contribution
 This repository uses trunk based development, which means that all changes can be pushed straight to master. Every commit is automatically tested via the CI pipeline. Once a new version tag is pushed, the release is deployed. 
 

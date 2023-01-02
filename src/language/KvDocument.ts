@@ -1,24 +1,24 @@
 import * as vscode from "vscode";
 import { KvPair, KvPiece } from "../Kv";
-import { Token, Tokenizer, TokenType } from "../../kv-core/kv-tokenizer";
+import { Tokenizer, TokenList, Token, TokenType } from "@sourcelib/kv";
 import { KvTokensProviderBase } from "./KvTokensProviderBase";
 
 export default class KvDocument {
 
     protected _document: vscode.TextDocument;
-    protected _tokens: Token[];
+    protected _tokens: TokenList;
 
     public get document(): vscode.TextDocument {
         return this._document;
     }
 
-    public get tokens(): Token[] {
+    public get tokens(): TokenList {
         return this._tokens;
     }
 
     private static tokenizer: Tokenizer = new Tokenizer();
 
-    public static tokenize(document: vscode.TextDocument): Token[] {
+    public static tokenize(document: vscode.TextDocument): TokenList {
         const text = document.getText();
         this.tokenizer.tokenizeFile(text);
         const tokens = this.tokenizer.tokens;
@@ -46,7 +46,7 @@ export default class KvDocument {
         "readonly"
     ]);
 
-    private constructor(document: vscode.TextDocument, tks: Token[]) {
+    private constructor(document: vscode.TextDocument, tks: TokenList) {
         this._document = document;
         this._tokens = tks;
     }
@@ -56,7 +56,7 @@ export default class KvDocument {
         const line = this._document.lineAt(lineNumber);
         if (line.isEmptyOrWhitespace)
             return null;
-        const tokens = this.findTokensOnLine(lineNumber);
+        const tokens = this.tokens.getAllOnLine(lineNumber);
 
         // Normal old keyvalue
         if (tokens.length == 0)
@@ -79,20 +79,8 @@ export default class KvDocument {
         return new KvPair(keyPiece, valuePieces);
     }
 
-    public getAllValueTokens(): Token[] {
-        return this._tokens.filter(t => t.type === TokenType.Value);
-    }
-
-    public getAllTokens(): Token[] {
-        return this._tokens;
-    }
-
-    public findTokensOnLine(line: number): Token[] {
-        return this._tokens.filter(t => t.line == line);
-    }
-
-    private getTokenRange(token: Token): vscode.Range {
-        return new vscode.Range(this.document.positionAt(token.start), this.document.positionAt(token.end));
+    public getTokenRange(token: Token): vscode.Range {
+        return new vscode.Range(this.document.positionAt(token.range.start), this.document.positionAt(token.range.end));
     }
 
     private getUnquotedToken(token: Token): KvPiece {

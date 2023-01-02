@@ -42,7 +42,7 @@
         "lint": "eslint ./src",
         "deploy": "vsce publish"
     },
-    "main": "./out/extension/main.js",
+    "main": "./out/main.js",
     "activationEvents": [
         "onLanguage:keyvalue3",
         "onLanguage:vmt",
@@ -1303,6 +1303,10 @@
         "typescript": "^4.7.4"
     },
     "dependencies": {
+        "@sourcelib/captions": "^0.1.1",
+        "@sourcelib/fs": "^0.1.1",
+        "@sourcelib/kv": "^0.3.3",
+        "@sourcelib/vmt": "^0.2.1",
         "@types/jest-expect-message": "^1.0.3",
         "jest-expect-message": "^1.0.2",
         "list-files-in-dir": "^0.1.5"

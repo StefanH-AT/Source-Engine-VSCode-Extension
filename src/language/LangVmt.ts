@@ -6,7 +6,7 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
 import { KvDocumentFormatter } from "./KvFormatter";
-import { ShaderParam } from "kv-core/shader-param";
+import { ShaderParam } from "@sourcelib/vmt";
 import * as main from "../main";
 import { ShaderParamCompletionItemProvider } from "./ShaderParamCompletionItemProvider";
 import { ShaderParamHoverProvider } from "./ShaderParamHoverProvider";
@@ -34,7 +34,8 @@ export function init(context: vscode.ExtensionContext): void {
     const vmtCompletion = vscode.languages.registerCompletionItemProvider(selectorAll, new ShaderParamCompletionItemProvider(), "$", "%");
     const vmtHover = vscode.languages.registerHoverProvider(selectorAll, new ShaderParamHoverProvider());
     const vmtColors = vscode.languages.registerColorProvider(selectorAll, new ShaderParamColorsProvider());
-    const vmtFormatter = vscode.languages.registerDocumentFormattingEditProvider(selectorAll, new KvDocumentFormatter());
-    context.subscriptions.push(vmtSemantics, vmtCompletion, vmtHover, vmtColors, vmtFormatter);
+    // TODO: Re-enable formatting here too
+    //const vmtFormatter = vscode.languages.registerDocumentFormattingEditProvider(selectorAll, new KvDocumentFormatter());
+    context.subscriptions.push(vmtSemantics, vmtCompletion, vmtHover, vmtColors);
 }
 

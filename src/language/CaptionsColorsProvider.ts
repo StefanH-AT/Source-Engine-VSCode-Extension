@@ -1,7 +1,6 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
-import { populateColorTagMatches } from "../../kv-core/kv-caption-tag-matches";
-
+import {  populateColorTagMatches, ClrTagInfo } from "@sourcelib/captions";
 
 export class CaptionsColorsProvider implements vscode.DocumentColorProvider {
 
@@ -23,7 +22,7 @@ export class CaptionsColorsProvider implements vscode.DocumentColorProvider {
             if (kv == null)
                 continue;
 
-            const clrInfo = populateColorTagMatches(kv.value.content);
+            const clrInfo: ClrTagInfo[] = populateColorTagMatches(kv.value.content);
             clrInfo.forEach((clr) => {
                 const colorInfo = new vscode.ColorInformation(kv.value.range.with(kv.value.range.start.translate(0, clr.start), kv.value.range.start.translate(0, clr.end)),
                     new vscode.Color(clr.color.r / 255, clr.color.g / 255, clr.color.b / 255, 1.0));

@@ -1,6 +1,7 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
-import { getColorMatches } from "../../kv-core/kv-color";
+import { TokenType } from "@sourcelib/kv";
+import { getColorMatches } from "@sourcelib/vmt";
 import { shaderParams } from "./LangVmt";
 
 
@@ -14,9 +15,9 @@ export class ShaderParamColorsProvider implements vscode.DocumentColorProvider {
         const colorInfos: vscode.ColorInformation[] = [];
 
         // TODO: This seems like it should be reusable.
-        const valueTokens = kvDoc.getAllValueTokens();
+        const valueTokens = kvDoc.tokens.getAllOfType(TokenType.Value);
         valueTokens.forEach(t => {
-            const line = document.positionAt(t.start).line;
+            const line = document.positionAt(t.range.start).line;
             const kv = kvDoc.getKeyValueAt(line);
             if (kv == null)
                 return;

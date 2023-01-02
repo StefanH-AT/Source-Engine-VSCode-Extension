@@ -1,14 +1,12 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
 import { KvTokensProviderBase } from "./KvTokensProviderBase";
-import { Token } from "../../kv-core/kv-tokenizer";
-import { getParentDocumentDirectory } from "../../kv-core/source-fs";
-import { isFloatValue, isScalarValue } from "../../kv-core/kv-string-util";
-import { getColorMatches, ColorMatchParenthesisType } from "../../kv-core/kv-color";
+import { getColorMatches, ColorMatchParenthesisType, getMatrixMatches } from "@sourcelib/vmt";
+import { getParentDocumentDirectory } from "@sourcelib/fs";
+import { Token, isFloatValue, isScalarValue } from "@sourcelib/kv";
 import { shaderParams, internalTextures } from "./LangVmt";
 import { KvSemanticProcessor, KvSemanticProcessorParams } from "./KvSemanticProcessor";
 import { KvPair } from "../Kv";
-import { getMatrixMatches } from "../../kv-core/kv-matrix";
 import fs from "fs";
 import path from "path";
 
