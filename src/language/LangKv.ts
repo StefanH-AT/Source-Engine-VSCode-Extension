@@ -33,8 +33,9 @@ export const selectorAll: ReadonlyArray<vscode.DocumentFilter> = [ filterKvSaved
 export function init(context: vscode.ExtensionContext): void {
     const kvTokenProvider = new KeyvalueSemanticTokensProvider();
     const kvSemantics = vscode.languages.registerDocumentSemanticTokensProvider(selectorAll, kvTokenProvider, kvTokenProvider.legend);
-    const kvFormatter = vscode.languages.registerDocumentFormattingEditProvider(selectorAll, new KvDocumentFormatter());
-    context.subscriptions.push(kvSemantics, kvTokenProvider.diagnosticCollection, kvFormatter);
+    // TODO: Formatting never really worked reliably. Reimplement it in sourcelib and then enable it back here. (Don't forget to add to subscriptions)
+    //const kvFormatter = vscode.languages.registerDocumentFormattingEditProvider(selectorAll, new KvDocumentFormatter());
+    context.subscriptions.push(kvSemantics, kvTokenProvider.diagnosticCollection);
 }
 
 export class KeyvalueSemanticTokensProvider extends KvTokensProviderBase {

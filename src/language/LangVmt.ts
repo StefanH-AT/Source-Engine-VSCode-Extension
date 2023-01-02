@@ -34,7 +34,8 @@ export function init(context: vscode.ExtensionContext): void {
     const vmtCompletion = vscode.languages.registerCompletionItemProvider(selectorAll, new ShaderParamCompletionItemProvider(), "$", "%");
     const vmtHover = vscode.languages.registerHoverProvider(selectorAll, new ShaderParamHoverProvider());
     const vmtColors = vscode.languages.registerColorProvider(selectorAll, new ShaderParamColorsProvider());
-    const vmtFormatter = vscode.languages.registerDocumentFormattingEditProvider(selectorAll, new KvDocumentFormatter());
-    context.subscriptions.push(vmtSemantics, vmtCompletion, vmtHover, vmtColors, vmtFormatter);
+    // TODO: Re-enable formatting here too
+    //const vmtFormatter = vscode.languages.registerDocumentFormattingEditProvider(selectorAll, new KvDocumentFormatter());
+    context.subscriptions.push(vmtSemantics, vmtCompletion, vmtHover, vmtColors);
 }
 
