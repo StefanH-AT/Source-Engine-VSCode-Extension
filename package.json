@@ -1305,7 +1305,7 @@
     "dependencies": {
         "@sourcelib/captions": "^0.1.1",
         "@sourcelib/fs": "^0.1.1",
-        "@sourcelib/kv": "^0.2.0",
+        "@sourcelib/kv": "^0.3.3",
         "@sourcelib/vmt": "^0.2.1",
         "@types/jest-expect-message": "^1.0.3",
         "jest-expect-message": "^1.0.2",
