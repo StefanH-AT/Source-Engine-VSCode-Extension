@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.10.0]
+
+**General**
+This release contains a major refactor where Source Engine-specific capabilities have been separated into a standalone package, [sourcelib](https://github.com/source-lib/sourcelib). Reformatting in Keyvalue file formats has been disabled until a better implementation is done.
+
 ## [0.9.0]
 
 **General**
