@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { KvPair, KvPiece } from "../Kv";
-import { Tokenizer, TokenList, Token, TokenType } from "@sourcelib/kv";
+import { tokenize, TokenList, Token, TokenType } from "@sourcelib/kv";
 import { KvTokensProviderBase } from "./KvTokensProviderBase";
 
 export default class KvDocument {
@@ -16,18 +16,8 @@ export default class KvDocument {
         return this._tokens;
     }
 
-    private static tokenizer: Tokenizer = new Tokenizer();
-
-    public static tokenize(document: vscode.TextDocument): TokenList {
-        const text = document.getText();
-        this.tokenizer.tokenizeFile(text);
-        const tokens = this.tokenizer.tokens;
-    
-        return tokens;
-    }
-
     public static from(document: vscode.TextDocument): KvDocument {
-        return new KvDocument(document, this.tokenize(document));
+        return new KvDocument(document, tokenize(document.getText()));
     }
 
     public static tokenLegend = new vscode.SemanticTokensLegend([
@@ -80,7 +70,9 @@ export default class KvDocument {
     }
 
     public getTokenRange(token: Token): vscode.Range {
-        return new vscode.Range(this.document.positionAt(token.range.start), this.document.positionAt(token.range.end));
+        const start = new vscode.Position(token.line, token.range.getStart());
+        const end = new vscode.Position(token.line, token.range.getEnd());
+        return new vscode.Range(start, end);
     }
 
     private getUnquotedToken(token: Token): KvPiece {

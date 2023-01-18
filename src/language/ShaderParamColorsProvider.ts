@@ -17,7 +17,7 @@ export class ShaderParamColorsProvider implements vscode.DocumentColorProvider {
         // TODO: This seems like it should be reusable.
         const valueTokens = kvDoc.tokens.getAllOfType(TokenType.Value);
         valueTokens.forEach(t => {
-            const line = document.positionAt(t.range.start).line;
+            const line = document.positionAt(t.range.getStart()).line;
             const kv = kvDoc.getKeyValueAt(line);
             if (kv == null)
                 return;

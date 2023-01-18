@@ -78,11 +78,8 @@ export abstract class KvTokensProviderBase implements vscode.DocumentSemanticTok
                 continue;
             }
 
-            // We're a keyvalue's key. Process the value too and skip forward
             if (token.type === TokenType.Value) {
-
                 this.processKvValue(token, tokenRange, tokensBuilder, kvDoc, currentScope);
-                
                 continue;
             }            
 

@@ -5,7 +5,7 @@
 
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
-import { KvDocumentFormatter } from "./KvFormatter";
+//import { KvDocumentFormatter } from "./KvFormatter";
 import { CaptionsColorsProvider } from "./CaptionsColorsProvider";
 import { CaptionsSemanticTokenProvider } from "./CaptionsSemanticTokenProvider";
 

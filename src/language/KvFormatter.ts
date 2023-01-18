@@ -1,19 +1,20 @@
+// TODO: Disabled until new formatter is implemented in sourcelib
+
+/*
 import vscode from "vscode";
-import { FormattingOptions, formatAll } from "@sourcelib/kv";
+import {  } from "@sourcelib/kv";
 import KvDocument from "./KvDocument";
 import * as main from "../main";
 
 export class KvDocumentFormatter implements vscode.DocumentFormattingEditProvider {
-
     protected createFormattingOptions(): FormattingOptions {
         return {
             braceOnNewline: main.config.get("keyvalueBracesOnNewline"),
             alwaysQuote: main.config.get("keyvalueAlwaysQuote")
         } as FormattingOptions;
     }
-
     provideDocumentFormattingEdits(document: vscode.TextDocument, options: vscode.FormattingOptions, token: vscode.CancellationToken): vscode.TextEdit[] {
-
+        
         const tokens = KvDocument.tokenize(document);
         if (tokens == null)
             return [];
@@ -32,3 +33,5 @@ export class KvDocumentFormatter implements vscode.DocumentFormattingEditProvide
     }
 
 }
+
+*/

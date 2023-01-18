@@ -1,5 +1,5 @@
 import vscode from "vscode";
-import { isWhitespace } from "@sourcelib/kv";
+import { isWhitespace } from "@sourcelib/kv/";
 import * as main from "../main";
 import * as fs from "fs";
 import { execFile } from "child_process";
