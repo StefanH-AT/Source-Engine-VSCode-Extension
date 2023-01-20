@@ -52,7 +52,8 @@
         "onLanguage:vpc",
         "onLanguage:cfg",
         "onLanguage:rad",
-        "onLanguage:soundscript"
+        "onLanguage:soundscript",
+        "onLanguage:plaintext"
     ],
     "contributes": {
         "snippets": [
@@ -192,7 +193,7 @@
                     "Source Soundscript"
                 ],
                 "filenamePatterns": [
-                    "game_sounds_*.txt",
+                    "game_sounds_example.txt",
                     "npc_sounds_*.txt",
                     "level_sounds_*.txt"
                 ]
