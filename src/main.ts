@@ -25,6 +25,12 @@ export function activate(context: vscode.ExtensionContext): void {
     updateConfig();
     const configChangeEvent = vscode.workspace.onDidChangeConfiguration(updateConfig);
     context.subscriptions.push(configChangeEvent);
+
+    vscode.window.onDidChangeActiveTextEditor((editor: vscode.TextEditor | undefined): void => {
+        if(editor === undefined) return;
+
+        
+    });
     
     keyvalue.init(context);
     vmt.init(context);
