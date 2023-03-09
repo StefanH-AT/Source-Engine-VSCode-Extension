@@ -16,7 +16,7 @@
 	"repository": {
         "langName": {
             "match": "^\"?(?i)lang(?-i)\"?",
-            "name": "entity.name.class.fgd"
+            "name": "entity.name.class.captions"
         },
         "langBody": {
             "begin": "{",
@@ -43,7 +43,7 @@
         "data": {
             "begin": "{",
             "end": "}",
-            "contentName": "meta.captions.body.fgd",
+            "contentName": "meta.captions.body.captions",
             "patterns": [
                 {
                     "include": "#captionLine"
@@ -57,7 +57,7 @@
             "begin": "(\"?[\\w.+#\\\\/-]+\"?)",
             "beginCaptures": {
                 "1": {
-                    "name": "variable.name.fgd"
+                    "name": "variable.name.captions"
                 }
             },
             "end": "\n",
@@ -70,7 +70,7 @@
                             "name": "string.quoted.double"
                         }
                     },
-                    "contentName": "string.caption.fgd",
+                    "contentName": "string.caption.captions",
                     "patterns": [
                         {
                             "include": "#tagItalic"
@@ -95,35 +95,41 @@
             ]
         },
         "tagItalic": {
-            "match": "(<[iI]>)([\\w '..,!?&\\[\\]\\(\\)]+)(<[iI]>)?",
-            "captures": {
-                "1": { "name": "storage.modifier.fgd" },
-                "3": { "name": "storage.modifier.fgd" }
+            "begin": "<[iI]>",
+            "end": "<[iI]>",
+            "beginCaptures": {
+                "0": { "name": "storage.modifier.captions" }
             },
-            "name": "markup.italic.fgd"
+            "endCaptures": {
+                "0": { "name": "storage.modifier.captions" }
+            },
+            "contentName": "markup.italic.captions"
         },
         "tagBold": {
-            "match": "(<[bB]>)([\\w '..,!?&\\[\\]\\(\\)]+)(<[bB]>)?",
-            "captures": {
-                "1": { "name": "storage.modifier.fgd" },
-                "3": { "name": "storage.modifier.fgd" }
+            "begin": "<[bB]>",
+            "end": "<[bB]>",
+            "beginCaptures": {
+                "0": { "name": "storage.modifier.captions" }
             },
-            "name": "markup.bold.fgd"
+            "endCaptures": {
+                "0": { "name": "storage.modifier.captions" }
+            },
+            "contentName": "markup.bold.captions"
         },
         "tagSfx": {
             "match": "\\<(?i)sfx(?-i)\\>",
             "captures": {
-                "0": { "name": "storage.modifier.fgd" }
+                "0": { "name": "storage.modifier.captions" }
             }
         },
         "tagDelayLenNorepeat": {
             "match": "\\<((?i)(delay|norepeat|len)(?-i))(:)(\\d+(\\.\\d+)?)\\>",
             "captures": {
                 "0": {
-                    "name": "storage.modifier.fgd"
+                    "name": "storage.modifier.captions"
                 },
                 "3": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 }
             }
         },
@@ -131,16 +137,16 @@
             "match": "\\<((?i)clr(?-i))(:)(\\d{1,3})\\s*(,)(\\d{1,3})\\s*(,)(\\d{1,3})\\>",
             "captures": {
                 "0": {
-                    "name": "storage.modifier.fgd"
+                    "name": "storage.modifier.captions"
                 },
                 "3": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 },
                 "5": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 },
                 "7": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 }
             }
         },
@@ -148,25 +154,25 @@
             "match": "\\<((?i)playerclr(?-i))(:)(\\d{1,3})\\s*(,)(\\d{1,3})\\s*(,)(\\d{1,3})(:)(\\d{1,3})\\s*(,)(\\d{1,3})\\s*(,)(\\d{1,3})\\>",
             "captures": {
                 "0": {
-                    "name": "storage.modifier.fgd"
+                    "name": "storage.modifier.captions"
                 },
                 "3": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 },
                 "5": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 },
                 "7": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 },
                 "9": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 },
                 "11": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 },
                 "13": {
-                    "name": "constant.numeric.fgd"
+                    "name": "constant.numeric.captions"
                 }
             }
         }
