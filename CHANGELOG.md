@@ -6,6 +6,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.10.1]
+
+**Captions**
+
+- Improved syntax highlighting for `<I>` and `<B>` tags
+
 ## [0.10.0]
 
 **General**
