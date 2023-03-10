@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.10.2]
+
+**General**
+- Fixed negative numbers not being highlighted correctly in keyvalue files
+
 ## [0.10.1]
 
 **Captions**
