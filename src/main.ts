@@ -10,27 +10,26 @@ import * as keyvalue from "./language/LangKv";
 import * as captionsCompile from "./compiler/captions-compile";
 import * as modelCompile from "./compiler/captions-compile";
 import * as performance from "./compiler/model-compile";
+import * as kvDetect from "./KvFileDetection";
 
 import * as packageJson from "../package.json";
 
 export let output: vscode.OutputChannel;
+export let debugOutput: vscode.OutputChannel;
 export let config: vscode.WorkspaceConfiguration;
 
 export function deactivate(): void {}
 export function activate(context: vscode.ExtensionContext): void {
     
     output = vscode.window.createOutputChannel("Source Engine Support");
-    context.subscriptions.push(output);
+    debugOutput = vscode.window.createOutputChannel("Source Engine Support Debug");
+    context.subscriptions.push(output, debugOutput);
     
     updateConfig();
     const configChangeEvent = vscode.workspace.onDidChangeConfiguration(updateConfig);
     context.subscriptions.push(configChangeEvent);
 
-    vscode.window.onDidChangeActiveTextEditor((editor: vscode.TextEditor | undefined): void => {
-        if(editor === undefined) return;
-
-        
-    });
+    kvDetect.init(context);
     
     keyvalue.init(context);
     vmt.init(context);
