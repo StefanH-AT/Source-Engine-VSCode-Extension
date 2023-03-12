@@ -19,7 +19,7 @@ export class CaptionsColorsProvider implements vscode.DocumentColorProvider {
 
             // Get a line that isn't empty
             const kv = kvDoc.getKeyValueAt(i);
-            if (kv == null)
+            if (kv == null || kv.values.length === 0)
                 continue;
 
             const clrInfo: ClrTagInfo[] = populateColorTagMatches(kv.value.content);
