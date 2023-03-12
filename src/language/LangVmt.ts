@@ -3,6 +3,7 @@
 // Implementations of language utility providers for the vmt language.
 // ==========================================================================
 
+import * as shared from "./Shared";
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
 //import { KvDocumentFormatter } from "./KvFormatter";
@@ -13,15 +14,8 @@ import { ShaderParamHoverProvider } from "./ShaderParamHoverProvider";
 import { ShaderParamColorsProvider } from "./ShaderParamColorsProvider";
 import { VmtSemanticTokenProvider } from "./VmtSemanticTokenProvider";
 
-export const filterVmtSaved: vscode.DocumentFilter = {
-    language: "vmt",
-    scheme: "file"
-};
-export const filterVmtUnsaved: vscode.DocumentFilter = {
-    language: "vmt",
-    scheme: "untitled"
-};
-export const selectorAll: ReadonlyArray<vscode.DocumentFilter> = [filterVmtSaved, filterVmtUnsaved];
+
+export const selectorAll: ReadonlyArray<vscode.DocumentFilter> = [shared.filterVmtSaved, shared.filterVmtUnsaved];
 
 export let shaderParams: ShaderParam[];
 export let internalTextures: string[];

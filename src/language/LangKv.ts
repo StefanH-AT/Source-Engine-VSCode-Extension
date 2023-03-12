@@ -5,6 +5,7 @@
 // This is NOT a base for other formats!
 // ==========================================================================
 
+import * as shared from "./Shared";
 import * as vscode from "vscode";
 import { KvTokensProviderBase } from "./KvTokensProviderBase";
 //import { KvDocumentFormatter } from "./KvFormatter";
@@ -12,23 +13,10 @@ import { KvSemanticProcessor, KvSemanticProcessorParams } from "./KvSemanticProc
 import KvDocument from "./KvDocument";
 import { matrixRegExp } from "@sourcelib/vmt";
 
-export const filterKvSaved: vscode.DocumentFilter = {
-    language: "keyvalue3",
-    scheme: "file"
-};
-export const filterKvUnsaved: vscode.DocumentFilter = {
-    language: "keyvalue3",
-    scheme: "untitled"
-};
-export const filterSoundscriptSaved: vscode.DocumentFilter = {
-    language: "soundscript",
-    scheme: "file"
-};
-export const filterSoundscriptUnsaved: vscode.DocumentFilter = {
-    language: "soundscript",
-    scheme: "untitled"
-};
-export const selectorAll: ReadonlyArray<vscode.DocumentFilter> = [ filterKvSaved, filterKvUnsaved, filterSoundscriptSaved, filterSoundscriptUnsaved ];
+export const selectorAll: ReadonlyArray<vscode.DocumentFilter> = [ shared.filterKvSaved, 
+    shared.filterKvUnsaved, 
+    shared.filterSoundscriptSaved, 
+    shared.filterSoundscriptUnsaved ];
 
 export function init(context: vscode.ExtensionContext): void {
     const kvTokenProvider = new KeyvalueSemanticTokensProvider();

@@ -52,7 +52,8 @@
         "onLanguage:vpc",
         "onLanguage:cfg",
         "onLanguage:rad",
-        "onLanguage:soundscript"
+        "onLanguage:soundscript",
+        "onLanguage:plaintext"
     ],
     "contributes": {
         "snippets": [
@@ -192,7 +193,7 @@
                     "Source Soundscript"
                 ],
                 "filenamePatterns": [
-                    "game_sounds_*.txt",
+                    "game_sounds_example.txt",
                     "npc_sounds_*.txt",
                     "level_sounds_*.txt"
                 ]
@@ -314,6 +315,31 @@
         "configuration": {
             "title": "Source Engine",
             "properties": {
+                "sourceEngine.kvAutoDetect.enabled": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Enable automatic detection of KeyValues files."
+                },
+                "sourceEngine.kvAutoDetect.onlyInSourceEngineWorkspaces": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Enable automatic detection of KeyValues files only in workspaces."
+                },
+                "sourceEngine.sourceEngineWorkspaces": {
+                    "type": "array",
+                    "default": [
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Portal 2",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Half Life 2",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Counter Strike Global Offensive",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Team Fortress 2",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Left 4 Dead 2",
+                        "C:\\Program Files (x86)\\Steam\\SteamApps\\common\\Alien Swarm"
+                    ],
+                    "description": "List of Source Engine workspaces. Some features are only enabled for files which are located in these workspaces.",
+                    "items": {
+                        "type": "string"
+                    }
+                },
                 "sourceEngine.performance.log": {
                     "type": "boolean",
                     "default": false,
