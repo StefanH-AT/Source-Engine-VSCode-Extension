@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.11.0]
+
+**General**
+- Added automatic Keyvalue file detection. This is disabled by default but can be enabled in the settings. This will automatically detect keyvalue files and apply the correct language mode to them. This is useful for files like `gameinfo.txt` or `game_sounds_whatever.txt` which are not detected by the extension automatically.
+
 ## [0.10.3]
 
 **FGD**
