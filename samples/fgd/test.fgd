@@ -2,12 +2,23 @@
 = test : "This is a test entity definition for syntax highlighting"
 [
 
+    KeyvalueExample1[engine](string) : "Keyvalue Display Name" : "Default" : "Description"
+    KeyvalueExample2[!engine](string) : "Keyvalue Display Name" : 1 : "Description"
+    KeyvalueExample3[P2, CSGO](string) : "Keyvalue Display Name" : "Default" : "Description"
+
     spawnflags(flags) =
     [
         1 : "Flag" : 0
+        2 : "Flag 2" : 0 [TF2]
     ]
 
-    KeyvalueExample(string) : "Keyvalue Display Name" : "Default" : "Description"
+    choicestest(choices) : "Test test" : 0 : "Hello" = 
+    [
+        0 : "Choice 1"
+        1 : "Choice 2" [TF2]
+    ]
+
+    KeyvalueExample4(string) : "Keyvalue Display Name" : "Default" : "Description"
 
     input InputExample(void) : "Description"
 

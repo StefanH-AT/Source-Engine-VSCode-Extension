@@ -77,7 +77,7 @@
         },
         "head": {
             "name": "meta.head.fgd",
-            "match": "([\\w]+:)",
+            "match": "([\\w]+ *:)",
             "captures": {
                 "1": {
                     "name": "entity.name.class.fgd"
@@ -90,7 +90,8 @@
             "end": "\\]",
             "patterns": [
                 {
-                    "include": "#keyvalueName"
+                    "match": "(input|output)",
+                    "name": "storage.modifier"
                 },
                 {
                     "include": "#array"
@@ -105,27 +106,31 @@
                     "include": "source.kv#stringQuoted"
                 },
                 {
-                    "include": "#description"
+                    "include": "#keyvalueName"
                 },
                 {
-                    "match": "(input|output)",
-                    "name": "storage.modifier"
+                    "include": "#description"
                 }
             ]
         },
         "keyvalueName": {
-            "match": "(\\w+)(\\[\\w+\\])?\\((axis|angle|angle_negative_pitch|color255|color1|filterclass|instance_file|instance_parm|instance_variable|material|node_dest|node_id|npcclass|origin|particlesystem|pointentityclass|scene|script|scriptlist|sidelist|sound|sprite|decal|studio|target_destination|target_name_or_class|target_source|vecline|vector|string|integer|float|boolean|choices|flags|void)\\)",
-            "captures": {
-                "1": {
+            "begin": "\\w+",
+            "beginCaptures": {
+                "0": {
                     "name": "entity.name.function.fgd"
-                },
-                "2": {
-                    "name": "meta.preprocessor.fgd"
-                },
-                "3": {
+                }
+            },
+            "end": "\\((axis|angle|angle_negative_pitch|color255|color1|filterclass|instance_file|instance_parm|instance_variable|material|node_dest|node_id|npcclass|origin|particlesystem|pointentityclass|scene|script|scriptlist|sidelist|sound|sprite|decal|studio|target_destination|target_name_or_class|target_source|vecline|vector|string|integer|float|boolean|choices|flags|void)\\)",
+            "endCaptures": {
+                "1": {
                     "name": "variable.parameter.fgd"
                 }
-            }
+            },
+            "patterns": [
+                {
+                    "include": "#preprocessorTag"
+                }
+            ]
         },
         "array": {
             "begin": "\\[",
@@ -136,6 +141,9 @@
                 },
                 {
                     "include": "source.kv#stringQuoted"
+                },
+                {
+                    "include": "#preprocessorTag"
                 }
             ]
         },
@@ -152,6 +160,30 @@
                 {
                     "match": "\\\\[a-z]",
                     "name": "constant.character.escape.fgd"
+                }
+            ]
+        },
+        "preprocessorTag": {
+            "begin": "\\[",
+            "end": "\\]",
+            "beginCaptures": {
+                "0": {
+                    "name": "keyword.operator.fgd"
+                }
+            },
+            "endCaptures": {
+                "0": {
+                    "name": "keyword.operator.fgd"
+                }
+            },
+            "patterns": [
+                {
+                    "match": "(\\w+)",
+                    "name": "entity.name.tag.fgd"
+                },
+                {
+                    "match": "!",
+                    "name": "keyword.control.fgd"
                 }
             ]
         }
