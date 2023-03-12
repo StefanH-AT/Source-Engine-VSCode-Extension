@@ -1,6 +1,7 @@
 import path from "path";
 import * as vscode from "vscode";
 import * as main from "./main";
+import * as shared from "./language/Shared";
 
 function isAutoDetectEnabled(): boolean {
     return main.config.get<boolean>("kvAutoDetect.enabled", false);
@@ -12,6 +13,34 @@ function isAutoDetectEnabledOnlyInWorkspaces(): boolean {
 
 function getSourceEngineWorkspaces(): string[] {
     return main.config.get<string[]>("sourceEngineWorkspaces", []);
+}
+
+
+type DetectableLanguageId = "keyvalue3" | "soundscript" | "captions";
+interface CommonFileName {
+    regex: RegExp;
+    languageId: DetectableLanguageId;
+}
+
+const commonKvFileNames: CommonFileName[] = [
+    { regex: /gameinfo\.txt/i, languageId: "keyvalue3" },
+    { regex: /subtitles_.+\.txt/i, languageId: "captions" },
+    { regex: /captions_.+\.txt/i, languageId: "captions" },
+    { regex: /basemodui_.+\.txt/i, languageId: "keyvalue3" },
+    { regex: /instructor_lessons\.txt/i, languageId: "keyvalue3" },
+    { regex: /instructor_textures\.txt/i, languageId: "keyvalue3" },
+    { regex: /game_sounds_.+\.txt/i, languageId: "soundscript" },
+    { regex: /npc_sounds_.+\.txt/i, languageId: "soundscript" },
+    { regex: /level_sounds_.+\.txt/i, languageId: "soundscript" },
+    { regex: /soundscapes_.+\.txt/i, languageId: "soundscript" },
+    { regex: /surfaceproperties_.+\.txt/i, languageId: "keyvalue3" },
+    { regex: /weapon_.+\.txt/i, languageId: "keyvalue3" },
+    { regex: /vgui_screens\.txt/i, languageId: "keyvalue3" },
+    { regex: /credits\.txt/i, languageId: "keyvalue3" }
+];
+
+function getCommonFileNameMatch(fileName: string): CommonFileName | undefined {
+    return commonKvFileNames.find((c) => c.regex.test(fileName));
 }
 
 const globalStateAutoDetectRecommended = "kvAutoDetect.recommended";
@@ -52,22 +81,23 @@ function detectKeyvalueFile(editor: vscode.TextEditor, context: vscode.Extension
     if(editor.document.languageId === "plaintext") {
         main.debugOutput.appendLine(`Potential kv file opened (${editor.document.uri.fsPath})`);
 
-        if(isPotentialKvFile(editor.document)) {
-            main.debugOutput.appendLine(`Changing document language of (${editor.document.uri.fsPath}) to keyvalue3`);
-            vscode.languages.setTextDocumentLanguage(editor.document, "keyvalue3");
-        } else {
+        const langId = getPotentialKvFileLanguageId(editor.document);
+        if(langId === undefined) {
             main.debugOutput.appendLine(`Not changing document language of (${editor.document.uri.fsPath})`);
+            return;
         }
 
+        main.debugOutput.appendLine(`Changing document language of (${editor.document.uri.fsPath}) to keyvalue3`);
+        vscode.languages.setTextDocumentLanguage(editor.document, langId);
     }
 }
 
-function isPotentialKvFile(document: vscode.TextDocument): boolean {
+function getPotentialKvFileLanguageId(document: vscode.TextDocument): DetectableLanguageId | undefined {
     if(isAutoDetectEnabledOnlyInWorkspaces()) {
 
         if(!isDocumentInSourceEngineWorkspace(document)) {
             main.debugOutput.appendLine(`Auto detect is enabled only in source engine workspaces, but the document (${document.uri.fsPath}) is not in a source engine workspace.`);
-            return false;
+            return undefined;
         }
 
     }
@@ -75,12 +105,13 @@ function isPotentialKvFile(document: vscode.TextDocument): boolean {
     const documentFileName = path.basename(document.uri.fsPath);
 
     main.debugOutput.appendLine(`Auto detect is enabled. Checking if filename (${documentFileName}) is in list of common kv file names.`);
-    if(isFileNameCommonKvFile(documentFileName)) {
-        main.debugOutput.appendLine(`! File (${document.uri.fsPath}) is a potential kv file.`);
-        return true;
+    const match = getCommonFileNameMatch(documentFileName);
+    if(match == undefined) {
+        return undefined;
     }
-
-    return false;
+    
+    main.debugOutput.appendLine(`! File (${document.uri.fsPath}) has a common file name and is associated with LanguageId: ${match.languageId}`);
+    return match.languageId;
 }
 
 function isDocumentInSourceEngineWorkspace(document: vscode.TextDocument): boolean {
@@ -108,23 +139,3 @@ function isDocumentInSourceEngineWorkspace(document: vscode.TextDocument): boole
     return false;
 }
 
-const commonKvFileNames: RegExp[] = [
-    /gameinfo\.txt/i,
-    /subtitles_.+\.txt/i,
-    /captions_.+\.txt/i,
-    /basemodui_.+\.txt/i,
-    /game_sounds_.+\.txt/i,
-    /instructor_lessons\.txt/i,
-    /instructor_textures\.txt/i,
-    /npc_sounds_.+\.txt/i,
-    /level_sounds_.+\.txt/i,
-    /soundscapes_.+\.txt/i,
-    /surfaceproperties_.+\.txt/i,
-    /weapon_.+\.txt/i,
-    /vgui_screens\.txt/i,
-    /credits\.txt/i
-];
-
-function isFileNameCommonKvFile(fileName: string): boolean {
-    return commonKvFileNames.some((regex) => regex.test(fileName));
-}
