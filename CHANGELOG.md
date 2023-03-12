@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.10.3]
+
+**FGD**
+- Fixed syntax highlighting for HammerAddons unified FGD tags [as reported by Luke18033](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/issues/99)
+
 ## [0.10.2]
 
 **General**
