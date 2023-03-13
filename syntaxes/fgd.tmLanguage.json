@@ -3,6 +3,8 @@
 	"name": "FGD",
 	"scopeName": "source.fgd",
 	"patterns": [
+        { "include": "#mapSize"},
+        { "include": "#autoVisgroup"},
         { "include": "#classDefinition" },
         { "include": "#helper"},
         { "include": "#classLabel" },
@@ -10,6 +12,27 @@
         { "include": "source.kv#comment" }
 	],
 	"repository": {
+        "mapSize": {
+            "begin": "(\\@(?i)mapsize(?-i))\\(",
+            "beginCaptures": {
+                "1": { "name": "constant.language.fgd" }
+            },
+            "end": "\\)",
+            "patterns": [
+                { "include": "source.kv#number" }
+            ]
+        },
+        "autoVisgroup": {
+            "begin": "(\\@(?i)AutoVisgroup(?-i)) *(=)",
+            "end": "(\\n)",
+            "beginCaptures": {
+                "1": { "name": "constant.language.fgd" },
+                "2": { "name": "keyword.operator.fgd" }
+            },
+            "patterns": [
+                { "include": "source.kv#stringQuoted" }
+            ]
+        },
 		"classDefinition": {
             "match": "(\\@)(\\w+)",
             "captures": {
@@ -45,7 +68,7 @@
             ]
         },
         "classLabel": {
-            "match": "(=) *([\\w_]+) *(:) *(\\\"[\\w ]+\\\")",
+            "match": "(=) *([\\w_]+) *(:) *(\\\".*\\\")",
             "captures": {
                 "1": { "name": "keyword.operator.fgd" },
                 "2": { "name": "entity.name.function.fgd" },
@@ -59,8 +82,12 @@
             "end": "\\]",
             "patterns": [
                 {
-                    "match": "(input|output)",
+                    "match": "(?i)(input|output)(?-i)",
                     "name": "storage.modifier"
+                },
+                {
+                    "match": "readonly",
+                    "name": "constant.language.fgd"
                 },
                 { "include": "#array" },
                 { "include": "source.kv#comment" },
@@ -71,11 +98,11 @@
             ]
         },
         "keyvalueName": {
-            "begin": "\\w+",
+            "begin": "(\\w+)\\(",
             "beginCaptures": {
-                "0": { "name": "entity.name.function.fgd" }
+                "1": { "name": "entity.name.function.fgd" }
             },
-            "end": "\\((\\w+)\\)",
+            "end": "(\\w+)\\)",
             "endCaptures": {
                 "1": {
                     "patterns": [
