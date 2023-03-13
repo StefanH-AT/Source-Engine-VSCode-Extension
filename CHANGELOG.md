@@ -6,6 +6,18 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.12.0]
+
+**General**
+- Debug performance output is now printed into a separate debug output channel 
+
+**FGD**
+- Fixed several syntax highlighting bugs reported by Luke18033 [#103](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/issues/103) [#104](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/issues/104)
+
+**Captions**
+- Added a hint notification to recommend configuring the captions compiler button
+- Fixed color previews not working in `clr` tags
+
 ## [0.11.0]
 
 **General**
