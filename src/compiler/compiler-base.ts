@@ -3,6 +3,7 @@ import { isWhitespace } from "@sourcelib/kv/";
 import * as main from "../main";
 import * as fs from "fs";
 import { execFile } from "child_process";
+import path from "path";
 
 export interface CompileSettings {
     editor: vscode.TextEditor;
@@ -25,9 +26,13 @@ export async function compileSomething(settings: CompileSettings): Promise<void>
         vscode.window.showErrorMessage("The current document is not a file. Cannot compile. Honestly, I have no idea how this is possible, so if you can into this, please message me.");
         return;
     }
-    const filePath = fileUri.fsPath;
-    const workDir: string = main.config.get(`${settings.configPrefix}.workingDirectory`) ?? vscode.Uri.joinPath(fileUri, "..").fsPath;
-
+    let filePath = fileUri.fsPath;
+    let workDir: string = main.config.get(`${settings.configPrefix}.workingDirectory`) ?? vscode.Uri.joinPath(fileUri, "..").fsPath;
+    
+    if(process.platform === "win32") {
+        filePath = filePath.toLowerCase();
+        workDir = workDir.toLowerCase();
+    }
     if( exePath == null || isWhitespace(exePath) ) {
         vscode.window.showErrorMessage(`${settings.compilerName} path is empty. Please configure!`);
         return;
@@ -42,6 +47,10 @@ export async function compileSomething(settings: CompileSettings): Promise<void>
 
     channel.clear();
     channel.appendLine(`Running ${settings.compilerName} for ${filePath}`);
+
+    if(!filePath.startsWith(workDir)) {
+        channel.appendLine("WARNING: The file is not in the compiler's working directory. The compiler may not be able to find the file.");
+    }
     
     if(shouldOpenOutputWindow) {
         channel.show();
@@ -49,7 +58,7 @@ export async function compileSomething(settings: CompileSettings): Promise<void>
 
     // Start process ----------------
     params.push(filePath);
-    const process = execFile(exePath, params, {
+    const proc = execFile(exePath, params, {
         cwd: workDir
     }, (error, stdout, stderr) => {
         if(error) {
@@ -66,7 +75,7 @@ export async function compileSomething(settings: CompileSettings): Promise<void>
     }, (progress, token) => {
 
         token.onCancellationRequested(e => {
-            process.kill();
+            proc.kill();
             channel.appendLine("Cancelled compilation process");
         });
 
@@ -74,7 +83,7 @@ export async function compileSomething(settings: CompileSettings): Promise<void>
         
         const promise = new Promise<void>(resolve => {
 
-            process.on("exit", (exitCode: number) => {
+            proc.on("exit", (exitCode: number) => {
                 if(exitCode === 0) {
                     channel.appendLine("Completed successfully!");
                 } else {
