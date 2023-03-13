@@ -3,40 +3,33 @@
 	"name": "FGD",
 	"scopeName": "source.fgd",
 	"patterns": [
-        {
-            "include": "#classDefinition"
-        }
+        { "include": "#classDefinition" }
 	],
 	"repository": {
 		"classDefinition": {
-            "begin": "(\\@)(PointClass|NPCClass|SolidClass|KeyFrameClass|MoveClass|FilterClass|BaseClass)",
+            "begin": "(\\@)(\\w+)",
             "beginCaptures": {
-                "1": {
-                    "name": "entity.name.type.fgd"
-                },
+                "1": { "name": "entity.name.type.fgd" },
                 "2": {
-                    "name": "entity.name.type.fgd"
+                    "patterns": [
+                        {
+                            "match": "(?i)(PointClass|NPCClass|SolidClass|KeyFrameClass|MoveClass|FilterClass|BaseClass)(?-i)",
+                            "name": "entity.name.type.fgd"
+                        }
+                    ]
                 }
             },
             "end": "\\]",
             "patterns": [
-                {
-                    "include": "#helper"
-                },
-                {
-                    "include": "#content"
-                },
-                {
-                    "include": "source.kv#comment"
-                }
+                { "include": "#helper" },
+                { "include": "#content" },
+                { "include": "source.kv#comment" }
             ]
         },
         "helper": {
             "begin": "(\\w+)\\(",
             "beginCaptures": {
-                "1": {
-                    "name": "entity.other.attribute-name.fgd"
-                }
+                "1": { "name": "entity.other.attribute-name.fgd" }
             },
             "end": "\\)",
             "patterns": [
@@ -58,30 +51,21 @@
         "content": {
             "begin": "=",
             "beginCaptures": {
-                "0": {
-                    "name": "keyword.operator.fgd"
-                }
+                "0": { "name": "keyword.operator.fgd" }
             },
             "end": "\\]",
             "patterns": [
-                {
-                    "include": "#head"
-                },
-                {
-                    "include": "#description"
-                },
-                {
-                    "include": "#body"
-                }
+                { "include": "#head" },
+                { "include": "#description" },
+                { "include": "#body" }
             ]
         },
         "head": {
             "name": "meta.head.fgd",
-            "match": "([\\w]+ *:)",
+            "match": "([\\w]+ *)(:)",
             "captures": {
-                "1": {
-                    "name": "entity.name.class.fgd"
-                }
+                "1": { "name": "entity.name.class.fgd" },
+                "2": { "name": "keyword.operator.fgd" }
             }
         },
         "body": {
@@ -93,58 +77,41 @@
                     "match": "(input|output)",
                     "name": "storage.modifier"
                 },
-                {
-                    "include": "#array"
-                },
-                {
-                    "include": "source.kv#comment"
-                },
-                {
-                    "include": "source.kv#number"
-                },
-                {
-                    "include": "source.kv#stringQuoted"
-                },
-                {
-                    "include": "#keyvalueName"
-                },
-                {
-                    "include": "#description"
-                }
+                { "include": "#array" },
+                { "include": "source.kv#comment" },
+                { "include": "source.kv#number" },
+                { "include": "source.kv#stringQuoted" },
+                { "include": "#keyvalueName" },
+                { "include": "#description" }
             ]
         },
         "keyvalueName": {
             "begin": "\\w+",
             "beginCaptures": {
-                "0": {
-                    "name": "entity.name.function.fgd"
-                }
+                "0": { "name": "entity.name.function.fgd" }
             },
-            "end": "\\((axis|angle|angle_negative_pitch|color255|color1|filterclass|instance_file|instance_parm|instance_variable|material|node_dest|node_id|npcclass|origin|particlesystem|pointentityclass|scene|script|scriptlist|sidelist|sound|sprite|decal|studio|target_destination|target_name_or_class|target_source|vecline|vector|string|integer|float|boolean|choices|flags|void)\\)",
+            "end": "\\((\\w+)\\)",
             "endCaptures": {
                 "1": {
-                    "name": "variable.parameter.fgd"
+                    "patterns": [
+                        {
+                            "match": "(?i)(axis|angle|angle_negative_pitch|color255|color1|filterclass|instance_file|instance_parm|instance_variable|material|node_dest|node_id|npcclass|origin|particlesystem|pointentityclass|scene|script|scriptlist|sidelist|sound|sprite|decal|studio|target_destination|target_name_or_class|target_source|vecline|vector|string|integer|float|boolean|choices|flags|void)(?-i)",
+                            "name": "variable.parameter.fgd"
+                        }
+                    ]
                 }
             },
             "patterns": [
-                {
-                    "include": "#preprocessorTag"
-                }
+                { "include": "#preprocessorTag" }
             ]
         },
         "array": {
             "begin": "\\[",
             "end": "\\]",
             "patterns": [
-                {
-                    "include": "source.kv#number"
-                },
-                {
-                    "include": "source.kv#stringQuoted"
-                },
-                {
-                    "include": "#preprocessorTag"
-                }
+                { "include": "source.kv#number" },
+                { "include": "source.kv#stringQuoted" },
+                { "include": "#preprocessorTag" }
             ]
         },
         "description": {
@@ -152,9 +119,7 @@
             "begin": "\"",
             "end": "\"(\\s+)?",
             "endCaptures": {
-                "1": {
-                    "name": "keyword.operator.fgd"
-                }
+                "1": { "name": "keyword.operator.fgd" }
             },
             "patterns": [
                 {
@@ -167,14 +132,10 @@
             "begin": "\\[",
             "end": "\\]",
             "beginCaptures": {
-                "0": {
-                    "name": "keyword.operator.fgd"
-                }
+                "0": { "name": "keyword.operator.fgd" }
             },
             "endCaptures": {
-                "0": {
-                    "name": "keyword.operator.fgd"
-                }
+                "0": { "name": "keyword.operator.fgd" }
             },
             "patterns": [
                 {
