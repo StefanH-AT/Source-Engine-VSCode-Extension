@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.12.1]
+
+**FGD**
+- Several bug fixes for syntax highlighting
+
 ## [0.12.0]
 
 **General**
