@@ -3,12 +3,16 @@
 	"name": "FGD",
 	"scopeName": "source.fgd",
 	"patterns": [
-        { "include": "#classDefinition" }
+        { "include": "#classDefinition" },
+        { "include": "#helper"},
+        { "include": "#classLabel" },
+        { "include": "#body" },
+        { "include": "source.kv#comment" }
 	],
 	"repository": {
 		"classDefinition": {
-            "begin": "(\\@)(\\w+)",
-            "beginCaptures": {
+            "match": "(\\@)(\\w+)",
+            "captures": {
                 "1": { "name": "entity.name.type.fgd" },
                 "2": {
                     "patterns": [
@@ -18,54 +22,35 @@
                         }
                     ]
                 }
-            },
-            "end": "\\]",
-            "patterns": [
-                { "include": "#helper" },
-                { "include": "#content" },
-                { "include": "source.kv#comment" }
-            ]
+            }
         },
         "helper": {
             "begin": "(\\w+)\\(",
-            "beginCaptures": {
-                "1": { "name": "entity.other.attribute-name.fgd" }
-            },
             "end": "\\)",
+            "beginCaptures": {
+                "1": { "name": "entity.name.function.fgd" }
+            },
             "patterns": [
-                {
-                    "match": "\\w+",
-                    "name": "string.unquoted.fgd"
-                },
                 {
                     "match": "\\d+",
                     "name": "constant.numeric.fgd"
                 },
                 {
-                    "begin": "\"",
-                    "end": "\"",
-                    "name": "string.quoted.double.fgd"
+                    "match": "\\w+",
+                    "name": "variable.parameter.fgd"
+                },
+                {
+                    "include": "source.kv#stringQuoted"
                 }
             ]
         },
-        "content": {
-            "begin": "=",
-            "beginCaptures": {
-                "0": { "name": "keyword.operator.fgd" }
-            },
-            "end": "\\]",
-            "patterns": [
-                { "include": "#head" },
-                { "include": "#description" },
-                { "include": "#body" }
-            ]
-        },
-        "head": {
-            "name": "meta.head.fgd",
-            "match": "([\\w]+ *)(:)",
+        "classLabel": {
+            "match": "(=) *([\\w_]+) *(:) *(\\\"[\\w ]+\\\")",
             "captures": {
-                "1": { "name": "entity.name.class.fgd" },
-                "2": { "name": "keyword.operator.fgd" }
+                "1": { "name": "keyword.operator.fgd" },
+                "2": { "name": "entity.name.function.fgd" },
+                "3": { "name": "keyword.operator.fgd" },
+                "4": { "name": "string.quoted.double.fgd" }
             }
         },
         "body": {
@@ -112,20 +97,6 @@
                 { "include": "source.kv#number" },
                 { "include": "source.kv#stringQuoted" },
                 { "include": "#preprocessorTag" }
-            ]
-        },
-        "description": {
-            "name": "string.quoted.double.fgd",
-            "begin": "\"",
-            "end": "\"(\\s+)?",
-            "endCaptures": {
-                "1": { "name": "keyword.operator.fgd" }
-            },
-            "patterns": [
-                {
-                    "match": "\\\\[a-z]",
-                    "name": "constant.character.escape.fgd"
-                }
             ]
         },
         "preprocessorTag": {
