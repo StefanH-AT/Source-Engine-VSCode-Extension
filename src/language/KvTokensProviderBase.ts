@@ -72,7 +72,8 @@ export abstract class KvTokensProviderBase implements vscode.DocumentSemanticTok
                 this.processKvKey(token, tokenRange, tokensBuilder, kvDoc, currentScope);
                 
                 // Is this key not followed by a value?
-                if (interestingToken?.token.type !== TokenType.Value) {
+                const interestingTokenType = interestingToken?.token.type;
+                if (interestingTokenType !== TokenType.Value && interestingTokenType !== TokenType.Conditional) {
                     this.diagnostics.push(new vscode.Diagnostic(tokenRange, "Expecting value to this key", vscode.DiagnosticSeverity.Error));
                 }
                 continue;
