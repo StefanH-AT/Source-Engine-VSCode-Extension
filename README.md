@@ -1,12 +1,5 @@
 
-<div style="display:grid; grid-auto-flow:column; align-items:center; justify-items:center; justify-content:center; gap:2rem; margin-bottom: 2rem; margin-top: 2rem">
-
-<img src="extension-icon-128.png" alt="Extension logo" style="width:80%">
-<h1 style="margin:0;border:none">Source Engine Support for Vscode</h1>
-
-</div>
-
-<div style="text-align:center">
+# Source Engine Support for Vscode
 
 [![CI Test](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/actions/workflows/test.yml/badge.svg)](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension/actions/workflows/test.yml)
 [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/dwyl/esta/issues)
@@ -22,8 +15,6 @@
 </a>
 
 [Marketplace](https://marketplace.visualstudio.com/items?itemName=stefan-h-at.source-engine-support) - [Discord](https://discord.gg/BDDxkNwXWw) - [Bugs](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension)
-
-</div>
 
 ---
 
