@@ -4,7 +4,7 @@ import { KvTokensProviderBase } from "./KvTokensProviderBase";
 import { getColorMatches, ColorMatchParenthesisType, getMatrixMatches } from "@sourcelib/vmt";
 import { getParentDocumentDirectory } from "@sourcelib/fs";
 import { Token, isFloatValue, isScalarValue } from "@sourcelib/kv";
-import { shaderParams, internalTextures } from "./LangVmt";
+import { shaderParams, internalTextures } from "@sourcelib/vmt";
 import { KvSemanticProcessor, KvSemanticProcessorParams } from "./KvSemanticProcessor";
 import { KvPair } from "../Kv";
 import fs from "fs";
@@ -51,7 +51,7 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
             this.processValueString(kv, params.wholeRange, params.tokensBuilder, params.kvDocument);
             return false;
         }
-        if (param.type == null || param.type == "")
+        if (param.type == null || param.type == "unknown")
             return false;
 
         // Bit copy paste?

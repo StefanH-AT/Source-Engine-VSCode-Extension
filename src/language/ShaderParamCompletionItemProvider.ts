@@ -1,6 +1,6 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
-import { shaderParams, internalTextures } from "./LangVmt";
+import { shaderParams, internalTextures } from "@sourcelib/vmt";
 import { KvPair } from "../Kv";
 import { ShaderParam } from "@sourcelib/vmt";
 import { getParentDocumentDirectory } from "@sourcelib/fs";

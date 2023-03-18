@@ -1,6 +1,6 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
-import { shaderParams } from "./LangVmt";
+import { shaderParams } from "@sourcelib/vmt";
 
 
 export class ShaderParamHoverProvider implements vscode.HoverProvider {

@@ -1,8 +1,7 @@
 import vscode from "vscode";
 import KvDocument from "./KvDocument";
 import { TokenType } from "@sourcelib/kv";
-import { getColorMatches } from "@sourcelib/vmt";
-import { shaderParams } from "./LangVmt";
+import { getColorMatches, shaderParams } from "@sourcelib/vmt";
 
 
 export class ShaderParamColorsProvider implements vscode.DocumentColorProvider {
