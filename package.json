@@ -418,7 +418,7 @@
         "@sourcelib/captions": "^0.1.1",
         "@sourcelib/fs": "^0.1.1",
         "@sourcelib/kv": "^0.7.1",
-        "@sourcelib/vmt": "^0.3.0",
+        "@sourcelib/vmt": "^0.3.1",
         "list-files-in-dir": "^0.1.5"
     }
 }
