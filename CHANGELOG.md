@@ -6,6 +6,19 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.12.3]
+
+**General**
+- Enabled Keyvalue auto detection by default
+- Removed Source Engine workspaces config
+- Removed "Only detect keyvalue files in workspaces" config
+- Fixed performance inspection
+- Fixed captions compiler command being registered twice
+- Fixed model compiler command not being registered
+
+**VMT**
+- Removed shader parameter config. These are now provided by sourcelib
+
 ## [0.12.2]
 
 **KeyValue**
