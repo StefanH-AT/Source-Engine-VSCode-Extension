@@ -8,8 +8,8 @@ import * as vmt from "./language/LangVmt";
 import * as captions from "./language/LangCaptions";
 import * as keyvalue from "./language/LangKv";
 import * as captionsCompile from "./compiler/captions-compile";
-import * as modelCompile from "./compiler/captions-compile";
-import * as performance from "./compiler/model-compile";
+import * as modelCompile from "./compiler/model-compile";
+import * as performance from "./performance";
 import * as kvDetect from "./KvFileDetection";
 
 import * as packageJson from "../package.json";
