@@ -1,22 +1,13 @@
 import path from "path";
 import * as vscode from "vscode";
 import * as main from "./main";
-import * as shared from "./language/Shared";
 
 function isAutoDetectEnabled(): boolean {
     return main.config.get<boolean>("kvAutoDetect.enabled", false);
 }
 
-function isAutoDetectEnabledOnlyInWorkspaces(): boolean {
-    return main.config.get<boolean>("kvAutoDetect.onlyInSourceEngineWorkspaces", true);
-}
-
-function getSourceEngineWorkspaces(): string[] {
-    return main.config.get<string[]>("sourceEngineWorkspaces", []);
-}
-
-
 type DetectableLanguageId = "keyvalue3" | "soundscript" | "captions";
+
 interface CommonFileName {
     regex: RegExp;
     languageId: DetectableLanguageId;
@@ -93,15 +84,6 @@ function detectKeyvalueFile(editor: vscode.TextEditor, context: vscode.Extension
 }
 
 function getPotentialKvFileLanguageId(document: vscode.TextDocument): DetectableLanguageId | undefined {
-    if(isAutoDetectEnabledOnlyInWorkspaces()) {
-
-        if(!isDocumentInSourceEngineWorkspace(document)) {
-            main.debugOutput.appendLine(`Auto detect is enabled only in source engine workspaces, but the document (${document.uri.fsPath}) is not in a source engine workspace.`);
-            return undefined;
-        }
-
-    }
-
     const documentFileName = path.basename(document.uri.fsPath);
 
     main.debugOutput.appendLine(`Auto detect is enabled. Checking if filename (${documentFileName}) is in list of common kv file names.`);
@@ -113,29 +95,3 @@ function getPotentialKvFileLanguageId(document: vscode.TextDocument): Detectable
     main.debugOutput.appendLine(`! File (${document.uri.fsPath}) has a common file name and is associated with LanguageId: ${match.languageId}`);
     return match.languageId;
 }
-
-function isDocumentInSourceEngineWorkspace(document: vscode.TextDocument): boolean {
-    let fileUri: string = document.uri.fsPath;
-    let sourceEngineWorkspaces: string[] = getSourceEngineWorkspaces();
-
-    // Make paths lower case on windows
-    if(process.platform === "win32") {
-        fileUri = fileUri.toLowerCase();
-        sourceEngineWorkspaces = sourceEngineWorkspaces.map((workspace) => workspace.toLowerCase());
-    }
-
-    main.debugOutput.appendLine(`Checking if file (${fileUri}) is in any source engine workspace.`);
-
-    for(const workspace of sourceEngineWorkspaces) {
-        main.debugOutput.appendLine(`- Checking if file (${fileUri}) is in workspace (${workspace})`);
-        if(fileUri.startsWith(workspace)) {
-            main.debugOutput.appendLine(`! File (${fileUri}) is in workspace (${workspace})`);
-            return true;
-        }
-    }
-
-    main.debugOutput.appendLine(`! File (${fileUri}) is not in any source engine workspace.`);
-
-    return false;
-}
-
