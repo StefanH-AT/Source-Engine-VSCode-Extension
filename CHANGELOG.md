@@ -11,7 +11,7 @@ The versions in this file adhere to [semantic versioning](https://semver.org/).
 **General**
 - Enabled Keyvalue auto detection by default
 - Removed Source Engine workspaces config
-- Removed "Only detect keyvalue files in workspaces" config
+- Removed 'Only detect keyvalue files in workspaces' config
 - Fixed performance inspection
 - Fixed captions compiler command being registered twice
 - Fixed model compiler command not being registered
