@@ -14,7 +14,11 @@
 <img src="https://contrib.rocks/image?repo=StefanH-AT/Source-Engine-VSCode-Extension" height="24"/>
 </a>
 
-[Marketplace](https://marketplace.visualstudio.com/items?itemName=stefan-h-at.source-engine-support) - [Discord](https://discord.gg/BDDxkNwXWw) - [Bugs](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension)
+[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=stefan-h-at.source-engine-support) -
+[OpenVSX Registry](https://open-vsx.org/extension/stefan-h-at/source-engine-support)
+
+[Discord](https://discord.gg/BDDxkNwXWw) - 
+[Bugs](https://github.com/StefanH-AT/Source-Engine-VSCode-Extension)
 
 ---
 
