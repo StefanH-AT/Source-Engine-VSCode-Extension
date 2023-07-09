@@ -10,7 +10,7 @@ The versions in this file adhere to [semantic versioning](https://semver.org/).
 
 **FGD**
 - Fixed preprocessor highlighting in FGD KeyValues
-- Fixed incorrect highlighting on FGD KeyValues, Inputs or Outputs with the word "input" or "output"
+- Fixed incorrect highlighting on FGD KeyValues, Inputs or Outputs with the word `input` or `output`
 
 ## [0.12.3]
 
