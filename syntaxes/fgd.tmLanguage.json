@@ -82,7 +82,7 @@
             "end": "\\]",
             "patterns": [
                 {
-                    "match": "(?i)(input|output)(?-i)",
+                    "match": "\\b(?i)(input|output)(?-i)\\b",
                     "name": "storage.modifier"
                 },
                 {
@@ -98,9 +98,14 @@
             ]
         },
         "keyvalueName": {
-            "begin": "(\\w+)\\(",
+            "begin": "(\\w+)(\\[.+\\])?\\(",
             "beginCaptures": {
-                "1": { "name": "entity.name.function.fgd" }
+                "1": { "name": "entity.name.function.fgd" },
+                "2": {
+                    "patterns": [ 
+                        { "include": "#preprocessorTag" }
+                    ]
+                }
             },
             "end": "(\\w+)\\)",
             "endCaptures": {
