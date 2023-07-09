@@ -6,6 +6,12 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.12.4]
+
+**FGD**
+- Fixed preprocessor highlighting in FGD KeyValues
+- Fixed incorrect highlighting on FGD KeyValues, Inputs or Outputs with the word "input" or "output"
+
 ## [0.12.3]
 
 **General**
