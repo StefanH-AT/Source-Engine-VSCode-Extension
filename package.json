@@ -93,6 +93,7 @@
                 "extensions": [
                     ".kv",
                     ".vdf",
+                    ".vcd",
                     ".res",
                     ".txt",
                     ".acf",
