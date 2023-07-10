@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [0.12.5]
+
+**General**
+- Added `.vcd` extension to use KeyValues format
+
 ## [0.12.4]
 
 **FGD**
