@@ -6,6 +6,16 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [1.0.0]
+
+**General**
+- Improved keyvalue auto detection
+- Renamed `keyvalue3` language to simply `keyvalue`
+
+**FGD**
+- Fixed comments not working in FGD arrays
+- Fixed syntax highlighting breaking when whitespace is placed after type name
+
 ## [0.12.5]
 
 **General**
