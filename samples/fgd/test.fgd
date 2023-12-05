@@ -19,6 +19,7 @@
     ]
 
     KeyvalueExample4(string) : "Keyvalue Display Name" : "Default" : "Description"
+    KeyvalueExample5( string ) : "Keyvalue Display Name" : "Default" : "Description"
 
     input InputExample(void) : "Description"
 
