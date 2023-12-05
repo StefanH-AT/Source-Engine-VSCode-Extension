@@ -313,11 +313,6 @@
         "configuration": {
             "title": "Source Engine",
             "properties": {
-                "sourceEngine.kvAutoDetect.enabled": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Enable automatic detection of KeyValues files."
-                },
                 "sourceEngine.performance.log": {
                     "type": "boolean",
                     "default": false,

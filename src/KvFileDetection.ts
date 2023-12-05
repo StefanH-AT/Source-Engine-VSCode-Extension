@@ -2,10 +2,6 @@ import path from "path";
 import * as vscode from "vscode";
 import * as main from "./main";
 
-function isAutoDetectEnabled(): boolean {
-    return main.config.get<boolean>("kvAutoDetect.enabled", false);
-}
-
 type DetectableLanguageId = "keyvalue" | "soundscript" | "captions";
 
 interface CommonFileName {
@@ -27,66 +23,49 @@ const commonKvFileNames: CommonFileName[] = [
     { regex: /surfaceproperties_.+\.txt/i, languageId: "keyvalue" },
     { regex: /weapon_.+\.txt/i, languageId: "keyvalue" },
     { regex: /vgui_screens\.txt/i, languageId: "keyvalue" },
-    { regex: /credits\.txt/i, languageId: "keyvalue" }
+    { regex: /credits\.txt/i, languageId: "keyvalue" },
+    { regex: /soundmixers\.txt/i, languageId: "keyvalue" },
 ];
 
 function getCommonFileNameMatch(fileName: string): CommonFileName | undefined {
     return commonKvFileNames.find((c) => c.regex.test(fileName));
 }
 
-const globalStateAutoDetectRecommended = "kvAutoDetect.recommended";
-function recommendAutoDetection(context: vscode.ExtensionContext): void {
-
-    const alreadyRecommended = context.globalState.get(globalStateAutoDetectRecommended, false);
-    if(alreadyRecommended) return;
-
-    vscode.window.showInformationMessage("Source Engine keyvalue files can be auto detected. Do you want to enable this feature?", "Yes", "No")
-        .then((value: string | undefined) => {
-            if(value === "Yes") {
-                main.config.update("kvAutoDetect.enabled", true, true);
-            }
-
-            context.globalState.update(globalStateAutoDetectRecommended, true);
-        });
-}
-
 export function init(context: vscode.ExtensionContext): void {
-    const onChange = vscode.window.onDidChangeActiveTextEditor((editor: vscode.TextEditor | undefined): void => {
-        main.debugOutput.appendLine(`Active editor changed to ${editor?.document.uri.fsPath}`);
-        if(editor === undefined) return;
-        detectKeyvalueFile(editor, context);
-    });
+    const onChange = vscode.workspace.onDidOpenTextDocument(onChangeEditor);
     context.subscriptions.push(onChange);
+
+    // Detect all currently open documents (When the extension is loaded, there might already be opened documents)
+    vscode.workspace.textDocuments.forEach(detectKeyvalueFile);
 }
 
-function detectKeyvalueFile(editor: vscode.TextEditor, context: vscode.ExtensionContext): void {
+function onChangeEditor(document: vscode.TextDocument): void {
+    main.debugOutput.appendLine(`Active editor changed to ${document.uri.fsPath}`);
 
-    if(!isAutoDetectEnabled()) {
-        main.debugOutput.appendLine("Auto detect is disabled. Not detecting kv file.");
+    detectKeyvalueFile(document);
+}
 
-        recommendAutoDetection(context);
-        return;
-    }
+function detectKeyvalueFile(document: vscode.TextDocument): void {
 
-    main.debugOutput.appendLine("File has language id: " + editor.document.languageId);
-    if(editor.document.languageId === "plaintext") {
-        main.debugOutput.appendLine(`Potential kv file opened (${editor.document.uri.fsPath})`);
+    main.debugOutput.appendLine("File has language id: " + document.languageId);
+    if(document.languageId === "plaintext") {
+        main.debugOutput.appendLine(`Potential kv file opened (${document.uri.fsPath})`);
 
-        const langId = getPotentialKvFileLanguageId(editor.document);
+        const langId = getPotentialKvFileLanguageId(document);
         if(langId === undefined) {
-            main.debugOutput.appendLine(`Not changing document language of (${editor.document.uri.fsPath})`);
+            main.debugOutput.appendLine(`Not changing document language of (${document.uri.fsPath})`);
             return;
         }
 
-        main.debugOutput.appendLine(`Changing document language of (${editor.document.uri.fsPath}) to keyvalue`);
-        vscode.languages.setTextDocumentLanguage(editor.document, langId);
+        main.debugOutput.appendLine(`Changing document language of (${document.uri.fsPath}) to keyvalue`);
+        vscode.languages.setTextDocumentLanguage(document, langId);
     }
 }
 
 function getPotentialKvFileLanguageId(document: vscode.TextDocument): DetectableLanguageId | undefined {
     const documentFileName = path.basename(document.uri.fsPath);
 
-    main.debugOutput.appendLine(`Auto detect is enabled. Checking if filename (${documentFileName}) is in list of common kv file names.`);
+    main.debugOutput.appendLine(`Checking if filename (${documentFileName}) is in list of common kv file names.`);
     const match = getCommonFileNameMatch(documentFileName);
     if(match == undefined) {
         return undefined;
