@@ -44,7 +44,7 @@
     },
     "main": "./out/main.js",
     "activationEvents": [
-        "onLanguage:keyvalue3",
+        "onLanguage:keyvalue",
         "onLanguage:vmt",
         "onLanguage:captions",
         "onLanguage:qc",
@@ -62,7 +62,7 @@
                 "path": "./snippets/vmt-snippets.json"
             },
             {
-                "language": "keyvalue3",
+                "language": "keyvalue",
                 "path": "./snippets/gameinfo-snippets.json"
             },
             {
@@ -84,11 +84,12 @@
         ],
         "languages": [
             {
-                "id": "keyvalue3",
-                "configuration": "./lang-config-kv3.json",
+                "id": "keyvalue",
+                "configuration": "./lang-config-kv.json",
                 "aliases": [
-                    "Valve Keyvalue 3",
-                    "keyvalue3"
+                    "Valve KeyValue",
+                    "keyvalue",
+                    "KV"
                 ],
                 "extensions": [
                     ".kv",
@@ -100,15 +101,11 @@
                     ".vmf",
                     ".vmm",
                     ".vmx"
-                ],
-                "filenames": [
-                    "gameinfo.txt"
-                ],
-                "firstLine": "^([\\w ]+|\"[\\w ]+\")"
+                ]
             },
             {
                 "id": "vmt",
-                "configuration": "./lang-config-kv3.json",
+                "configuration": "./lang-config-kv.json",
                 "aliases": [
                     "Valve Material Type",
                     "vmt"
@@ -119,7 +116,7 @@
             },
             {
                 "id": "fgd",
-                "configuration": "./lang-config-kv3.json",
+                "configuration": "./lang-config-kv.json",
                 "aliases": [
                     "FGD",
                     "Forge Game Data",
@@ -131,7 +128,7 @@
             },
             {
                 "id": "captions",
-                "configuration": "./lang-config-kv3.json",
+                "configuration": "./lang-config-kv.json",
                 "aliases": [
                     "Source Engine Captions",
                     "Source Engine Subtitles"
@@ -144,7 +141,7 @@
             },
             {
                 "id": "cfg",
-                "configuration": "./lang-config-kv3.json",
+                "configuration": "./lang-config-kv.json",
                 "aliases": [
                     "Source Engine Configuration",
                     "Source Engine Commands"
@@ -155,7 +152,7 @@
             },
             {
                 "id": "vpc",
-                "configuration": "./lang-config-kv3.json",
+                "configuration": "./lang-config-kv.json",
                 "aliases": [
                     "Valve Project Creator"
                 ],
@@ -166,7 +163,7 @@
             },
             {
                 "id": "qc",
-                "configuration": "./lang-config-kv3.json",
+                "configuration": "./lang-config-kv.json",
                 "aliases": [
                     "Valve QC",
                     "Valve MC",
@@ -188,7 +185,7 @@
             },
             {
                 "id": "soundscript",
-                "configuration": "./lang-config-kv3.json",
+                "configuration": "./lang-config-kv.json",
                 "aliases": [
                     "Valve Soundscript",
                     "Source Soundscript"
@@ -222,14 +219,14 @@
         ],
         "grammars": [
             {
-                "language": "keyvalue3",
+                "language": "keyvalue",
                 "scopeName": "source.kv",
-                "path": "./syntaxes/keyvalue3.tmLanguage.json"
+                "path": "./syntaxes/keyvalue.tmLanguage.json"
             },
             {
                 "language": "soundscript",
                 "scopeName": "source.kv",
-                "path": "./syntaxes/keyvalue3.tmLanguage.json"
+                "path": "./syntaxes/keyvalue.tmLanguage.json"
             },
             {
                 "language": "vmt",
@@ -389,7 +386,7 @@
             }
         },
         "configurationDefaults": {
-            "[keyvalue3]": {
+            "[keyvalue]": {
                 "editor.semanticHighlighting.enabled": true
             }
         }

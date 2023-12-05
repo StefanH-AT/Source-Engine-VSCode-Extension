@@ -30,7 +30,7 @@
                 },
                 {
                     "match": "\"?(?i)tokens(?-i)\"?",
-                    "name": "variable.name.keyvalue3"
+                    "name": "variable.name.keyvalue"
                 },
                 {
                     "include": "#data"

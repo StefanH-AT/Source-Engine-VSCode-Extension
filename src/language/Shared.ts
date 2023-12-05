@@ -1,6 +1,6 @@
 import { DocumentFilter } from "vscode";
 
-export const languageIdKeyvalue = "keyvalue3";
+export const languageIdKeyvalue = "keyvalue";
 export const languageIdVmt = "vmt";
 export const languageIdSoundscript = "soundscript";
 export const languageIdCaptions = "captions";

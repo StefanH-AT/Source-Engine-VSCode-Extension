@@ -21,23 +21,23 @@
 	],
 	"repository": {
 		"comment": {
-			"name": "comment.line.keyvalue3",
+			"name": "comment.line.keyvalue",
 			"match": "//.*"
 		},
 		"boolean": {
-			"name": "constant.numeric.keyvalue3",
+			"name": "constant.numeric.keyvalue",
 			"match": "\\b(true|false)\\b"
 		},
 		"number": {
-			"name": "constant.numeric.keyvalue3",
+			"name": "constant.numeric.keyvalue",
 			"match": "-?([0-9]+)?\\.?[0-9]+"
 		},
 		"stringUnquoted": {
-			"name": "string.unquoted.keyvalue3",
+			"name": "string.unquoted.keyvalue",
 			"match": "[\\w|\\*\\.\\\\/$%#-\\[\\]]+"
 		},
 		"stringQuoted": {
-			"name": "string.quoted.double.keyvalue3",
+			"name": "string.quoted.double.keyvalue",
 			"begin": "\"",
 			"end": "\"",
 			"patterns": [{

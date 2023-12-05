@@ -36,7 +36,7 @@ export class KeyvalueSemanticTokensProvider extends KvTokensProviderBase {
     ];
 
     constructor() {
-        super(KvDocument.tokenLegend, vscode.languages.createDiagnosticCollection("keyvalue3"));
+        super(KvDocument.tokenLegend, vscode.languages.createDiagnosticCollection("keyvalue"));
     }
     
     processValueNumber(params: KvSemanticProcessorParams): boolean {

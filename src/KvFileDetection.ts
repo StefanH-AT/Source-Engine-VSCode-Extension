@@ -6,7 +6,7 @@ function isAutoDetectEnabled(): boolean {
     return main.config.get<boolean>("kvAutoDetect.enabled", false);
 }
 
-type DetectableLanguageId = "keyvalue3" | "soundscript" | "captions";
+type DetectableLanguageId = "keyvalue" | "soundscript" | "captions";
 
 interface CommonFileName {
     regex: RegExp;
@@ -14,20 +14,20 @@ interface CommonFileName {
 }
 
 const commonKvFileNames: CommonFileName[] = [
-    { regex: /gameinfo\.txt/i, languageId: "keyvalue3" },
+    { regex: /gameinfo\.txt/i, languageId: "keyvalue" },
     { regex: /subtitles_.+\.txt/i, languageId: "captions" },
     { regex: /captions_.+\.txt/i, languageId: "captions" },
-    { regex: /basemodui_.+\.txt/i, languageId: "keyvalue3" },
-    { regex: /instructor_lessons\.txt/i, languageId: "keyvalue3" },
-    { regex: /instructor_textures\.txt/i, languageId: "keyvalue3" },
+    { regex: /basemodui_.+\.txt/i, languageId: "keyvalue" },
+    { regex: /instructor_lessons\.txt/i, languageId: "keyvalue" },
+    { regex: /instructor_textures\.txt/i, languageId: "keyvalue" },
     { regex: /game_sounds_.+\.txt/i, languageId: "soundscript" },
     { regex: /npc_sounds_.+\.txt/i, languageId: "soundscript" },
     { regex: /level_sounds_.+\.txt/i, languageId: "soundscript" },
     { regex: /soundscapes_.+\.txt/i, languageId: "soundscript" },
-    { regex: /surfaceproperties_.+\.txt/i, languageId: "keyvalue3" },
-    { regex: /weapon_.+\.txt/i, languageId: "keyvalue3" },
-    { regex: /vgui_screens\.txt/i, languageId: "keyvalue3" },
-    { regex: /credits\.txt/i, languageId: "keyvalue3" }
+    { regex: /surfaceproperties_.+\.txt/i, languageId: "keyvalue" },
+    { regex: /weapon_.+\.txt/i, languageId: "keyvalue" },
+    { regex: /vgui_screens\.txt/i, languageId: "keyvalue" },
+    { regex: /credits\.txt/i, languageId: "keyvalue" }
 ];
 
 function getCommonFileNameMatch(fileName: string): CommonFileName | undefined {
@@ -78,7 +78,7 @@ function detectKeyvalueFile(editor: vscode.TextEditor, context: vscode.Extension
             return;
         }
 
-        main.debugOutput.appendLine(`Changing document language of (${editor.document.uri.fsPath}) to keyvalue3`);
+        main.debugOutput.appendLine(`Changing document language of (${editor.document.uri.fsPath}) to keyvalue`);
         vscode.languages.setTextDocumentLanguage(editor.document, langId);
     }
 }
