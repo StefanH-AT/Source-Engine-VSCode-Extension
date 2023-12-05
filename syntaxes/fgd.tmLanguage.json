@@ -126,6 +126,7 @@
             "begin": "\\[",
             "end": "\\]",
             "patterns": [
+                { "include": "source.kv#comment" },
                 { "include": "source.kv#number" },
                 { "include": "source.kv#stringQuoted" },
                 { "include": "#preprocessorTag" }

@@ -38,6 +38,7 @@ wirebox(0,10)
     [
         1 : "Flag" : 0
         2 : "Flag 2" : 0 [TF2]
+        //3 : "Flag 3" : 0
     ]
     KeyvalueExample4(string) : "Keyvalue Display Name" : "Default" : "Description"
 
