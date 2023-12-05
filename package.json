@@ -34,8 +34,8 @@
         "vscode": "^1.59.0"
     },
     "scripts": {
-        "vscode:prepublish": "npm run compile",
-        "compile": "tsc -p ./src",
+        "vscode:prepublish": "npm run build",
+        "build": "tsc -p ./src",
         "watch": "tsc -watch -p ./src",
         "test": "jest --projects jest.config.ts --passWithNoTests",
         "benchmark": "jest --projects bench.config.ts",

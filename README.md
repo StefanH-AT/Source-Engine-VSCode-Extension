@@ -150,7 +150,7 @@ To start the unit tests, run `npm run test`. The project will be automatically c
 To run the benchmark tests, run `npm run benchmark`. The project will be automatically compiled
 
 ### Running the extension
-1) To start the extension, first compile the project `npm run compile` (Or `npm run watch` to auto-compile on every file change)
+1) To start the extension, first compile the project `npm run build` (Or `npm run watch` to auto-compile on every file change)
 2) Open the repository in VSCode
 3) Open the 'Run and Debug' tab
 4) Select the 'Extension' run configuration on the dropdown on the top
