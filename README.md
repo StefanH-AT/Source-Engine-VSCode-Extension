@@ -50,13 +50,7 @@ Instead of juggling standalone tools or CLI programs, simply **compile model (.q
 
 ## **KeyValue file auto-detection**
 
-In Source, many KeyValue files are saved with a `.txt` extension. Since not all .txt files should be treated as KeyValue files, this extension can auto-detect KeyValue files which end in `.txt`. 
-
-> ⚠️ **This feature is disabled by default. A popup will ask you whether to turn this feature on the first time you open a .txt file.**
-
-KV files are matched using a list of common keyvalue file names. (e.g.: gameinfo.txt, game_sounds_*.txt, subtitles_engish.txt...)
-
----
+In Source, many KeyValue files are saved with a `.txt` extension. Since not all .txt files should be treated as KeyValue files, this extension can auto-detect KeyValue files which end in `.txt`. Instead, KeyValue files are matched using a list of common keyvalue file names. (e.g.: gameinfo.txt, game_sounds_*.txt, subtitles_engish.txt...)
 
 ## Full feature list
 
