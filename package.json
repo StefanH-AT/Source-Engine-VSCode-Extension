@@ -107,7 +107,7 @@
                 "id": "vmt",
                 "configuration": "./lang-config-kv.json",
                 "aliases": [
-                    "Valve Material Type",
+                    "Valve Material",
                     "vmt"
                 ],
                 "extensions": [
