@@ -171,6 +171,7 @@
                 ],
                 "extensions": [
                     ".qc",
+                    ".qci",
                     ".mc"
                 ]
             },
