@@ -9,7 +9,7 @@ The versions in this file adhere to [semantic versioning](https://semver.org/).
 ## [1.1.0]
 
 **VMT**
-- VMT file format is now called "Valve Material"
+- VMT file format is now called Valve Material
 
 **QC**
 - Added support for .qci extension
