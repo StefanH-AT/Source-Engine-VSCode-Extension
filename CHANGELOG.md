@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 The versions in this file adhere to [semantic versioning](https://semver.org/).
 
+## [1.2.0]
+
+**VMT**
+- Added setting to "File not found" warnings for texture properties
+
 ## [1.1.0]
 
 **VMT**
