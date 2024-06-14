@@ -23,13 +23,22 @@ jobs:
       run: npm run test
           
     - name: Set up publishing
-      run: npm install vsce --save-dev
+      run: |
+        npm install vsce --save-dev
+        npm install ovsx --save-dev
      
     - name: Publish
       run: npm run deploy
       env:
         VSCE_PAT: ${{ secrets.VSCE_PAT }}
-        
+
+    - name: Create OVSX Package
+      run: npx vsce package --out package.vsix
+
+    - name: Publish OVSX Package
+      run: |
+        npx ovsx publish package.vsix --pat ${{ secrets.OVSX_PAT }}
+
     - name: Read package.json
       id: package-json
       run: |
@@ -38,7 +47,7 @@ jobs:
         content="${content//$'\n'/'%0A'}"
         content="${content//$'\r'/'%0D'}"
         echo "::set-output name=packageJson::$content"
-      
+    
     - name: Get Changelog
       id: changelog
       run: |
