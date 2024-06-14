@@ -7,6 +7,7 @@ import { Token, isFloatValue, isScalarValue } from "@sourcelib/kv";
 import { shaderParams, internalTextures } from "@sourcelib/vmt";
 import { KvSemanticProcessor, KvSemanticProcessorParams } from "./KvSemanticProcessor";
 import { KvPair } from "../Kv";
+import * as main from "../main";
 import fs from "fs";
 import path from "path";
 
@@ -113,11 +114,14 @@ export class VmtSemanticTokenProvider extends KvTokensProviderBase {
             tokensBuilder.push(range, "keyword");
             return;
         }
-        const materialDir = getParentDocumentDirectory(kvDoc.document.uri.fsPath, "materials");
-        if (materialDir != null) {
-            const materialPath: string = path.join(materialDir, kv.value.content + ".vtf");
-            if (!fs.existsSync(materialPath)) {
-                this.diagnostics.push(new vscode.Diagnostic(range, "Texture not found on disk", vscode.DiagnosticSeverity.Warning));
+        const validationEnabled = main.config.get<boolean>("vmt.validateTexturePaths");
+        if(validationEnabled) {
+            const materialDir = getParentDocumentDirectory(kvDoc.document.uri.fsPath, "materials");
+            if (materialDir != null) {
+                const materialPath: string = path.join(materialDir, kv.value.content + ".vtf");
+                if (!fs.existsSync(materialPath)) {
+                    this.diagnostics.push(new vscode.Diagnostic(range, "Texture not found on disk", vscode.DiagnosticSeverity.Warning));
+                }
             }
         }
 

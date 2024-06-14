@@ -378,6 +378,11 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Whether to put { on a newline after the key"
+                },
+                "sourceEngine.vmt.validateTexturePaths": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Warn when the file of a texture property can't be found"
                 }
             }
         },
