@@ -24,6 +24,14 @@
 
 This extension adds intelligent syntax highlighting and additional tooling for Source Engine file formats.
 
+---
+
+# State of this project
+
+Looking at the last commit times, you may assume this project is abandoned. But I would rather call it done. I build this extension to aid in my work on [Portal: Revolution](https://store.steampowered.com/app/601360/Portal_Revolution/), which has now released. I have added all the features I wanted and don't know what else I'd add. If you find any bugs, please feel free to report them. I want to keep this extension in a working state, but have no plans to add any new features unless I need them in another modding endevour.
+
+---
+
 ## **Syntax highlighting**
 
 Available for:
