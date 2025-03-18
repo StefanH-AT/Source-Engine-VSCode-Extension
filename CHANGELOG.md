@@ -1,15 +1,23 @@
 # Change Log
 
-All notable changes to the "source-engine-support" extension will be documented in this file.
+All notable changes to the source-engine-support extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-The versions in this file adhere to [semantic versioning](https://semver.org/).
+Versioning adheres to a loose semver scheme.
+
+## [1.3.0]
+
+**General**
+- Improved KeyValue file detection
+- Added editor button to remember a file path as a KeyValue file, so it automatically opens as KV next time
+- Added option to disable KeyValue file detection based on the file name
+- Updated packages to fix vulnerabilities
 
 ## [1.2.0]
 
 **VMT**
-- Added setting to "File not found" warnings for texture properties
+- Added setting to File not found warnings for texture properties
 
 ## [1.1.0]
 
