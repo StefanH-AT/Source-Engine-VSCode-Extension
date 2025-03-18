@@ -382,6 +382,21 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Warn when the file of a texture property can't be found"
+                },
+                "sourceEngine.detectKeyvalueFiles.enabled": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Automatically use keyvalue file format for common file names like gameinfo.txt, subtitles_english.txt..."
+                },
+                "sourceEngine.detectKeyvalueFiles.customRules": {
+                    "type": "array",
+                    "default": [],
+                    "description": "Define custom rules to detect keyvalue files based on the file name"
+                },
+                "sourceEngine.detectKeyvalueFiles.onlyUseCustomRules": {
+                    "type": "boolean",
+                    "default": false,
+                    "description": "Disables all the common file name rules that come with the extension. Useful if some standard rule is causing problems and you would rather define them yourself"
                 }
             }
         },

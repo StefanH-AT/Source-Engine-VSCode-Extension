@@ -47,19 +47,24 @@ function onChangeEditor(document: vscode.TextDocument): void {
 
 function detectKeyvalueFile(document: vscode.TextDocument): void {
 
-    main.debugOutput.appendLine("File has language id: " + document.languageId);
-    if(document.languageId === "plaintext") {
-        main.debugOutput.appendLine(`Potential kv file opened (${document.uri.fsPath})`);
-
-        const langId = getPotentialKvFileLanguageId(document);
-        if(langId === undefined) {
-            main.debugOutput.appendLine(`Not changing document language of (${document.uri.fsPath})`);
-            return;
-        }
-
-        main.debugOutput.appendLine(`Changing document language of (${document.uri.fsPath}) to keyvalue`);
-        vscode.languages.setTextDocumentLanguage(document, langId);
+    const enabled = main.config.get("detectKeyvalueFiles.enabled");
+    if(!enabled) {
+        return;
     }
+
+    main.debugOutput.appendLine("File has language id: " + document.languageId);
+    if(document.languageId !== "plaintext") return;
+
+    main.debugOutput.appendLine(`Potential kv file opened (${document.uri.fsPath})`);
+
+    const langId = getPotentialKvFileLanguageId(document);
+    if(langId === undefined) {
+        main.debugOutput.appendLine(`Not changing document language of (${document.uri.fsPath})`);
+        return;
+    }
+
+    main.debugOutput.appendLine(`Changing document language of (${document.uri.fsPath}) to keyvalue`);
+    vscode.languages.setTextDocumentLanguage(document, langId);
 }
 
 function getPotentialKvFileLanguageId(document: vscode.TextDocument): DetectableLanguageId | undefined {
