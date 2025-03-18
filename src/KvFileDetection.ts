@@ -1,6 +1,7 @@
 import path from "path";
 import * as vscode from "vscode";
 import * as main from "./main";
+import { isRemembered, updateForgetRememberCommandContext } from "./KvFileMemory";
 
 type DetectableLanguageId = "keyvalue" | "soundscript" | "captions";
 
@@ -41,11 +42,19 @@ export function init(context: vscode.ExtensionContext): void {
 
 function onChangeEditor(document: vscode.TextDocument): void {
     main.debugOutput.appendLine(`Active editor changed to ${document.uri.fsPath}`);
+    updateForgetRememberCommandContext(document);
 
     detectKeyvalueFile(document);
 }
 
 function detectKeyvalueFile(document: vscode.TextDocument): void {
+
+    if(isRemembered(document.uri.fsPath)) {
+        main.debugOutput.appendLine(`Remembered keyvalue file opened (${document.uri.fsPath})`);
+        vscode.languages.setTextDocumentLanguage(document, "keyvalue");
+        return;
+    }
+
 
     const enabled = main.config.get("detectKeyvalueFiles.enabled");
     if(!enabled) {
@@ -55,6 +64,10 @@ function detectKeyvalueFile(document: vscode.TextDocument): void {
     main.debugOutput.appendLine("File has language id: " + document.languageId);
     if(document.languageId !== "plaintext") return;
 
+    detectKeyValueFileFromName(document);
+}
+
+function detectKeyValueFileFromName(document: vscode.TextDocument): void {
     main.debugOutput.appendLine(`Potential kv file opened (${document.uri.fsPath})`);
 
     const langId = getPotentialKvFileLanguageId(document);

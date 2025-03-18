@@ -1,7 +1,4 @@
-// ==========================================================================
-// Purpose:
 // Entry point to the extension. Keep code here to a minimum.
-// ==========================================================================
 
 import * as vscode from "vscode";
 import * as vmt from "./language/LangVmt";
@@ -11,6 +8,7 @@ import * as captionsCompile from "./compiler/captions-compile";
 import * as modelCompile from "./compiler/model-compile";
 import * as performance from "./performance";
 import * as kvDetect from "./KvFileDetection";
+import * as kvFileMemory from "./KvFileMemory";
 
 import * as packageJson from "../package.json";
 
@@ -29,6 +27,8 @@ export function activate(context: vscode.ExtensionContext): void {
     const configChangeEvent = vscode.workspace.onDidChangeConfiguration(updateConfig);
     context.subscriptions.push(configChangeEvent);
 
+    // Memory must come before detect so the state is loaded
+    kvFileMemory.init(context);
     kvDetect.init(context);
     
     keyvalue.init(context);

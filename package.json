@@ -117,7 +117,7 @@
                 "id": "fgd",
                 "configuration": "./lang-config-kv.json",
                 "aliases": [
-                    "FGD",
+                    "Valve FGD",
                     "Forge Game Data",
                     "Hammer Game Data"
                 ],
@@ -129,8 +129,8 @@
                 "id": "captions",
                 "configuration": "./lang-config-kv.json",
                 "aliases": [
-                    "Source Engine Captions",
-                    "Source Engine Subtitles"
+                    "Valve Source Engine Captions",
+                    "Valve Source Engine Subtitles"
                 ],
                 "firstLine": "^\"?(?i)lang(?-i)\"?",
                 "filenamePatterns": [
@@ -142,8 +142,8 @@
                 "id": "cfg",
                 "configuration": "./lang-config-kv.json",
                 "aliases": [
-                    "Source Engine Configuration",
-                    "Source Engine Commands"
+                    "Valve Source Engine Configuration",
+                    "Valve Source Engine Commands"
                 ],
                 "extensions": [
                     ".cfg"
@@ -209,7 +209,7 @@
             {
                 "id": "fxc",
                 "aliases": [
-                    "FXC Shader"
+                    "Valve FXC Shader"
                 ],
                 "extensions": [
                     ".fxc",
@@ -297,12 +297,22 @@
             },
             {
                 "command": "kv.remember",
-                "title": "Remember file path as Valve KeyValue file",
+                "title": "Remember this as KeyValue file",
                 "shortTitle": "Remember KeyValue File",
                 "category": "KeyValue",
                 "icon": {
-                    "light": "./icons/start-light.svg",
-                    "dark": "./icons/start-dark.svg"
+                    "light": "./icons/remember-kv-light.png",
+                    "dark": "./icons/remember-kv-dark.png"
+                }
+            },
+            {
+                "command": "kv.forget",
+                "title": "Forget this as KeyValue file",
+                "shortTitle": "Forget KeyValue File",
+                "category": "KeyValue",
+                "icon": {
+                    "light": "./icons/forget-kv-light.png",
+                    "dark": "./icons/forget-kv-dark.png"
                 }
             }
         ],
@@ -316,6 +326,16 @@
                 {
                     "when": "resourceLangId == qc && resourceScheme == 'file'",
                     "command": "mdl.compile",
+                    "group": "navigation"
+                },
+                {
+                    "when": "sourceEngine.showKvForget && resourceScheme == 'file'",
+                    "command": "kv.forget",
+                    "group": "navigation"
+                },
+                {
+                    "when": "sourceEngine.showKvRemember && resourceScheme == 'file'",
+                    "command": "kv.remember",
                     "group": "navigation"
                 }
             ]
@@ -397,16 +417,6 @@
                     "type": "boolean",
                     "default": true,
                     "description": "Automatically use keyvalue file format for common file names like gameinfo.txt, subtitles_english.txt..."
-                },
-                "sourceEngine.detectKeyvalueFiles.customRules": {
-                    "type": "array",
-                    "default": [],
-                    "description": "Define custom rules to detect keyvalue files based on the file name"
-                },
-                "sourceEngine.detectKeyvalueFiles.onlyUseCustomRules": {
-                    "type": "boolean",
-                    "default": false,
-                    "description": "Disables all the common file name rules that come with the extension. Useful if some standard rule is causing problems and you would rather define them yourself"
                 }
             }
         },
