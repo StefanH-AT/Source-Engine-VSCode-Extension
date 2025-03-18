@@ -40,6 +40,7 @@
         "test": "jest --projects jest.config.ts --passWithNoTests",
         "benchmark": "jest --projects bench.config.ts",
         "lint": "eslint ./src",
+        "lint-fix": "eslint --fix ./src",
         "deploy": "vsce publish"
     },
     "main": "./out/main.js",
