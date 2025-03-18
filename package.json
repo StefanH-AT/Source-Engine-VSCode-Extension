@@ -294,6 +294,16 @@
                     "light": "./icons/start-light.svg",
                     "dark": "./icons/start-dark.svg"
                 }
+            },
+            {
+                "command": "kv.remember",
+                "title": "Remember file path as Valve KeyValue file",
+                "shortTitle": "Remember KeyValue File",
+                "category": "KeyValue",
+                "icon": {
+                    "light": "./icons/start-light.svg",
+                    "dark": "./icons/start-dark.svg"
+                }
             }
         ],
         "menus": {
