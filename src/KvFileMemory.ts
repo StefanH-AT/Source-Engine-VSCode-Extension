@@ -11,11 +11,11 @@ export function init(context: vscode.ExtensionContext): void {
 
 export function updateForgetRememberCommandContext(document: vscode.TextDocument): void {
     if(isRemembered(document.uri.fsPath)) {
-        vscode.commands.executeCommand('setContext', 'sourceEngine.showKvForget', true);
-        vscode.commands.executeCommand('setContext', 'sourceEngine.showKvRemember', false);
+        vscode.commands.executeCommand("setContext", "sourceEngine.showKvForget", true);
+        vscode.commands.executeCommand("setContext", "sourceEngine.showKvRemember", false);
     } else {
-        vscode.commands.executeCommand('setContext', 'sourceEngine.showKvForget', false);
-        vscode.commands.executeCommand('setContext', 'sourceEngine.showKvRemember', true);
+        vscode.commands.executeCommand("setContext", "sourceEngine.showKvForget", false);
+        vscode.commands.executeCommand("setContext", "sourceEngine.showKvRemember", true);
     }
 }
 
