@@ -6,6 +6,11 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 Versioning adheres to a loose semver scheme.
 
+## [1.3.1]
+
+**VMT**
+- Fixed texture path completion only setting first slash as forward slash
+
 ## [1.3.0]
 
 **General**
