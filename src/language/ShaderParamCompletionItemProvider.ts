@@ -115,7 +115,7 @@ export class ShaderParamCompletionItemProvider implements vscode.CompletionItemP
             if (filePath.startsWith("\\") || filePath.startsWith("/")) {
                 filePath = filePath.slice(1);
             }
-            const filePathWithoutExtension = filePath.substring(0, filePath.length - 4).replace("\\", "/");
+            const filePathWithoutExtension = filePath.substring(0, filePath.length - 4).replace(/\\/g, "/");
 
             const completion = new vscode.CompletionItem(filePathWithoutExtension);
             completion.insertText = filePathWithoutExtension;
